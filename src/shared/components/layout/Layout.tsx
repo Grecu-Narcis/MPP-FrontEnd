@@ -1,17 +1,15 @@
-import React from 'react';
-
-import { Footer } from '../footer/Footer'
-import { Header } from '../header/Header'
-import './Layout.css'
+import { Footer } from "../footer/Footer";
+import { Header } from "../header/Header";
+import "./Layout.css";
 
 export function Layout({ children }: any) {
-    return (
-        <div className="layout-container">
-            <Header />
+  return (
+    <div className="layout-container">
+      <Header />
 
-            {children}
+      {children}
 
-            <Footer />
-        </div>
-    )
+      <Footer />
+    </div>
+  );
 }
