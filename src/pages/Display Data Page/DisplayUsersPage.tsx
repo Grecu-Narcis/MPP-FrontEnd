@@ -3,16 +3,22 @@ import './DisplayUsersPage.css';
 import { User } from '../../models/user';
 import { UserCard } from '../../features/Display Users/UserCard';
 import { Layout } from '../../shared/components/layout/Layout';
+
+import { UsersContext } from '../../App';
+
+import { useContext } from 'react';
 // import { Button } from "../../shared/components/button/Button";
 
 // import { Link } from "react-router-dom";
 
-export function DisplayUsersPage(props: any) {
+export function DisplayUsersPage() {
     document.title = 'Users dashboard!';
 
-    let usersArray: User[] = props.users;
+    const usersContext = useContext(UsersContext);
+    if (!usersContext) throw new Error('Users Context is undefined!');
 
-    const removeMethod = props.removeMethod;
+    let usersArray: User[] = usersContext.users;
+    const removeMethod = usersContext.removeUser;
 
     return (
         <Layout>

@@ -2,7 +2,9 @@ import { FormEntry } from './FormEntry';
 import { User } from '../../models/user';
 import { Button } from '../../shared/components/button/Button';
 
-import { useRef } from 'react';
+import { UsersContext } from '../../App';
+
+import { useRef, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './UserForm.css';
 
@@ -31,13 +33,16 @@ function handleOnClick(
     return new User(userId, userFirstName, userLastName, userUrl);
 }
 
-export function UserForm(props: any) {
+export function UserForm() {
     const idInput = useRef<HTMLInputElement>(null);
     const firstNameInput = useRef<HTMLInputElement>(null);
     const lastNameInput = useRef<HTMLInputElement>(null);
     const urlInput = useRef<HTMLInputElement>(null);
 
     const navigate = useNavigate();
+
+    const usersContext = useContext(UsersContext);
+    if (!usersContext) throw new Error('Users Context is undefined!');
 
     const formEntries = [
         { label: 'ID', ref: idInput },
@@ -49,7 +54,7 @@ export function UserForm(props: any) {
     const handleOnClickWrapper = () => {
         try {
             const inputUser = handleOnClick(idInput, firstNameInput, lastNameInput, urlInput);
-            props.handleAddUser(inputUser);
+            usersContext.addUser(inputUser);
 
             navigate('/');
         } catch (error) {
