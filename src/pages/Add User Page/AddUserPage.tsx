@@ -1,37 +1,20 @@
-import { UserForm } from "../../features/CRUD Operations/UserForm";
-import { Button } from "../../shared/components/button/Button";
-import { Layout } from "../../shared/components/layout/Layout";
+import { UserForm } from '../../features/CRUD Operations/UserForm';
+import { Layout } from '../../shared/components/layout/Layout';
+import { User } from '../../models/user';
 
-import { useState } from "react";
-
-import { User } from "../../models/user";
-
-import "./AddUserPage.css";
+import './AddUserPage.css';
 
 export function AddUserPage(props: any) {
-  document.title = "Add user";
-  const addMethod = props.addMethod;
+    document.title = 'Add user';
 
-  const [user, setUser] = useState(new User(0, "", "", ""));
+    const handleInputChange = (newUser: User) => props.addMethod(newUser);
 
-  const handleInputChange = (newUser: User) => {
-    setUser((_) => newUser);
-  };
-
-  const handleAddUser = () => addMethod(user);
-
-  return (
-    <Layout>
-      <div className="main-page-container">
-        <div className="main-title">Add user</div>
-        <UserForm handleInputChange={handleInputChange} />
-
-        <Button
-          type="button"
-          buttonMessage="Add user"
-          onClick={handleAddUser}
-        />
-      </div>
-    </Layout>
-  );
+    return (
+        <Layout>
+            <div className='main-page-container'>
+                <div className='main-title'>Add user</div>
+                <UserForm handleAddUser={handleInputChange} />
+            </div>
+        </Layout>
+    );
 }

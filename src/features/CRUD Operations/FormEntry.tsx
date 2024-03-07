@@ -1,27 +1,20 @@
-import React from 'react';
+import React, { forwardRef } from 'react';
 
-import './FormEntry.css'
+import './FormEntry.css';
 
 const fieldNameMap: Map<string, string> = new Map();
-fieldNameMap.set("ID", "id");
-fieldNameMap.set("First Name", "firstName");
-fieldNameMap.set("Last Name", "lastName");
-fieldNameMap.set("URL", "pictureUrl");
+fieldNameMap.set('ID', 'id');
+fieldNameMap.set('First Name', 'firstName');
+fieldNameMap.set('Last Name', 'lastName');
+fieldNameMap.set('URL', 'pictureUrl');
 
-export function FormEntry(props: any) {
-    const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        props.handleChange(fieldNameMap.get(event.target.name), event.target.value);
-    };
-
+const FormEntry = forwardRef(function FormEntry(props: any, ref: React.Ref<HTMLInputElement>) {
     return (
         <div className='form-entry'>
             <label className='form-label'>{props.label}</label>
-            <input type="text"
-                className="form-input"
-                placeholder={props.label}
-                name={props.label}
-                onChange={handleChange}
-            />
+            <input type='text' className='form-input' placeholder={props.label} name={props.label} ref={ref} />
         </div>
-    )
-}
+    );
+});
+
+export { FormEntry };
