@@ -4,18 +4,11 @@ import { User } from './models/user';
 import { AddUserPage } from './pages/Add User Page/AddUserPage';
 
 import { Routes, Route } from 'react-router-dom';
-import { createContext, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
+import { UsersContextProvider } from './contexts/UsersContext';
 
 let demoUser1: User = new User(1, 'Narcis', 'Grecu', 'narcis.jpg');
 let demoUser2: User = new User(2, 'Bogdan', 'Ciornohac', 'bogdan.jpg');
-
-type UsersContextType = {
-    users: User[];
-    addUser: (user: User) => void;
-    removeUser: (userId: number) => void;
-};
-
-export const UsersContext = createContext<UsersContextType | null>(null);
 
 function App() {
     let [users, setUsers] = useState<User[]>([demoUser1, demoUser2]);
@@ -33,13 +26,13 @@ function App() {
     });
 
     return (
-        <UsersContext.Provider value={{ users, addUser, removeUser }}>
+        <UsersContextProvider userContext={{ users, addUser, removeUser }}>
             <Routes>
                 <Route path='/' element={<DisplayUsersPage />}></Route>
 
                 <Route path='addUser' element={<AddUserPage />} />
             </Routes>
-        </UsersContext.Provider>
+        </UsersContextProvider>
     );
 }
 

@@ -1,10 +1,9 @@
 import { FormEntry } from './FormEntry';
 import { User } from '../../models/user';
 import { Button } from '../../shared/components/button/Button';
+import { useUsersContext } from '../../contexts/UsersContext';
 
-import { UsersContext } from '../../App';
-
-import { useRef, useContext } from 'react';
+import { useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './UserForm.css';
 
@@ -41,8 +40,7 @@ export function UserForm() {
 
     const navigate = useNavigate();
 
-    const usersContext = useContext(UsersContext);
-    if (!usersContext) throw new Error('Users Context is undefined!');
+    const usersContext = useUsersContext();
 
     const formEntries = [
         { label: 'ID', ref: idInput },
@@ -66,7 +64,7 @@ export function UserForm() {
         <div className='form-div'>
             <form className='user-form'>
                 {formEntries.map((entry) => (
-                    <FormEntry label={entry.label} ref={entry.ref} />
+                    <FormEntry key={entry.label} label={entry.label} ref={entry.ref} />
                 ))}
             </form>
 
