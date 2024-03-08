@@ -17,6 +17,12 @@
 
 @media (max-width: 600px) {
     .form-div {
-        width: 70%;
+        width: 60%;
+    }
+}
+
+@media (min-width: 601px) and (max-width: 1024px) {
+    .form-div {
+        width: 40%;
     }
 }
