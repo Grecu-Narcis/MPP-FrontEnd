@@ -6,6 +6,7 @@ import { AddUserPage } from './pages/Add User Page/AddUserPage';
 import { Routes, Route, BrowserRouter } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { UsersContextProvider } from './contexts/UsersContext';
+import { EditUserPage } from './pages/Edit User Page/EditUserPage';
 
 let demoUser1: User = new User(1, 'Narcis', 'Grecu', 'narcis.jpg');
 let demoUser2: User = new User(2, 'Bogdan', 'Ciornohac', 'bogdan.jpg');
@@ -29,9 +30,9 @@ function App() {
         <UsersContextProvider userContext={{ users, addUser, removeUser }}>
             <BrowserRouter>
                 <Routes>
-                    <Route path='/' element={<DisplayUsersPage />}></Route>
-
-                    <Route path='addUser' element={<AddUserPage />} />
+                    <Route path='/' element={<DisplayUsersPage />} />
+                    <Route path='/addUser' element={<AddUserPage />} />
+                    <Route path='/editUser/:userId' element={<EditUserPage />} />
                 </Routes>
             </BrowserRouter>
         </UsersContextProvider>

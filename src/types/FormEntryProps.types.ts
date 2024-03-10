@@ -1,4 +1,6 @@
-export type FormEntryPropsType = {
+export type FormEntryProps = {
     label: string;
-    ref: React.Ref<HTMLInputElement>;
+    placeHolder: string;
+    disabled: boolean;
+    defaultValue: string;
 };
