@@ -4,6 +4,8 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 
+import {configDefaults} from 'vitest/config'
+
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [react()],
@@ -16,5 +18,19 @@ export default defineConfig({
     environment: 'jsdom',
     setupFiles: ['./src/setupTests.ts'],
     pool: 'forks',
+    exclude: [
+      ...configDefaults.exclude,
+      './src/types/**'
+    ],
+    coverage: {
+      exclude: [
+        ...configDefaults.exclude,
+        '**/src/types/**',
+        '.eslintrc.cjs',
+        '**/src/vite-env.d.ts',
+        '**/src/index.tsx',
+        '**/src/main.tsx'
+      ]
+    }
   },
 })

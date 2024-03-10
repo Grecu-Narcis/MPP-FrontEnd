@@ -1,4 +1,4 @@
-import { UserFormType } from '../../pages/Add User Page/AddUserPage';
+import { UserFormType } from '../../types/UserFormProps.types';
 import { FormEntry } from './FormEntry';
 
 import './UserForm.css';
