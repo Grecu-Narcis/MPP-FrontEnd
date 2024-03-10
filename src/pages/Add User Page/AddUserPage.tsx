@@ -3,10 +3,10 @@ import { Layout } from '../../shared/components/layout/Layout';
 import { Button } from '../../shared/components/button/Button';
 import { User } from '../../models/user';
 
-import { useRef } from 'react';
+import { useRef, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import { useUsersContext } from '../../contexts/UsersContext';
+import { UsersContext } from '../../contexts/UsersContext';
 
 import './AddUserPage.css';
 
@@ -51,7 +51,7 @@ export function AddUserPage() {
     const urlInput = useRef<HTMLInputElement>(null);
 
     const navigate = useNavigate();
-    const usersContext = useUsersContext();
+    const usersContext = useContext(UsersContext)!;
 
     const handleOnClickWrapper = () => {
         try {

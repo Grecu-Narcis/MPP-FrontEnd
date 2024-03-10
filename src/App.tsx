@@ -3,7 +3,7 @@ import { DisplayUsersPage } from './pages/Display Data Page/DisplayUsersPage';
 import { User } from './models/user';
 import { AddUserPage } from './pages/Add User Page/AddUserPage';
 
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, BrowserRouter } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { UsersContextProvider } from './contexts/UsersContext';
 
@@ -27,11 +27,13 @@ function App() {
 
     return (
         <UsersContextProvider userContext={{ users, addUser, removeUser }}>
-            <Routes>
-                <Route path='/' element={<DisplayUsersPage />}></Route>
+            <BrowserRouter>
+                <Routes>
+                    <Route path='/' element={<DisplayUsersPage />}></Route>
 
-                <Route path='addUser' element={<AddUserPage />} />
-            </Routes>
+                    <Route path='addUser' element={<AddUserPage />} />
+                </Routes>
+            </BrowserRouter>
         </UsersContextProvider>
     );
 }

@@ -12,7 +12,7 @@ export function UserForm(props: UserFormType) {
     ];
 
     return (
-        <div className='form-div'>
+        <div className='form-div' data-testid='user-form'>
             <form className='user-form'>
                 {formEntries.map((entry) => (
                     <FormEntry key={entry.label} label={entry.label} ref={entry.ref} />
