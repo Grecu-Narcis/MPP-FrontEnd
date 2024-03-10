@@ -4,12 +4,14 @@ import { User } from '../../models/user';
 import { UserCard } from '../../features/Display Users/UserCard';
 import { Layout } from '../../shared/components/layout/Layout';
 
-import { useUsersContext } from '../../contexts/UsersContext';
+import { UsersContext } from '../../contexts/UsersContext';
+
+import { useContext } from 'react';
 
 export function DisplayUsersPage() {
     document.title = 'Users dashboard!';
 
-    const usersContext = useUsersContext();
+    const usersContext = useContext(UsersContext)!;
 
     let usersArray: User[] = usersContext.users;
     const removeMethod = usersContext.removeUser;
