@@ -8,8 +8,6 @@ test('demo-test', () => {
     render(<App />);
 
     const elements = screen.getAllByTestId('user-card');
-    console.log('!!!!');
-    console.log(elements);
 
     for (let element in elements) expect(elements[element]).toBeInTheDocument();
 });

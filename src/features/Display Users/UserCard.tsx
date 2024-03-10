@@ -1,16 +1,13 @@
-import { User } from '../../models/user';
+import { UserCardPropsType } from '../../types/UserCardProps.types';
 
 import './UserCard.css';
 
-export function UserCard(props: any) {
-    let givenUser: User = props.user;
+export function UserCard({ givenUser, removeMethod }: UserCardPropsType) {
     let path: string = 'assets/' + givenUser.getPictureUrl();
 
-    const removeUser = props.removeMethod;
-
     return (
-        <div className='card' onClick={props.onClick} data-testid='user-card'>
-            <button className='remove-button' onClick={() => removeUser(givenUser.getId())}>
+        <div className='card' data-testid='user-card'>
+            <button className='remove-button' onClick={() => removeMethod(givenUser.getId())}>
                 X
             </button>
 
