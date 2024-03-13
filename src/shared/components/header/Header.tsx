@@ -4,7 +4,7 @@ import './Header.css';
 
 const Header = () => {
     return (
-        <div className='header'>
+        <div className='header' data-testid='header-test-id'>
             <nav className='navbar'>
                 <div className='title'>Rentify</div>
 

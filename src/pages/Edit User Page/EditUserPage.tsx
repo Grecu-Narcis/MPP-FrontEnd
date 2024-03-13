@@ -1,8 +1,8 @@
 import { UsersContext } from '../../contexts/UsersContext';
-import { UserForm } from '../../features/CRUD Operations/UserForm';
+import { UserForm } from '../../features/CRUD Operations/User Form/UserForm';
 import { Layout } from '../../shared/components/layout/Layout';
 import { Button } from '../../shared/components/button/Button';
-import { User } from '../../models/user';
+import { User } from '../../models/User';
 
 import { useContext, useRef } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
@@ -16,12 +16,7 @@ function handleOnClick(
     if (!idInput.current || !firstNameInput.current || !lastNameInput.current || !urlInput.current)
         throw new Error('Inputs references are null');
 
-    if (
-        !idInput.current.value ||
-        !firstNameInput.current.value ||
-        !lastNameInput.current.value ||
-        !urlInput.current.value
-    )
+    if (!idInput.current.value || !firstNameInput.current.value || !lastNameInput.current.value || !urlInput.current.value)
         throw new Error('You must provide values for each field!');
 
     const userId: number = parseInt(idInput.current.value),

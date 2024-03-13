@@ -1,6 +1,6 @@
 import './App.css';
 import { DisplayUsersPage } from './pages/Display Data Page/DisplayUsersPage';
-import { User } from './models/user';
+import { User } from './models/User';
 import { AddUserPage } from './pages/Add User Page/AddUserPage';
 
 import { Routes, Route, BrowserRouter } from 'react-router-dom';

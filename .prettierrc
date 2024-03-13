@@ -9,7 +9,7 @@
     "arrowParens": "always",
     "semi": true,
     "singleAttributePerLine": false,
-    "printWidth": 120,
+    "printWidth": 140,
     "max-line-length": [
       true,
       {

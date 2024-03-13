@@ -16,6 +16,7 @@ export function UserCard({ givenUser, removeMethod }: UserCardPropsType) {
         <div className='card' data-testid='user-card' onClick={handleCardOnClick}>
             <button
                 className='remove-button'
+                data-testid='remove-button'
                 onClick={(e) => {
                     e.stopPropagation();
                     removeMethod(givenUser.getId());
@@ -24,7 +25,7 @@ export function UserCard({ givenUser, removeMethod }: UserCardPropsType) {
                 X
             </button>
 
-            <div className='card-info'>
+            <div className='card-info' data-testid='card-info'>
                 <div className='picture'>
                     <img src={path} alt='user profile' />
                 </div>
