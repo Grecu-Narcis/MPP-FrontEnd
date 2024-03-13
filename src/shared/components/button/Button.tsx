@@ -8,6 +8,7 @@ export function Button(props: ButtonProps) {
             type={props.type}
             className={'button' + ' ' + (props.className ? props.className : '')}
             onClick={props.onClick}
+            data-testid='button-test-id'
         >
             {props.buttonMessage}
         </button>

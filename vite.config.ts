@@ -29,7 +29,10 @@ export default defineConfig({
         '.eslintrc.cjs',
         '**/src/vite-env.d.ts',
         '**/src/index.tsx',
-        '**/src/main.tsx'
+        '**/src/main.tsx',
+        '**/src/models/User.ts',
+        '**/src/contexts/**',
+        '**/src/App.tsx'
       ]
     }
   },

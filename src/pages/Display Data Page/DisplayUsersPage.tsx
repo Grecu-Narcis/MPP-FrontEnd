@@ -1,6 +1,6 @@
 import { useContext } from 'react';
 
-import { User } from '../../models/user';
+import { User } from '../../models/User';
 import { UserCard } from '../../features/Display Users/UserCard';
 import { Layout } from '../../shared/components/layout/Layout';
 import { UsersContext } from '../../contexts/UsersContext';
@@ -18,7 +18,7 @@ export function DisplayUsersPage() {
     return (
         <Layout>
             <div className='main-page-container'>
-                <div className='users-list'>
+                <div className='users-list' data-testid='users-list'>
                     {usersArray.map((user) => (
                         <UserCard givenUser={user} removeMethod={removeMethod} key={user.getId()} />
                     ))}
