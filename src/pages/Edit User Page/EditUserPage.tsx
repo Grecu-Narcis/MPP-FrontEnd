@@ -12,7 +12,7 @@ function handleOnClick(
     lastNameInput: React.RefObject<HTMLInputElement>,
     urlInput: React.RefObject<HTMLInputElement>,
 ) {
-    if (firstNameInput.current!.value === '' || !lastNameInput.current!.value || !urlInput.current!.value)
+    if (!firstNameInput.current!.value || !lastNameInput.current!.value || !urlInput.current!.value)
         throw new Error('You must provide values for each field!');
 
     const userFirstName: string = firstNameInput.current!.value,
