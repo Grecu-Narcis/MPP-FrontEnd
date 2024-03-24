@@ -3,4 +3,6 @@ export type ButtonProps = {
     className?: string;
     onClick?: () => void;
     buttonMessage: string;
+    color?: string;
+    data_test_id?: string;
 }

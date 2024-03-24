@@ -4,27 +4,22 @@ import { Layout } from '../../shared/components/layout/Layout';
 import { Button } from '../../shared/components/button/Button';
 import { User } from '../../models/User';
 
-import { useContext, useRef } from 'react';
+import { useContext, useEffect, useRef } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 
 function handleOnClick(
-    idInput: React.RefObject<HTMLInputElement>,
     firstNameInput: React.RefObject<HTMLInputElement>,
     lastNameInput: React.RefObject<HTMLInputElement>,
     urlInput: React.RefObject<HTMLInputElement>,
 ) {
-    if (!idInput.current || !firstNameInput.current || !lastNameInput.current || !urlInput.current)
-        throw new Error('Inputs references are null');
-
-    if (!idInput.current.value || !firstNameInput.current.value || !lastNameInput.current.value || !urlInput.current.value)
+    if (firstNameInput.current!.value === '' || !lastNameInput.current!.value || !urlInput.current!.value)
         throw new Error('You must provide values for each field!');
 
-    const userId: number = parseInt(idInput.current.value),
-        userFirstName: string = firstNameInput.current.value,
-        userLastName: string = lastNameInput.current.value,
-        userUrl: string = urlInput.current.value;
+    const userFirstName: string = firstNameInput.current!.value,
+        userLastName: string = lastNameInput.current!.value,
+        userUrl: string = urlInput.current!.value;
 
-    return new User(userId, userFirstName, userLastName, userUrl);
+    return new User(userFirstName, userLastName, userUrl);
 }
 
 export function EditUserPage() {
@@ -39,16 +34,17 @@ export function EditUserPage() {
     const usersContext = useContext(UsersContext)!;
 
     const { userId } = useParams();
-    if (!userId) {
-        navigate('/');
-        return;
-    }
 
-    const givenUser = usersContext.users.find((user: User) => user.getId() === parseInt(userId));
+    const givenUser = usersContext.users.find((user: User) => user.getId() === parseInt(userId!));
+
+    useEffect(() => {
+        if (!givenUser) navigate('/');
+    });
+
     const handleOnClickWrapper = () => {
         try {
-            const newUser = handleOnClick(idInput, firstNameInput, lastNameInput, urlInput);
-            usersContext.removeUser(newUser.getId());
+            const newUser = handleOnClick(firstNameInput, lastNameInput, urlInput);
+            usersContext.removeUser(givenUser!.getId());
             usersContext.addUser(newUser);
 
             navigate('/');
@@ -68,7 +64,7 @@ export function EditUserPage() {
                     givenUser={givenUser}
                 />
 
-                <Button type='submit' buttonMessage='Edit User' onClick={handleOnClickWrapper} />
+                <Button type='submit' data_test_id='edit-user-button' buttonMessage='Edit User' onClick={handleOnClickWrapper} />
             </div>
         </Layout>
     );

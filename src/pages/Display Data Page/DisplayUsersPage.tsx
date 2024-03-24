@@ -6,6 +6,7 @@ import { Layout } from '../../shared/components/layout/Layout';
 import { UsersContext } from '../../contexts/UsersContext';
 
 import './DisplayUsersPage.css';
+import { DeleteUserModal } from '../../modals/DeleteUserModal';
 
 export function DisplayUsersPage() {
     document.title = 'Users dashboard!';
@@ -17,6 +18,7 @@ export function DisplayUsersPage() {
 
     return (
         <Layout>
+            <DeleteUserModal />
             <div className='main-page-container'>
                 <div className='users-list' data-testid='users-list'>
                     {usersArray.map((user) => (

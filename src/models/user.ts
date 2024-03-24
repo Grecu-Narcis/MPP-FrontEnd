@@ -4,9 +4,13 @@ export class User {
     private lastName: string;
     private pictureUrl: string;
 
-    public constructor(id: number, firstName: string, lastName: string, pictureUrl: string)
+    private static lastUsedId: number = 0;
+
+    public constructor(firstName: string, lastName: string, pictureUrl: string)
     {
-        this.id = id;
+        User.lastUsedId += 1;
+        
+        this.id = User.lastUsedId;
         this.firstName = firstName;
         this.lastName = lastName;
         this.pictureUrl = pictureUrl;

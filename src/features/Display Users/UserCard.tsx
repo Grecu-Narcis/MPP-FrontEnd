@@ -2,8 +2,10 @@ import { useNavigate } from 'react-router-dom';
 import { UserCardPropsType } from '../../types/UserCardProps.types';
 
 import './UserCard.css';
+import { useContext } from 'react';
+import { ModalContext } from '../../contexts/ModalContext';
 
-export function UserCard({ givenUser, removeMethod }: UserCardPropsType) {
+export function UserCard({ givenUser }: UserCardPropsType) {
     let path: string = 'assets/' + givenUser.getPictureUrl();
 
     const navigate = useNavigate();
@@ -12,6 +14,10 @@ export function UserCard({ givenUser, removeMethod }: UserCardPropsType) {
         navigate('/editUser/' + givenUser.getId());
     };
 
+    const modalContext = useContext(ModalContext)!;
+    const setUserId = modalContext.setUserId;
+    const setModalStatus = modalContext.setModalStatus;
+
     return (
         <div className='card' data-testid='user-card' onClick={handleCardOnClick}>
             <button
@@ -19,7 +25,9 @@ export function UserCard({ givenUser, removeMethod }: UserCardPropsType) {
                 data-testid='remove-button'
                 onClick={(e) => {
                     e.stopPropagation();
-                    removeMethod(givenUser.getId());
+                    setModalStatus(true);
+                    setUserId(givenUser.getId());
+                    // removeMethod(givenUser.getId());
                 }}
             >
                 X
@@ -31,7 +39,7 @@ export function UserCard({ givenUser, removeMethod }: UserCardPropsType) {
                 </div>
 
                 <div className='user-info'>
-                    <div className='user-id'>ID: {givenUser.getId()}</div>
+                    {/* <div className='user-id'>ID: {givenUser.getId()}</div> */}
                     <div className='first-name'>First Name: {givenUser.getFirstName()}</div>
                     <div className='last-name'>Last Name: {givenUser.getLastName()}</div>
                 </div>

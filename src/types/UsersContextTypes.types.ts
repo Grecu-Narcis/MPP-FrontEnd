@@ -8,7 +8,7 @@ export type UsersContextType = {
     removeUser: (userId: number) => void;
 };
 
-export type ProviderType = {
+export type UsersContextProviderType = {
     userContext: UsersContextType;
     children: ReactNode;
 };

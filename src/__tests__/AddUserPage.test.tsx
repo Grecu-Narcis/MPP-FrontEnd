@@ -68,26 +68,22 @@ test('test add user page add button with form data', () => {
 
     const addUserButton = screen.getByTestId('button-test-id');
 
-    const idFormInput = screen.getByLabelText('ID');
     const firstNameFormInput = screen.getByLabelText('First Name');
     const lastNameFormInput = screen.getByLabelText('Last Name');
     const urlFormInput = screen.getByLabelText('URL');
 
-    fireEvent.change(idFormInput, {
-        target: {
-            value: '1',
-        },
-    });
     fireEvent.change(firstNameFormInput, {
         target: {
             value: 'Grecu',
         },
     });
+
     fireEvent.change(lastNameFormInput, {
         target: {
             value: 'Narcis',
         },
     });
+
     fireEvent.change(urlFormInput, {
         target: {
             value: 'narcis.png',

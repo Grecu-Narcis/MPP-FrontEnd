@@ -14,12 +14,13 @@ type FormEntryType = {
 
 function setFormEntriesForUser(formEntries: FormEntryType[], givenUser: User | undefined) {
     if (givenUser !== undefined) {
-        formEntries[0].disabled = true;
+        // formEntries[0].disabled = true;
 
-        formEntries[0].defaultValue = givenUser.getId().toString();
-        formEntries[1].defaultValue = givenUser.getFirstName();
-        formEntries[2].defaultValue = givenUser.getLastName();
-        formEntries[3].defaultValue = givenUser.getPictureUrl();
+        // formEntries[0].defaultValue = givenUser.getId().toString();
+        formEntries[0].defaultValue = givenUser.getFirstName();
+        formEntries[1].defaultValue = givenUser.getLastName();
+        formEntries[2].defaultValue = givenUser.getPictureUrl();
+        // formEntries[3].defaultValue = givenUser.getPictureUrl();
     }
 
     return formEntries;
@@ -27,7 +28,7 @@ function setFormEntriesForUser(formEntries: FormEntryType[], givenUser: User | u
 
 function createFormEntries(props: UserFormType) {
     let formEntries = [
-        { label: 'ID', ref: props.idInput, placeHolder: 'ID', defaultValue: '', disabled: false },
+        // { label: 'ID', ref: props.idInput, placeHolder: 'ID', defaultValue: '', disabled: false },
         { label: 'First Name', ref: props.firstNameInput, placeHolder: 'First Name', defaultValue: '', disabled: false },
         { label: 'Last Name', ref: props.lastNameInput, placeHolder: 'Last Name', defaultValue: '', disabled: false },
         { label: 'URL', ref: props.urlInput, placeHolder: 'URL', defaultValue: '', disabled: false },

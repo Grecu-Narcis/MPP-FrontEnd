@@ -11,20 +11,18 @@ import { UsersContext } from '../../contexts/UsersContext';
 import './AddUserPage.css';
 
 function handleOnClick(
-    idInput: React.RefObject<HTMLInputElement>,
     firstNameInput: React.RefObject<HTMLInputElement>,
     lastNameInput: React.RefObject<HTMLInputElement>,
     urlInput: React.RefObject<HTMLInputElement>,
 ): User {
-    if (!idInput.current!.value || !firstNameInput.current!.value || !lastNameInput.current!.value || !urlInput.current!.value)
+    if (!firstNameInput.current!.value || !lastNameInput.current!.value || !urlInput.current!.value)
         throw new Error('You must provide values for each field!');
 
-    const userId: number = parseInt(idInput.current!.value),
-        userFirstName: string = firstNameInput.current!.value,
+    const userFirstName: string = firstNameInput.current!.value,
         userLastName: string = lastNameInput.current!.value,
         userUrl: string = urlInput.current!.value;
 
-    return new User(userId, userFirstName, userLastName, userUrl);
+    return new User(userFirstName, userLastName, userUrl);
 }
 
 export function AddUserPage() {
@@ -40,7 +38,7 @@ export function AddUserPage() {
 
     const handleOnClickWrapper = () => {
         try {
-            const inputUser = handleOnClick(idInput, firstNameInput, lastNameInput, urlInput);
+            const inputUser = handleOnClick(firstNameInput, lastNameInput, urlInput);
             usersContext.addUser(inputUser);
             navigate('/');
         } catch (error) {

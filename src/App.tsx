@@ -7,12 +7,15 @@ import { Routes, Route, BrowserRouter } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { UsersContextProvider } from './contexts/UsersContext';
 import { EditUserPage } from './pages/Edit User Page/EditUserPage';
+import { ModalContextProvider } from './contexts/ModalContext';
 
-let demoUser1: User = new User(1, 'Narcis', 'Grecu', 'narcis.jpg');
-let demoUser2: User = new User(2, 'Bogdan', 'Ciornohac', 'bogdan.jpg');
+let demoUser1: User = new User('Narcis', 'Grecu', 'narcis.jpg');
+let demoUser2: User = new User('Bogdan', 'Ciornohac', 'bogdan.jpg');
 
 function App() {
     let [users, setUsers] = useState<User[]>([demoUser1, demoUser2]);
+    let [modalStatus, setModalStatus] = useState<boolean>(false);
+    let [userId, setUserId] = useState<number>(-1);
 
     const addUser = (newUser: User) => {
         setUsers((prevState: User[]) => [...prevState, newUser]);
@@ -28,13 +31,15 @@ function App() {
 
     return (
         <UsersContextProvider userContext={{ users, addUser, removeUser }}>
-            <BrowserRouter>
-                <Routes>
-                    <Route path='/' element={<DisplayUsersPage />} />
-                    <Route path='/addUser' element={<AddUserPage />} />
-                    <Route path='/editUser/:userId' element={<EditUserPage />} />
-                </Routes>
-            </BrowserRouter>
+            <ModalContextProvider modalContext={{ modalStatus, setModalStatus, userId, setUserId, removeUser }}>
+                <BrowserRouter>
+                    <Routes>
+                        <Route path='/' element={<DisplayUsersPage />} />
+                        <Route path='/addUser' element={<AddUserPage />} />
+                        <Route path='/editUser/:userId' element={<EditUserPage />} />
+                    </Routes>
+                </BrowserRouter>
+            </ModalContextProvider>
         </UsersContextProvider>
     );
 }
