@@ -5,6 +5,7 @@ import { Routes, Route, BrowserRouter, Navigate } from 'react-router-dom';
 import React, { Suspense, useEffect, useState } from 'react';
 import { UsersContextProvider } from './contexts/UsersContext';
 import { ModalContextProvider } from './contexts/ModalContext';
+import LoadingPage from './pages/Loading Page/LoadingPage';
 
 let demoUser1: User = new User('Narcis', 'Grecu', 'narcis.jpg', 20);
 let demoUser2: User = new User('Bogdan', 'Ciornohac', 'bogdan.jpg', 21);
@@ -35,10 +36,12 @@ function App() {
             <ModalContextProvider modalContext={{ modalStatus, setModalStatus, userId, setUserId, removeUser }}>
                 <BrowserRouter>
                     <Routes>
+                        <Route path='/loading' element={<LoadingPage />} />
+
                         <Route
                             path='/'
                             element={
-                                <Suspense fallback={<div>Loading...</div>}>
+                                <Suspense fallback={<LoadingPage />}>
                                     <DisplayUsersPage />
                                 </Suspense>
                             }
@@ -47,7 +50,7 @@ function App() {
                         <Route
                             path='/addUser'
                             element={
-                                <Suspense fallback={<div>Loading...</div>}>
+                                <Suspense fallback={<LoadingPage />}>
                                     <AddUserPage />
                                 </Suspense>
                             }
@@ -56,7 +59,7 @@ function App() {
                         <Route
                             path='/editUser/:userId'
                             element={
-                                <Suspense fallback={<div>Loading...</div>}>
+                                <Suspense fallback={<LoadingPage />}>
                                     <EditUserPage />
                                 </Suspense>
                             }
