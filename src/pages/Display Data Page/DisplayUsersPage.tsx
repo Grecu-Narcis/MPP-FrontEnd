@@ -8,13 +8,12 @@ import { UsersContext } from '../../contexts/UsersContext';
 import './DisplayUsersPage.css';
 import { DeleteUserModal } from '../../modals/DeleteUserModal';
 
-export function DisplayUsersPage() {
+export default function DisplayUsersPage() {
     document.title = 'Users dashboard!';
 
     const usersContext = useContext(UsersContext)!;
 
     let usersArray: User[] = usersContext.users;
-    const removeMethod = usersContext.removeUser;
 
     return (
         <Layout>
@@ -22,7 +21,7 @@ export function DisplayUsersPage() {
             <div className='main-page-container'>
                 <div className='users-list' data-testid='users-list'>
                     {usersArray.map((user) => (
-                        <UserCard givenUser={user} removeMethod={removeMethod} key={user.getId()} />
+                        <UserCard givenUser={user} key={user.getId()} />
                     ))}
                 </div>
             </div>

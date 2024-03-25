@@ -2,7 +2,7 @@ import '@testing-library/jest-dom';
 import { render, screen } from '@testing-library/react';
 import { BrowserRouter } from 'react-router-dom';
 import { expect, test, vi } from 'vitest';
-import { DisplayUsersPage } from '../pages/Display Data Page/DisplayUsersPage';
+import DisplayUsersPage from '../pages/Display Data Page/DisplayUsersPage';
 import { UsersContextProvider } from '../contexts/UsersContext';
 import { ModalContextProvider } from '../contexts/ModalContext';
 import { User } from '../models/User';
@@ -11,7 +11,7 @@ test('test display users page render', () => {
     render(
         <UsersContextProvider
             userContext={{
-                users: [new User('Grecu', 'Narcis', 'narcis.jpg')],
+                users: [new User('Grecu', 'Narcis', 'narcis.jpg', 20)],
                 addUser: vi.fn(),
                 removeUser: vi.fn(),
             }}

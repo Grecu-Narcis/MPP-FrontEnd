@@ -1,6 +1,6 @@
 import { forwardRef } from 'react';
 
-import { FormEntryProps } from '../../../types/FormEntryProps.types';
+import { FormEntryProps } from '../../../../types/FormEntryProps.types';
 
 import './FormEntry.css';
 
@@ -17,7 +17,6 @@ const FormEntry = forwardRef<HTMLInputElement, FormEntryProps>((props, ref) => {
                     className='form-input'
                     id={props.label}
                     placeholder={props.placeHolder}
-                    disabled={props.disabled}
                     ref={ref}
                 />
             ) : (
@@ -27,7 +26,6 @@ const FormEntry = forwardRef<HTMLInputElement, FormEntryProps>((props, ref) => {
                     className='form-input'
                     placeholder={props.defaultValue}
                     defaultValue={props.defaultValue}
-                    disabled={props.disabled}
                     ref={ref}
                 />
             )}

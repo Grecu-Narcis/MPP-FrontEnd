@@ -1,16 +1,17 @@
 import './App.css';
-import { DisplayUsersPage } from './pages/Display Data Page/DisplayUsersPage';
 import { User } from './models/User';
-import { AddUserPage } from './pages/Add User Page/AddUserPage';
 
-import { Routes, Route, BrowserRouter } from 'react-router-dom';
-import { useEffect, useState } from 'react';
+import { Routes, Route, BrowserRouter, Navigate } from 'react-router-dom';
+import React, { Suspense, useEffect, useState } from 'react';
 import { UsersContextProvider } from './contexts/UsersContext';
-import { EditUserPage } from './pages/Edit User Page/EditUserPage';
 import { ModalContextProvider } from './contexts/ModalContext';
 
-let demoUser1: User = new User('Narcis', 'Grecu', 'narcis.jpg');
-let demoUser2: User = new User('Bogdan', 'Ciornohac', 'bogdan.jpg');
+let demoUser1: User = new User('Narcis', 'Grecu', 'narcis.jpg', 20);
+let demoUser2: User = new User('Bogdan', 'Ciornohac', 'bogdan.jpg', 21);
+
+const DisplayUsersPage = React.lazy(() => import('./pages/Display Data Page/DisplayUsersPage'));
+const AddUserPage = React.lazy(() => import('./pages/Add User Page/AddUserPage'));
+const EditUserPage = React.lazy(() => import('./pages/Edit User Page/EditUserPage'));
 
 function App() {
     let [users, setUsers] = useState<User[]>([demoUser1, demoUser2]);
@@ -34,9 +35,34 @@ function App() {
             <ModalContextProvider modalContext={{ modalStatus, setModalStatus, userId, setUserId, removeUser }}>
                 <BrowserRouter>
                     <Routes>
-                        <Route path='/' element={<DisplayUsersPage />} />
-                        <Route path='/addUser' element={<AddUserPage />} />
-                        <Route path='/editUser/:userId' element={<EditUserPage />} />
+                        <Route
+                            path='/'
+                            element={
+                                <Suspense fallback={<div>Loading...</div>}>
+                                    <DisplayUsersPage />
+                                </Suspense>
+                            }
+                        />
+
+                        <Route
+                            path='/addUser'
+                            element={
+                                <Suspense fallback={<div>Loading...</div>}>
+                                    <AddUserPage />
+                                </Suspense>
+                            }
+                        />
+
+                        <Route
+                            path='/editUser/:userId'
+                            element={
+                                <Suspense fallback={<div>Loading...</div>}>
+                                    <EditUserPage />
+                                </Suspense>
+                            }
+                        />
+
+                        <Route path='*' element={<Navigate to={'/'} />} />
                     </Routes>
                 </BrowserRouter>
             </ModalContextProvider>

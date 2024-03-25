@@ -1,7 +1,7 @@
 import '@testing-library/jest-dom';
 import { fireEvent, render, screen } from '@testing-library/react';
 import { expect, test, vi } from 'vitest';
-import { AddUserPage } from '../pages/Add User Page/AddUserPage';
+import AddUserPage from '../pages/Add User Page/AddUserPage';
 import { BrowserRouter } from 'react-router-dom';
 import { UsersContextProvider } from '../contexts/UsersContext';
 
@@ -71,6 +71,7 @@ test('test add user page add button with form data', () => {
     const firstNameFormInput = screen.getByLabelText('First Name');
     const lastNameFormInput = screen.getByLabelText('Last Name');
     const urlFormInput = screen.getByLabelText('URL');
+    const ageFormInput = screen.getByLabelText('Age');
 
     fireEvent.change(firstNameFormInput, {
         target: {
@@ -87,6 +88,12 @@ test('test add user page add button with form data', () => {
     fireEvent.change(urlFormInput, {
         target: {
             value: 'narcis.png',
+        },
+    });
+
+    fireEvent.change(ageFormInput, {
+        target: {
+            value: 20,
         },
     });
 

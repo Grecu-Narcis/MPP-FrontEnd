@@ -6,12 +6,12 @@ import React from 'react';
 import { User } from '../models/User';
 
 test('testing rendering of user form without user', () => {
-    let idInput = React.createRef<HTMLInputElement>();
+    let ageInput = React.createRef<HTMLInputElement>();
     let firstNameInput = React.createRef<HTMLInputElement>();
     let lastNameInput = React.createRef<HTMLInputElement>();
     let urlInput = React.createRef<HTMLInputElement>();
 
-    render(<UserForm idInput={idInput} firstNameInput={firstNameInput} lastNameInput={lastNameInput} urlInput={urlInput} />);
+    render(<UserForm firstNameInput={firstNameInput} lastNameInput={lastNameInput} ageInput={ageInput} urlInput={urlInput} />);
 
     const renderedUserForm = screen.getByTestId('user-form');
     const firstNameFormInput = screen.getByPlaceholderText('First Name');
@@ -25,19 +25,19 @@ test('testing rendering of user form without user', () => {
 });
 
 test('testing rendering of user form with user', () => {
-    let idInput = React.createRef<HTMLInputElement>();
+    let ageInput = React.createRef<HTMLInputElement>();
     let firstNameInput = React.createRef<HTMLInputElement>();
     let lastNameInput = React.createRef<HTMLInputElement>();
     let urlInput = React.createRef<HTMLInputElement>();
 
-    let demoUser = new User('Grecu', 'Narcis', 'narcis.jpg');
+    let demoUser = new User('Grecu', 'Narcis', 'narcis.jpg', 20);
 
     render(
         <UserForm
-            idInput={idInput}
             firstNameInput={firstNameInput}
             lastNameInput={lastNameInput}
             urlInput={urlInput}
+            ageInput={ageInput}
             givenUser={demoUser}
         />,
     );

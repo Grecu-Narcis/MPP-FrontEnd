@@ -3,10 +3,11 @@ export class User {
     private firstName: string;
     private lastName: string;
     private pictureUrl: string;
+    private age: number;
 
     private static lastUsedId: number = 0;
 
-    public constructor(firstName: string, lastName: string, pictureUrl: string)
+    public constructor(firstName: string, lastName: string, pictureUrl: string, age: number)
     {
         User.lastUsedId += 1;
         
@@ -14,6 +15,7 @@ export class User {
         this.firstName = firstName;
         this.lastName = lastName;
         this.pictureUrl = pictureUrl;
+        this.age = age;
     }
 
     public getId(): number {
@@ -46,5 +48,13 @@ export class User {
 
     public setPictureUrl(newPictureUrl: string) {
         this.pictureUrl = newPictureUrl;
+    }
+
+    public getAge(): number {
+        return this.age;
+    }
+
+    public setAge(newAge: number): void {
+        this.age = newAge;
     }
 }

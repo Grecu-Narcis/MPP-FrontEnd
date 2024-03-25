@@ -14,31 +14,33 @@ function handleOnClick(
     firstNameInput: React.RefObject<HTMLInputElement>,
     lastNameInput: React.RefObject<HTMLInputElement>,
     urlInput: React.RefObject<HTMLInputElement>,
+    ageInput: React.RefObject<HTMLInputElement>,
 ): User {
-    if (!firstNameInput.current!.value || !lastNameInput.current!.value || !urlInput.current!.value)
+    if (!firstNameInput.current!.value || !lastNameInput.current!.value || !urlInput.current!.value || !ageInput.current!.value)
         throw new Error('You must provide values for each field!');
 
     const userFirstName: string = firstNameInput.current!.value,
         userLastName: string = lastNameInput.current!.value,
-        userUrl: string = urlInput.current!.value;
+        userUrl: string = urlInput.current!.value,
+        age: number = parseInt(ageInput.current!.value);
 
-    return new User(userFirstName, userLastName, userUrl);
+    return new User(userFirstName, userLastName, userUrl, age);
 }
 
-export function AddUserPage() {
+export default function AddUserPage() {
     document.title = 'Add user';
 
-    const idInput = useRef<HTMLInputElement>(null);
     const firstNameInput = useRef<HTMLInputElement>(null);
     const lastNameInput = useRef<HTMLInputElement>(null);
     const urlInput = useRef<HTMLInputElement>(null);
+    const ageInput = useRef<HTMLInputElement>(null);
 
     const navigate = useNavigate();
     const usersContext = useContext(UsersContext)!;
 
     const handleOnClickWrapper = () => {
         try {
-            const inputUser = handleOnClick(firstNameInput, lastNameInput, urlInput);
+            const inputUser = handleOnClick(firstNameInput, lastNameInput, urlInput, ageInput);
             usersContext.addUser(inputUser);
             navigate('/');
         } catch (error) {
@@ -52,10 +54,10 @@ export function AddUserPage() {
                 <div className='main-title'>Add user</div>
 
                 <UserForm
-                    idInput={idInput}
                     firstNameInput={firstNameInput}
                     lastNameInput={lastNameInput}
                     urlInput={urlInput}
+                    ageInput={ageInput}
                     data-testid='user-form'
                 />
 

@@ -1,6 +1,6 @@
 import { User } from '../../../models/User';
 import { UserFormType } from '../../../types/UserFormProps.types';
-import { FormEntry } from '../Form Entry/FormEntry';
+import { FormEntry } from './Form Entry/FormEntry';
 
 import './UserForm.css';
 
@@ -9,7 +9,6 @@ type FormEntryType = {
     ref: React.RefObject<HTMLInputElement>;
     placeHolder: string;
     defaultValue: string;
-    disabled: boolean;
 };
 
 function setFormEntriesForUser(formEntries: FormEntryType[], givenUser: User | undefined) {
@@ -20,6 +19,7 @@ function setFormEntriesForUser(formEntries: FormEntryType[], givenUser: User | u
         formEntries[0].defaultValue = givenUser.getFirstName();
         formEntries[1].defaultValue = givenUser.getLastName();
         formEntries[2].defaultValue = givenUser.getPictureUrl();
+        formEntries[3].defaultValue = givenUser.getAge().toString();
         // formEntries[3].defaultValue = givenUser.getPictureUrl();
     }
 
@@ -29,9 +29,10 @@ function setFormEntriesForUser(formEntries: FormEntryType[], givenUser: User | u
 function createFormEntries(props: UserFormType) {
     let formEntries = [
         // { label: 'ID', ref: props.idInput, placeHolder: 'ID', defaultValue: '', disabled: false },
-        { label: 'First Name', ref: props.firstNameInput, placeHolder: 'First Name', defaultValue: '', disabled: false },
-        { label: 'Last Name', ref: props.lastNameInput, placeHolder: 'Last Name', defaultValue: '', disabled: false },
-        { label: 'URL', ref: props.urlInput, placeHolder: 'URL', defaultValue: '', disabled: false },
+        { label: 'First Name', ref: props.firstNameInput, placeHolder: 'First Name', defaultValue: '' },
+        { label: 'Last Name', ref: props.lastNameInput, placeHolder: 'Last Name', defaultValue: '' },
+        { label: 'URL', ref: props.urlInput, placeHolder: 'URL', defaultValue: '' },
+        { label: 'Age', ref: props.ageInput, placeHolder: 'Age', defaultValue: '' },
     ];
 
     formEntries = setFormEntriesForUser(formEntries, props.givenUser);
@@ -52,7 +53,6 @@ export function UserForm(props: UserFormType) {
                         label={entry.placeHolder}
                         placeHolder={entry.placeHolder}
                         defaultValue={entry.defaultValue}
-                        disabled={entry.disabled}
                     />
                 ))}
             </form>

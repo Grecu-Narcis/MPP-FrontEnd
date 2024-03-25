@@ -39,9 +39,9 @@ export function UserCard({ givenUser }: UserCardPropsType) {
                 </div>
 
                 <div className='user-info'>
-                    {/* <div className='user-id'>ID: {givenUser.getId()}</div> */}
                     <div className='first-name'>First Name: {givenUser.getFirstName()}</div>
                     <div className='last-name'>Last Name: {givenUser.getLastName()}</div>
+                    <div className='age'>Age: {givenUser.getAge()}</div>
                 </div>
             </div>
         </div>

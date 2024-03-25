@@ -7,28 +7,32 @@ import { User } from '../../models/User';
 import { useContext, useEffect, useRef } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 
+import './EditUserPage.css';
+
 function handleOnClick(
     firstNameInput: React.RefObject<HTMLInputElement>,
     lastNameInput: React.RefObject<HTMLInputElement>,
     urlInput: React.RefObject<HTMLInputElement>,
+    ageInput: React.RefObject<HTMLInputElement>,
 ) {
-    if (!firstNameInput.current!.value || !lastNameInput.current!.value || !urlInput.current!.value)
+    if (!firstNameInput.current!.value || !lastNameInput.current!.value || !urlInput.current!.value || !ageInput.current!.value)
         throw new Error('You must provide values for each field!');
 
     const userFirstName: string = firstNameInput.current!.value,
         userLastName: string = lastNameInput.current!.value,
-        userUrl: string = urlInput.current!.value;
+        userUrl: string = urlInput.current!.value,
+        age: number = parseInt(ageInput.current!.value);
 
-    return new User(userFirstName, userLastName, userUrl);
+    return new User(userFirstName, userLastName, userUrl, age);
 }
 
-export function EditUserPage() {
+export default function EditUserPage() {
     document.title = 'Edit User';
 
-    const idInput = useRef<HTMLInputElement>(null);
     const firstNameInput = useRef<HTMLInputElement>(null);
     const lastNameInput = useRef<HTMLInputElement>(null);
     const urlInput = useRef<HTMLInputElement>(null);
+    const ageInput = useRef<HTMLInputElement>(null);
 
     const navigate = useNavigate();
     const usersContext = useContext(UsersContext)!;
@@ -43,7 +47,7 @@ export function EditUserPage() {
 
     const handleOnClickWrapper = () => {
         try {
-            const newUser = handleOnClick(firstNameInput, lastNameInput, urlInput);
+            const newUser = handleOnClick(firstNameInput, lastNameInput, urlInput, ageInput);
             usersContext.removeUser(givenUser!.getId());
             usersContext.addUser(newUser);
 
@@ -53,14 +57,18 @@ export function EditUserPage() {
         }
     };
 
+    const profileImagePath = '../assets/' + givenUser?.getPictureUrl();
+
     return (
         <Layout>
             <div className='main-page-container'>
+                <img src={profileImagePath} alt='profile image' id='profile-picture' />
+
                 <UserForm
-                    idInput={idInput}
                     firstNameInput={firstNameInput}
                     lastNameInput={lastNameInput}
                     urlInput={urlInput}
+                    ageInput={ageInput}
                     givenUser={givenUser}
                 />
 
