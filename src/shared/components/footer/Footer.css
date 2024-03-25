@@ -10,3 +10,8 @@
     padding: 10px;
     line-height: 1;
 }
+
+#footer-text {
+    font-weight: bold;
+    font-size: 14pt;
+}

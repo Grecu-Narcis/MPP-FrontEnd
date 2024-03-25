@@ -20,6 +20,12 @@ const Header = () => {
                             Add user
                         </Link>
                     </div>
+
+                    <div>
+                        <Link to='/chart' className='link'>
+                            Chart
+                        </Link>
+                    </div>
                 </div>
             </nav>
         </div>
