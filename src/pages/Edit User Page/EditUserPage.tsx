@@ -1,15 +1,17 @@
-import { UsersContext } from '../../contexts/UsersContext';
 import { UserForm } from '../../features/CRUD Operations/User Form/UserForm';
 import { Layout } from '../../shared/components/layout/Layout';
 import { Button } from '../../shared/components/button/Button';
 import { User } from '../../models/User';
 
-import { useContext, useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 
 import './EditUserPage.css';
+import LoadingPage from '../Loading Page/LoadingPage';
+import { getUserById, updateUser } from '../../services/Users Service/UsersService';
 
 function handleOnClick(
+    givenUser: User,
     firstNameInput: React.RefObject<HTMLInputElement>,
     lastNameInput: React.RefObject<HTMLInputElement>,
     urlInput: React.RefObject<HTMLInputElement>,
@@ -23,7 +25,7 @@ function handleOnClick(
         userUrl: string = urlInput.current!.value,
         age: number = parseInt(ageInput.current!.value);
 
-    return new User(userFirstName, userLastName, userUrl, age);
+    return new User(givenUser.getId(), userFirstName, userLastName, userUrl, age);
 }
 
 export default function EditUserPage() {
@@ -34,30 +36,37 @@ export default function EditUserPage() {
     const urlInput = useRef<HTMLInputElement>(null);
     const ageInput = useRef<HTMLInputElement>(null);
 
-    const navigate = useNavigate();
-    const usersContext = useContext(UsersContext)!;
+    let [givenUser, setGivenUser] = useState<User>();
+    let [isLoading, setIsLoading] = useState<boolean>(true);
 
+    const navigate = useNavigate();
     const { userId } = useParams();
 
-    const givenUser = usersContext.users.find((user: User) => user.getId() === parseInt(userId!));
+    useEffect(() => {
+        getUserById(userId!).then((foundUser: User) => {
+            setGivenUser(foundUser);
+            setIsLoading(false);
+        });
+    }, []);
 
     useEffect(() => {
+        if (isLoading) return;
         if (!givenUser) navigate('/');
     });
 
     const handleOnClickWrapper = () => {
         try {
-            const newUser = handleOnClick(firstNameInput, lastNameInput, urlInput, ageInput);
-            usersContext.removeUser(givenUser!.getId());
-            usersContext.addUser(newUser);
+            const newUser: User = handleOnClick(givenUser!, firstNameInput, lastNameInput, urlInput, ageInput);
 
-            navigate('/');
+            updateUser(newUser).then(() => navigate('/'));
         } catch (error) {
             alert(error);
         }
     };
 
     const profileImagePath = '../assets/' + givenUser?.getPictureUrl();
+
+    if (isLoading) return <LoadingPage />;
 
     return (
         <Layout>

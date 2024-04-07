@@ -5,7 +5,7 @@ import { ReactNode } from "react";
 export type UsersContextType = {
     users: User[];
     addUser: (user: User) => void;
-    removeUser: (userId: number) => void;
+    removeUser: (userId: string) => void;
 };
 
 export type UsersContextProviderType = {

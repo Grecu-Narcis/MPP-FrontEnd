@@ -1,28 +1,25 @@
 export class User {
-    private id: number;
+    private id: string;
     private firstName: string;
     private lastName: string;
     private pictureUrl: string;
     private age: number;
 
-    private static lastUsedId: number = 0;
 
-    public constructor(firstName: string, lastName: string, pictureUrl: string, age: number)
+    public constructor(id:string, firstName: string, lastName: string, pictureUrl: string, age: number)
     {
-        User.lastUsedId += 1;
-        
-        this.id = User.lastUsedId;
+        this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
         this.pictureUrl = pictureUrl;
         this.age = age;
     }
 
-    public getId(): number {
+    public getId(): string {
         return this.id;
     }
 
-    public setId(newId: number) {
+    public setId(newId: string) {
         this.id = newId;
     }
 
