@@ -27,7 +27,7 @@ export async function getAllUsers() {
 
 export async function getUsersPage(requiredPage: number, isAscending: boolean, pageSize: number = 3) {
     try {
-    let response = await axios.get(apiEndPoint + '/getPage/?page=' + requiredPage + "&isAscending=" + isAscending + "&pageSize=" + pageSize);
+    let response = await axios.get(apiEndPoint + '/getPage?page=' + requiredPage + "&isAscending=" + isAscending + "&pageSize=" + pageSize);
     let users: User[] = [];
 
     response.data.forEach((currentUser: UserDTO) => {
