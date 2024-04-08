@@ -5,5 +5,5 @@ export type PagingContextProps = {
     setCurrentUsers: (newUsers: User[]) => void,
     currentPage: number,
     setCurrentPage: (newPage: number) => void,
-    pageSize: number
+    pageSize: number,
 }

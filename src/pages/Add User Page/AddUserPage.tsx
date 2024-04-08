@@ -1,30 +1,34 @@
 import { UserForm } from '../../features/CRUD Operations/User Form/UserForm';
 import { Layout } from '../../shared/components/layout/Layout';
 import { Button } from '../../shared/components/button/Button';
-import { User } from '../../models/User';
 
-import { useRef, useContext } from 'react';
+import { useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import { UsersContext } from '../../contexts/UsersContext';
-
 import './AddUserPage.css';
+import { UserDTO } from '../../types/UserDTO.types';
+import { addUser } from '../../services/Users Service/UsersService';
 
 function handleOnClick(
     firstNameInput: React.RefObject<HTMLInputElement>,
     lastNameInput: React.RefObject<HTMLInputElement>,
     urlInput: React.RefObject<HTMLInputElement>,
     ageInput: React.RefObject<HTMLInputElement>,
-): User {
+): UserDTO {
     if (!firstNameInput.current!.value || !lastNameInput.current!.value || !urlInput.current!.value || !ageInput.current!.value)
         throw new Error('You must provide values for each field!');
 
-    const userFirstName: string = firstNameInput.current!.value,
-        userLastName: string = lastNameInput.current!.value,
-        userUrl: string = urlInput.current!.value,
+    const firstName: string = firstNameInput.current!.value,
+        lastName: string = lastNameInput.current!.value,
+        pictureUrl: string = urlInput.current!.value,
         age: number = parseInt(ageInput.current!.value);
 
-    return new User(userFirstName, userLastName, userUrl, age);
+    return {
+        firstName,
+        lastName,
+        pictureUrl,
+        age,
+    };
 }
 
 export default function AddUserPage() {
@@ -36,12 +40,14 @@ export default function AddUserPage() {
     const ageInput = useRef<HTMLInputElement>(null);
 
     const navigate = useNavigate();
-    const usersContext = useContext(UsersContext)!;
+    // const usersContext = useContext(UsersContext)!;
 
     const handleOnClickWrapper = () => {
         try {
             const inputUser = handleOnClick(firstNameInput, lastNameInput, urlInput, ageInput);
-            usersContext.addUser(inputUser);
+
+            addUser(inputUser).then(() => navigate('/'));
+            // usersContext.addUser(inputUser);
             navigate('/');
         } catch (error) {
             alert(error);

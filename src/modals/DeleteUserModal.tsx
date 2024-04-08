@@ -4,6 +4,7 @@ import { Button } from '../shared/components/button/Button';
 import { ModalContext } from '../contexts/ModalContext';
 
 import './DeleteUserModal.css';
+import { deleteUser } from '../services/Users Service/UsersService';
 
 export const DeleteUserModal = () => {
     const modalContext = useContext(ModalContext)!;
@@ -13,8 +14,10 @@ export const DeleteUserModal = () => {
     const userId = modalContext.userId;
 
     const handleYesClick = () => {
-        setModalStatus(false);
-        removeUser(userId);
+        deleteUser(userId).then(() => {
+            setModalStatus(false);
+            removeUser(userId);
+        });
     };
 
     return (
