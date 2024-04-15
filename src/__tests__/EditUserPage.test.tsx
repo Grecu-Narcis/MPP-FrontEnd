@@ -3,7 +3,7 @@ import { MemoryRouter, Route, Routes } from 'react-router-dom';
 import { expect, test, vi } from 'vitest';
 import { UsersContextProvider } from '../contexts/UsersContext';
 
-import { User } from '../models/User';
+import { User } from '../models/user';
 import EditUserPage from '../pages/Edit User Page/EditUserPage';
 
 const { mockedUseNavigate } = vi.hoisted(() => {
@@ -26,7 +26,7 @@ test('test rendering of edit user page', () => {
     render(
         <UsersContextProvider
             userContext={{
-                users: [new User('Grecu', 'Narcis', 'narcis.jpg', 20)],
+                users: [new User(2, 'Grecu', 'Narcis', 'narcis.jpg', 20)],
                 addUser: vi.fn(),
                 removeUser: vi.fn(),
             }}
@@ -47,7 +47,7 @@ test('test rendering of edit user page with invalid userId', () => {
     render(
         <UsersContextProvider
             userContext={{
-                users: [new User('Grecu', 'Narcis', 'narcis.jpg', 20)],
+                users: [new User(2, 'Grecu', 'Narcis', 'narcis.jpg', 20)],
                 addUser: vi.fn(),
                 removeUser: vi.fn(),
             }}
@@ -70,7 +70,7 @@ test('test rendering of submit form', () => {
     render(
         <UsersContextProvider
             userContext={{
-                users: [new User('Grecu', 'Narcis', 'narcis.jpg', 20)],
+                users: [new User(2, 'Grecu', 'Narcis', 'narcis.jpg', 20)],
                 addUser: mockAddUser,
                 removeUser: mockRemoveUser,
             }}
@@ -96,7 +96,7 @@ test('test submit with empty field', () => {
     render(
         <UsersContextProvider
             userContext={{
-                users: [new User('Grecu', 'Narcis', 'narcis.jpg', 20)],
+                users: [new User(2, 'Grecu', 'Narcis', 'narcis.jpg', 20)],
                 addUser: vi.fn(),
                 removeUser: vi.fn(),
             }}

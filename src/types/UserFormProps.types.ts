@@ -1,4 +1,4 @@
-import { User } from "../models/User";
+import { User } from "../models/user";
 
 export type UserFormType = {
     firstNameInput: React.RefObject<HTMLInputElement>;

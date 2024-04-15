@@ -1,0 +1,23 @@
+.main-content {
+    flex: 1;
+    display: flex;
+    flex-flow: column wrap;
+    align-items: center;
+}
+
+.cars-list {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+}
+
+@media screen and (max-width: 768px) {
+    .cars-list {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .cars-list {
+        grid-template-columns: 1fr;
+    }
+}

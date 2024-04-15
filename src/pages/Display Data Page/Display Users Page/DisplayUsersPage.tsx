@@ -1,15 +1,15 @@
 import { useEffect, useState } from 'react';
 
-import { User } from '../../models/User';
-import { UserCard } from '../../features/Display Users/UserCard';
-import { Layout } from '../../shared/components/layout/Layout';
+import { User } from '../../../models/user';
+import { UserCard } from '../../../features/Display Users/UserCard';
+import { Layout } from '../../../shared/components/layout/Layout';
 
-import { DeleteUserModal } from '../../modals/DeleteUserModal';
-import { Button } from '../../shared/components/button/Button';
+import { DeleteUserModal } from '../../../modals/DeleteUserModal';
+import { Button } from '../../../shared/components/button/Button';
 
-import { checkServerStatus, getUsersCount, getUsersPage } from '../../services/Users Service/UsersService';
-import LoadingPage from '../Loading Page/LoadingPage';
-import { ModalContextProvider } from '../../contexts/ModalContext';
+import { checkServerStatus, getUsersCount, getUsersPage } from '../../../services/Users Service/UsersService';
+import LoadingPage from '../../Loading Page/LoadingPage';
+import { ModalContextProvider } from '../../../contexts/ModalContext';
 
 import './DisplayUsersPage.css';
 
@@ -25,7 +25,7 @@ export default function DisplayUsersPage() {
     let [currentUsers, setCurrentUsers] = useState<User[]>([]);
 
     let [modalStatus, setModalStatus] = useState<boolean>(false);
-    let [userId, setUserId] = useState<string>('');
+    let [userId, setUserId] = useState<number>(0);
 
     let [scrollPosition, setScrollPosition] = useState<number>(0);
     let [isOnline, setIsOnline] = useState<boolean>(navigator.onLine);
@@ -45,7 +45,6 @@ export default function DisplayUsersPage() {
     const handleShowMore = () => {
         setIsLoading(true);
 
-        handleScroll();
         getUsersPage(currentPage, isAscending)
             .then((nextPage) => {
                 if (nextPage.length === 0) {
@@ -80,15 +79,21 @@ export default function DisplayUsersPage() {
 
     // load first time
     useEffect(() => {
+        window.addEventListener('scroll', handleScroll);
         getUsersPage(0, isAscending)
             .then((loadedPage) => {
                 setCurrentUsers(loadedPage);
-                setIsLoading(false);
+                // setIsLoading(false);
             })
             .catch((error) => {
                 console.log('eroare');
                 console.log(error);
             });
+
+        getUsersCount().then((result) => {
+            setUsersCount(result);
+            setIsLoading(false);
+        });
 
         setInterval(() => {
             setIsOnline(navigator.onLine);
@@ -104,6 +109,7 @@ export default function DisplayUsersPage() {
 
     // test for show more button if it needs to be disabled
     useEffect(() => {
+        console.log(scrollPosition);
         if (isLoading) return;
         if (currentUsers.length === usersCount) setShowNext(false);
 

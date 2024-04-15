@@ -4,6 +4,7 @@ import { UserCardPropsType } from '../../types/UserCardProps.types';
 import './UserCard.css';
 import { useContext } from 'react';
 import { ModalContext } from '../../contexts/ModalContext';
+import { Button } from '../../shared/components/button/Button';
 
 export function UserCard({ givenUser }: UserCardPropsType) {
     let path: string = 'assets/' + givenUser.getPictureUrl();
@@ -12,6 +13,13 @@ export function UserCard({ givenUser }: UserCardPropsType) {
 
     const handleCardOnClick = () => {
         navigate('/editUser/' + givenUser.getId());
+    };
+
+    const handleViewCarsClick = (event: any) => {
+        event.stopPropagation();
+        event.preventDefault();
+        console.log('View cars button clicked');
+        navigate('/cars/' + givenUser.getId());
     };
 
     const modalContext = useContext(ModalContext)!;
@@ -44,6 +52,8 @@ export function UserCard({ givenUser }: UserCardPropsType) {
                     <div className='age'>Age: {givenUser.getAge()}</div>
                 </div>
             </div>
+
+            <Button type='button' buttonMessage='View cars' onClick={handleViewCarsClick} />
         </div>
     );
 }

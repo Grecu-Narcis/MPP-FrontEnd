@@ -1,7 +1,7 @@
 import { UserForm } from '../../features/CRUD Operations/User Form/UserForm';
 import { Layout } from '../../shared/components/layout/Layout';
 import { Button } from '../../shared/components/button/Button';
-import { User } from '../../models/User';
+import { User } from '../../models/user';
 
 import { useEffect, useRef, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
@@ -57,8 +57,11 @@ export default function EditUserPage() {
     const handleOnClickWrapper = () => {
         try {
             const newUser: User = handleOnClick(givenUser!, firstNameInput, lastNameInput, urlInput, ageInput);
-
-            updateUser(newUser).then(() => navigate('/'));
+            setIsLoading(true);
+            updateUser(newUser).then(() => {
+                setIsLoading(false);
+                navigate('/');
+            });
         } catch (error) {
             alert(error);
         }

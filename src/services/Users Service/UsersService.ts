@@ -1,10 +1,10 @@
 import axios from "axios";
-import { User } from "../../models/User";
+import { User } from "../../models/user";
 import { UserDTO } from "../../types/UserDTO.types";
 
 const apiEndPoint = 'http://localhost:8080/api/users';
 
-function convertDtoToUser(userToConvert: UserDTO) {
+export function convertDtoToUser(userToConvert: UserDTO) {
     return new User(userToConvert.id!, userToConvert.firstName, userToConvert.lastName, userToConvert.pictureUrl, userToConvert.age);
 }
 
@@ -53,7 +53,6 @@ export async function addUser(userToAdd: UserDTO) {
     await axios.post(apiEndPoint + '/addUser', {
         ...userToAdd
     });
-    
 }
 
 export async function updateUser(userToUpdate: User) {
@@ -62,7 +61,7 @@ export async function updateUser(userToUpdate: User) {
     });
 }
 
-export async function deleteUser(userId: string) {
+export async function deleteUser(userId: number) {
     await axios.delete(apiEndPoint + '/delete/' + userId);
 }
 
