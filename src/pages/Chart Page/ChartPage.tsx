@@ -3,6 +3,8 @@ import { UsersContext } from '../../contexts/UsersContext';
 import { BarChart } from '@mui/x-charts';
 import { Layout } from '../../shared/components/layout/Layout';
 
+import './ChartPage.css';
+
 export default function ChartPage() {
     const usersContext = useContext(UsersContext)!;
     const usersList = usersContext.users;
@@ -15,6 +17,12 @@ export default function ChartPage() {
     });
 
     console.log(ageMap);
+    if (ageMap.size === 0)
+        return (
+            <Layout>
+                <div className='main-page-content'>No users to display</div>
+            </Layout>
+        );
 
     return (
         <Layout>

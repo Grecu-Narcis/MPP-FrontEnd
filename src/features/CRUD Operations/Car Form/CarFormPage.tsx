@@ -31,8 +31,8 @@ export function CarForm() {
     const { carId } = useParams();
     const navigate = useNavigate();
 
-    let [givenCar, setGivenCar] = useState<Car>();
-    let [isLoading, setIsLoading] = useState<boolean>(true);
+    const [givenCar, setGivenCar] = useState<Car>();
+    const [isLoading, setIsLoading] = useState<boolean>(true);
 
     if (carId === undefined) {
         navigate('/');

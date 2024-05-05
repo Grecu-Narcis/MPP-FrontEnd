@@ -89,25 +89,3 @@ export class Car {
         return 'Car: ' + this.id + ' ' + this.brand + ' ' + this.model + ' ' + this.year + ' ' + this.price + ' ' + this.pictureUrl + ' ' + this.mileage + ' ' + this.fuelType;
     }
 }
-
-// @Column(name = "id", updatable = false)
-//     private Long id;
-
-//     @Column(name = "brand", nullable = false, length = 50)
-//     private String brand;
-
-//     @Column(name = "model", nullable = false, length = 50)
-//     private String model;
-
-//     @Column(name = "year", nullable = false)
-//     private int year;
-
-
-//     @Column(name = "price", nullable = false)
-//     private int price;
-
-//     @Column(name = "picture_url", nullable = false, columnDefinition = "TEXT")
-//     private String pictureUrl;
-
-//     @Column(name = "license_plate", nullable = false, length = 50)
-//     private String licensePlate;

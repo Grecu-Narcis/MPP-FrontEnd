@@ -5,34 +5,42 @@ import { CarCard } from '../../../features/Display Cars/CarCard';
 
 import './DisplayCarsPage.css';
 import { Layout } from '../../../shared/components/layout/Layout';
-import { getAllCarsByOwnerId } from '../../../services/Cars Service/CarsService';
+import { getCarsCountByOwnerId, getPageOfCarsByOwnerId } from '../../../services/Cars Service/CarsService';
 import { User } from '../../../models/user';
 import { getUserById } from '../../../services/Users Service/UsersService';
 import LoadingPage from '../../Loading Page/LoadingPage';
+import InfiniteScroll from 'react-infinite-scroll-component';
 
 export function DisplayCarsPage() {
-    let [cars, setCars] = useState<Car[]>([
-        // new Car(1, 'Audi', 'A4', 2018, 20000, 'audi-a4.jpg', 10000, 'Diesel'),
-        // new Car(2, 'BMW', 'X6', 2019, 30000, 'bmw-x6.jpg', 20000, 'Gasoline'),
-        // new Car(3, 'Mercedes', 'C180', 2017, 15000, 'mercedes-c180.jpg', 30000, 'Diesel'),
-        // new Car(4, 'Seat', 'Ibiza', 2011, 5499, 'seat-ibiza.jpg', 295345, 'Diesel'),
-        // new Car(5, 'Ford', 'Mustang', 2015, 10000, 'mustang.jpg', 40000, 'Gasoline'),
-        // new Car(6, 'Mazda', 'Miata', 2022, 5235, 'miata.jpg', 5234, 'Gasoline'),
-        // new Car(7, 'Volkswagen', 'Golf', 2022, 30000, 'golf.jpg', 20000, 'Gasoline'),
-        // new Car(4, 'Ford', 'Focus', 2015, 10000, 'ford-focus.jpg', 40000, 'Gasoline'),
-    ]);
-    let [isLoadingCars, setIsLoadingCars] = useState<boolean>(true);
-    let [isLoadingUser, setIsLoadingUser] = useState<boolean>(true);
+    const [cars, setCars] = useState<Car[]>([]);
 
-    let [user, setUser] = useState<User>();
+    const [isLoadingCars, setIsLoadingCars] = useState<boolean>(true);
+    const [isLoadingUser, setIsLoadingUser] = useState<boolean>(true);
+    const [carsTotal, setCarsTotal] = useState<number>(0);
+
+    const [pageNumber, setPageNumber] = useState<number>(0);
+
+    const [user, setUser] = useState<User>();
 
     const { userId } = useParams();
     if (userId === undefined) return;
 
+    const fetchCars = () => {
+        getPageOfCarsByOwnerId(parseInt(userId), pageNumber, 50).then((response) => {
+            setCars([...cars, ...response]);
+            setPageNumber(pageNumber + 1);
+        });
+    };
+
     useEffect(() => {
-        getAllCarsByOwnerId(parseInt(userId)).then((response) => {
+        getPageOfCarsByOwnerId(parseInt(userId), pageNumber, 50).then((response) => {
             setCars(response);
             setIsLoadingCars(false);
+            setPageNumber(pageNumber + 1);
+        });
+
+        getCarsCountByOwnerId(parseInt(userId)).then((response) => {
+            setCarsTotal(response);
         });
 
         getUserById(userId).then((response) => {
@@ -47,10 +55,21 @@ export function DisplayCarsPage() {
         <Layout>
             <div className='main-content'>
                 <h1>Hi, {user?.getFirstName() + ' ' + user?.getLastName()}</h1>
+                <h2>
+                    {carsTotal == 0 ? "You don't have any cars" : carsTotal === 1 ? 'You have one car.' : `You have ${carsTotal} cars.`}
+                </h2>
                 <div className='cars-list'>
-                    {cars.map((car) => (
-                        <CarCard key={car.getId()} givenCar={car} />
-                    ))}
+                    <InfiniteScroll
+                        dataLength={cars.length}
+                        next={fetchCars}
+                        hasMore={carsTotal > cars.length}
+                        loader={<h4>Loading...</h4>}
+                        className='infinite-scroll-grid'
+                    >
+                        {cars.map((car) => (
+                            <CarCard key={car.getId()} givenCar={car} />
+                        ))}
+                    </InfiniteScroll>
                 </div>
             </div>
         </Layout>

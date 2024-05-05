@@ -97,7 +97,7 @@ test('test modal click modal overlay', () => {
         </ModalContextProvider>,
     );
 
-    let modalOverlay = screen.getByTestId('modal-overlay-test');
+    const modalOverlay = screen.getByTestId('modal-overlay-test');
 
     fireEvent.click(modalOverlay);
 

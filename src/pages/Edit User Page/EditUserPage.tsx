@@ -9,6 +9,9 @@ import { useNavigate, useParams } from 'react-router-dom';
 import './EditUserPage.css';
 import LoadingPage from '../Loading Page/LoadingPage';
 import { getUserById, updateUser } from '../../services/Users Service/UsersService';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faRightLeft } from '@fortawesome/free-solid-svg-icons';
+import { getImageByUserId, saveImage } from '../../services/Images Service/ImagesService';
 
 function handleOnClick(
     givenUser: User,
@@ -31,13 +34,16 @@ function handleOnClick(
 export default function EditUserPage() {
     document.title = 'Edit User';
 
+    const [profileImage, setProfileImage] = useState<File | string | undefined>();
+
     const firstNameInput = useRef<HTMLInputElement>(null);
     const lastNameInput = useRef<HTMLInputElement>(null);
     const urlInput = useRef<HTMLInputElement>(null);
     const ageInput = useRef<HTMLInputElement>(null);
+    const imageInput = useRef<HTMLInputElement>(null);
 
-    let [givenUser, setGivenUser] = useState<User>();
-    let [isLoading, setIsLoading] = useState<boolean>(true);
+    const [givenUser, setGivenUser] = useState<User>();
+    const [isLoading, setIsLoading] = useState<boolean>(true);
 
     const navigate = useNavigate();
     const { userId } = useParams();
@@ -47,6 +53,10 @@ export default function EditUserPage() {
             setGivenUser(foundUser);
             setIsLoading(false);
         });
+
+        getImageByUserId(parseInt(userId!)).then((image: string) => {
+            setProfileImage('data:image/jpeg;base64,' + image);
+        });
     }, []);
 
     useEffect(() => {
@@ -54,10 +64,21 @@ export default function EditUserPage() {
         if (!givenUser) navigate('/');
     });
 
+    const handleImageUpload = (event: any) => {
+        if (!event.target.files[0]) return;
+        setProfileImage(event.target.files[0]);
+        console.log(event.target.files[0]);
+    };
+
     const handleOnClickWrapper = () => {
         try {
             const newUser: User = handleOnClick(givenUser!, firstNameInput, lastNameInput, urlInput, ageInput);
             setIsLoading(true);
+
+            if (profileImage instanceof File) {
+                saveImage(profileImage, parseInt(userId!));
+            }
+
             updateUser(newUser).then(() => {
                 setIsLoading(false);
                 navigate('/');
@@ -67,14 +88,25 @@ export default function EditUserPage() {
         }
     };
 
-    const profileImagePath = '../assets/' + givenUser?.getPictureUrl();
-
     if (isLoading) return <LoadingPage />;
 
     return (
         <Layout>
             <div className='main-page-container'>
-                <img src={profileImagePath} alt='profile image' id='profile-picture' />
+                <label htmlFor='profile-image' className='profile-image-label'>
+                    <img
+                        src={
+                            profileImage === undefined
+                                ? 'assets/default-user.png'
+                                : typeof profileImage === 'string'
+                                ? profileImage
+                                : URL.createObjectURL(profileImage)
+                        }
+                        className='add-image'
+                    />
+                    <FontAwesomeIcon icon={faRightLeft} className='replace-button' />
+                </label>
+                <input type='file' id='profile-image' accept='.jpg,.jpeg,.png' onChange={handleImageUpload} ref={imageInput} />
 
                 <UserForm
                     firstNameInput={firstNameInput}

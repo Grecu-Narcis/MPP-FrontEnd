@@ -4,7 +4,7 @@ import { CarCardProps } from '../../types/CarCardProps.types';
 import './CarCard.css';
 
 export function CarCard({ givenCar }: CarCardProps) {
-    let imagePath: string = '/assets/cars/' + givenCar.getPictureUrl();
+    const imagePath: string = '/assets/cars/' + givenCar.getPictureUrl();
 
     const navigate = useNavigate();
 

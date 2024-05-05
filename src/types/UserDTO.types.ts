@@ -3,5 +3,5 @@ export type UserDTO = {
     firstName: string,
     lastName: string,
     pictureUrl: string,
-    age: number
+    age: number,
 };

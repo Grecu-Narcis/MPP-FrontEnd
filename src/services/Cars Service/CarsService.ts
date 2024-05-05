@@ -11,7 +11,7 @@ export function convertDtoToCar(carToConvert: CarDTO) {
 
 export async function getCarById(carId: number) {
     try {
-        let response = await axios.get(apiEndPoint + '/getCar/' + carId);
+        const response = await axios.get(apiEndPoint + '/getCar/' + carId);
         return convertDtoToCar(response.data);
     }
 
@@ -23,8 +23,8 @@ export async function getCarById(carId: number) {
 
 export async function getAllCarsByOwnerId(ownerId: number) {
     try {
-        let response = await axios.get(apiEndPoint + '/getAllByOwnerId/' + ownerId);
-        let result: Car[] = [];
+        const response = await axios.get(apiEndPoint + '/getAllByOwnerId/' + ownerId);
+        const result: Car[] = [];
         response.data.forEach((currentCar: CarDTO) => {
             result.push(convertDtoToCar(currentCar));
         });
@@ -37,6 +37,38 @@ export async function getAllCarsByOwnerId(ownerId: number) {
         return [];
     }
 }
+
+export async function getPageOfCarsByOwnerId(ownerId: number, pageNumber: number, pageSize: number) {
+    try {
+        const response = await axios.get(apiEndPoint + '/getPageByOwnerId' + 
+        '?ownerId=' + ownerId + '&page=' + pageNumber + '&pageSize=' + pageSize);
+        const result: Car[] = [];
+        response.data.forEach((currentCar: CarDTO) => {
+            result.push(convertDtoToCar(currentCar));
+        });
+
+        return result;
+    }
+
+    catch (error) {
+        console.error((error as Error).message);
+        return [];
+    }
+}
+
+export async function getCarsCountByOwnerId(ownerId: number): Promise<number> {
+    try {
+        const response = await axios.get(apiEndPoint + '/getCarsCount/' + ownerId);
+        return response.data;
+    }
+
+    catch (error) {
+        console.error((error as Error).message);
+        return 0;
+    }
+
+}
+
 
 export async function updateCar(carToUpdate: Car) {
     try {

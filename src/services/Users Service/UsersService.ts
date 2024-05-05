@@ -1,6 +1,7 @@
 import axios from "axios";
 import { User } from "../../models/user";
 import { UserDTO } from "../../types/UserDTO.types";
+import { saveImage } from "../Images Service/ImagesService";
 
 const apiEndPoint = 'http://localhost:8080/api/users';
 
@@ -9,26 +10,30 @@ export function convertDtoToUser(userToConvert: UserDTO) {
 }
 
 export async function getUserById(requiredId: string) {
-    let response = await axios.get(apiEndPoint + '/getUser/' + requiredId);
+    const response = await axios.get(apiEndPoint + '/getUser/' + requiredId);
     return convertDtoToUser(response.data);
 }
 
 export async function getAllUsers() {
-    let response = await axios.get(apiEndPoint + '/getAll');
-    let users: User[] = [];
-
-    response.data.forEach((currentUser: UserDTO) => {
-        users.push(convertDtoToUser(currentUser));
-    });
-
-    console.log(users);
-    return users;
+    try {
+        const response = await axios.get(apiEndPoint + '/getAll');
+        const users: User[] = [];
+    
+        response.data.forEach((currentUser: UserDTO) => {
+            users.push(convertDtoToUser(currentUser));
+        });
+    
+        return users;
+    }
+    catch (error) {
+        return [];
+    }
 }
 
-export async function getUsersPage(requiredPage: number, isAscending: boolean, pageSize: number = 3) {
+export async function getUsersPage(requiredPage: number, isAscending: boolean, pageSize: number = 6) {
     try {
-    let response = await axios.get(apiEndPoint + '/getPage?page=' + requiredPage + "&isAscending=" + isAscending + "&pageSize=" + pageSize);
-    let users: User[] = [];
+    const response = await axios.get(apiEndPoint + '/getPage?page=' + requiredPage + "&isAscending=" + isAscending + "&pageSize=" + pageSize);
+    const users: User[] = [];
 
     response.data.forEach((currentUser: UserDTO) => {
         users.push(convertDtoToUser(currentUser));
@@ -36,23 +41,34 @@ export async function getUsersPage(requiredPage: number, isAscending: boolean, p
 
     return users;
     } catch (error) {
-        console.log('eroare');
-        console.error((error as Error).message);
         return [];  
     }   
 }
 
 export async function getUsersCount() {
-    let response = await axios.get(apiEndPoint + '/countUsers');
-
-    console.log(response.data);
-    return response.data;
+    try {
+        const response = await axios.get(apiEndPoint + '/countUsers');
+        return response.data;
+    }
+    catch (error) {}
 }
 
-export async function addUser(userToAdd: UserDTO) {
+export async function addUser(userToAdd: UserDTO, profileImage: File | undefined) {
+
     await axios.post(apiEndPoint + '/addUser', {
-        ...userToAdd
+        ...userToAdd,
+        // image: profileImage
+    })
+    .then((response) => {
+        console.log(response.data);
+
+        if (!profileImage) return;
+        saveImage(profileImage, response.data);
     });
+}
+
+export async function addMissingUsers(usersToAdd: UserDTO[]) {
+    await axios.post(apiEndPoint + '/addUsers', usersToAdd);
 }
 
 export async function updateUser(userToUpdate: User) {
