@@ -6,10 +6,10 @@ import React from 'react';
 import { User } from '../models/User';
 
 test('testing rendering of user form without user', () => {
-    let ageInput = React.createRef<HTMLInputElement>();
-    let firstNameInput = React.createRef<HTMLInputElement>();
-    let lastNameInput = React.createRef<HTMLInputElement>();
-    let urlInput = React.createRef<HTMLInputElement>();
+    const ageInput = React.createRef<HTMLInputElement>();
+    const firstNameInput = React.createRef<HTMLInputElement>();
+    const lastNameInput = React.createRef<HTMLInputElement>();
+    const urlInput = React.createRef<HTMLInputElement>();
 
     render(<UserForm firstNameInput={firstNameInput} lastNameInput={lastNameInput} ageInput={ageInput} urlInput={urlInput} />);
 
@@ -25,12 +25,12 @@ test('testing rendering of user form without user', () => {
 });
 
 test('testing rendering of user form with user', () => {
-    let ageInput = React.createRef<HTMLInputElement>();
-    let firstNameInput = React.createRef<HTMLInputElement>();
-    let lastNameInput = React.createRef<HTMLInputElement>();
-    let urlInput = React.createRef<HTMLInputElement>();
+    const ageInput = React.createRef<HTMLInputElement>();
+    const firstNameInput = React.createRef<HTMLInputElement>();
+    const lastNameInput = React.createRef<HTMLInputElement>();
+    const urlInput = React.createRef<HTMLInputElement>();
 
-    let demoUser = new User('Grecu', 'Narcis', 'narcis.jpg', 20);
+    const demoUser = new User('Grecu', 'Narcis', 'narcis.jpg', 20);
 
     render(
         <UserForm

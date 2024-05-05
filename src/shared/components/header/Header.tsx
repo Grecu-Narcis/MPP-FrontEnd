@@ -7,7 +7,6 @@ const Header = () => {
         <div className='header' data-testid='header-test-id'>
             <nav className='navbar'>
                 <div className='title'>Rentify</div>
-
                 <div className='links'>
                     <div>
                         <Link to='/' className='link'>

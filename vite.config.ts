@@ -34,6 +34,9 @@ export default defineConfig({
         '**/src/contexts/**',
         '**/src/App.tsx'
       ]
-    }
+    },
+  },
+  define: {
+    global: 'window',
   },
 })

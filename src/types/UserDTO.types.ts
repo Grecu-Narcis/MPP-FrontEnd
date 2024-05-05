@@ -1,7 +1,7 @@
 export type UserDTO = {
-    id?: string,
+    id?: number,
     firstName: string,
     lastName: string,
     pictureUrl: string,
-    age: number
+    age: number,
 };

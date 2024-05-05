@@ -2,11 +2,13 @@ import { useNavigate } from 'react-router-dom';
 import { UserCardPropsType } from '../../types/UserCardProps.types';
 
 import './UserCard.css';
-import { useContext } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { ModalContext } from '../../contexts/ModalContext';
+import { Button } from '../../shared/components/button/Button';
+import { getImageByUserId } from '../../services/Images Service/ImagesService';
 
 export function UserCard({ givenUser }: UserCardPropsType) {
-    let path: string = 'assets/' + givenUser.getPictureUrl();
+    const [path, setPath] = useState<string>('');
 
     const navigate = useNavigate();
 
@@ -14,9 +16,22 @@ export function UserCard({ givenUser }: UserCardPropsType) {
         navigate('/editUser/' + givenUser.getId());
     };
 
+    const handleViewCarsClick = (event: any) => {
+        event.stopPropagation();
+        event.preventDefault();
+        console.log('View cars button clicked');
+        navigate('/cars/' + givenUser.getId());
+    };
+
     const modalContext = useContext(ModalContext)!;
     const setUserId = modalContext.setUserId;
     const setModalStatus = modalContext.setModalStatus;
+
+    useEffect(() => {
+        getImageByUserId(givenUser.getId()).then((response) => {
+            setPath('data:image/jpeg;base64,' + response);
+        });
+    }, []);
 
     return (
         <div className='card' data-testid='user-card' onClick={handleCardOnClick}>
@@ -44,6 +59,8 @@ export function UserCard({ givenUser }: UserCardPropsType) {
                     <div className='age'>Age: {givenUser.getAge()}</div>
                 </div>
             </div>
+
+            <Button type='button' buttonMessage='View cars' onClick={handleViewCarsClick} />
         </div>
     );
 }

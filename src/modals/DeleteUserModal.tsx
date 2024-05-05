@@ -8,8 +8,8 @@ import { deleteUser } from '../services/Users Service/UsersService';
 
 export const DeleteUserModal = () => {
     const modalContext = useContext(ModalContext)!;
-    let modalStatus = modalContext.modalStatus;
-    let setModalStatus = modalContext.setModalStatus;
+    const modalStatus = modalContext.modalStatus;
+    const setModalStatus = modalContext.setModalStatus;
     const removeUser = modalContext.removeUser;
     const userId = modalContext.userId;
 

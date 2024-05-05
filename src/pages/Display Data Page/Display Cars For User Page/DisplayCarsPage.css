@@ -1,0 +1,30 @@
+.main-content {
+    flex: 1;
+    display: flex;
+    flex-flow: column wrap;
+    align-items: center;
+}
+
+.cars-list {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.infinite-scroll-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+}
+
+@media screen and (max-width: 768px) {
+    .infinite-scroll-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .infinite-scroll-grid {
+        grid-template-columns: 1fr;
+    }
+}

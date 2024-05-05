@@ -15,6 +15,10 @@
     align-self: center;
 }
 
+#profile-image {
+    display: none;
+}
+
 @media (max-width: 600px) {
     .form-div {
         width: 60%;
