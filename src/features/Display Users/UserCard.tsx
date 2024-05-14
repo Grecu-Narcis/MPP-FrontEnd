@@ -7,6 +7,22 @@ import { ModalContext } from '../../contexts/ModalContext';
 import { Button } from '../../shared/components/button/Button';
 import { getImageByUserId } from '../../services/Images Service/ImagesService';
 
+/**
+ * UserCard Component
+ *
+ * A component representing a card view for displaying user details.
+ *
+ * This component renders a card displaying user information such as profile picture,
+ * first name, last name, and age. It also provides buttons for editing user details,
+ * viewing the user's cars, and removing the user (via modal confirmation).
+ *
+ * @component
+ * @param {Object} props - The props object containing the givenUser data.
+ * @param {User} props.givenUser - The user object containing details to be displayed.
+ * @returns {JSX.Element} - Rendered UserCard component.
+ * @example
+ * <UserCard givenUser={userData} />
+ */
 export function UserCard({ givenUser }: UserCardPropsType) {
     const [path, setPath] = useState<string>('');
 

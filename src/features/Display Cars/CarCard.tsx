@@ -3,6 +3,22 @@ import { CarCardProps } from '../../types/CarCardProps.types';
 
 import './CarCard.css';
 
+/**
+ * CarCard Component
+ *
+ * A component representing a card view for displaying car details.
+ *
+ * This component renders a card view with details of a given car object, including
+ * the car image, brand, model, mileage, fuel type, year, and price. It also provides
+ * a button to view more details of the car.
+ *
+ * @component
+ * @param {Object} props - The props object containing the givenCar data.
+ * @param {Car} props.givenCar - The car object containing details to be displayed.
+ * @returns {JSX.Element} - Rendered CarCard component.
+ * @example
+ * <CarCard givenCar={carData} />
+ */
 export function CarCard({ givenCar }: CarCardProps) {
     const imagePath: string = '/assets/cars/' + givenCar.getPictureUrl();
 

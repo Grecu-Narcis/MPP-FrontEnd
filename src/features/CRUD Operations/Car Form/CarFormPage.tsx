@@ -27,6 +27,19 @@ function getCarData(
     return new Car(currentCar.getId(), brand, model, year, price, currentCar.getPictureUrl(), mileage, fuelType);
 }
 
+/**
+ * CarForm
+ *
+ * A form component for updating car details.
+ *
+ * This component fetches a specific car's details based on the `carId` parameter from the URL,
+ * and provides a form to update the car's brand, model, mileage, fuel type, year, and price.
+ * On submission, it updates the car details via an API call and navigates back to the home page.
+ *
+ * @returns JSX.Element
+ * @example
+ * <CarForm />
+ */
 export function CarForm() {
     const { carId } = useParams();
     const navigate = useNavigate();
