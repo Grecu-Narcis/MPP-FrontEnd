@@ -14,6 +14,19 @@ import { ModalContextProvider } from '../../../contexts/ModalContext';
 import './DisplayUsersPage.css';
 import { ConnectionStatusContext } from '../../../contexts/ConnectionStatusContext';
 
+/**
+ * DisplayUsersPage Component
+ *
+ * A page component for displaying and managing users.
+ *
+ * This component represents a dashboard for managing users, including sorting, pagination,
+ * and interaction with user cards (viewing, editing, and deleting users).
+ *
+ * @component
+ * @returns {JSX.Element} - Rendered DisplayUsersPage component.
+ * @example
+ * <DisplayUsersPage />
+ */
 export default function DisplayUsersPage() {
     document.title = 'Users dashboard!';
 

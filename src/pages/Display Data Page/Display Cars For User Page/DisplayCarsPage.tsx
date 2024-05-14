@@ -11,6 +11,15 @@ import { getUserById } from '../../../services/Users Service/UsersService';
 import LoadingPage from '../../Loading Page/LoadingPage';
 import InfiniteScroll from 'react-infinite-scroll-component';
 
+/**
+ * DisplayCarsPage
+ * A component that displays a user's cars with infinite scroll functionality.
+ *
+ * Props: None
+ *
+ * Example:
+ * <DisplayCarsPage />
+ */
 export function DisplayCarsPage() {
     const [cars, setCars] = useState<Car[]>([]);
 

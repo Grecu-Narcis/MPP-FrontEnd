@@ -5,6 +5,9 @@ import { UserDTO } from '../types/UserDTO.types';
 
 export const ConnectionStatusContext = createContext<ConnectionStatusProps | null>(null);
 
+/**
+ * Provides a context to monitor connection status and server availability.
+ */
 function ConnectionStatusContextProvider({ children }: any) {
     const [isOnline, setIsOnline] = useState<boolean>(navigator.onLine);
     const [isServerOnline, setIsServerOnline] = useState<boolean>(true);
