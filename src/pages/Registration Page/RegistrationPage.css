@@ -1,0 +1,22 @@
+.registration-wrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 30%;
+}
+
+.register-message {
+    font-weight: bold;
+    font-size: 16pt;
+    padding-bottom: 1rem;
+}
+
+.terms-message {
+    font-size: 11pt;
+}
+
+.login-link {
+    font-size: 11pt;
+    color: #5D6D7E;
+}

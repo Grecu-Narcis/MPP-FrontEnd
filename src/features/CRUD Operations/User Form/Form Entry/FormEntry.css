@@ -1,8 +1,7 @@
 .form-entry {
     display: flex;
     flex-direction: column;
-
-    padding: 10px;
+    margin-top: 0.6rem;
 }
 
 .form-label {
@@ -14,8 +13,8 @@
 
 .form-input {
     padding: 12px;
-    border: 0;
+    border: 1px solid #e5e7e9;
     border-radius: 5px;
 
-    background-color: #f7f7f7;
+    /* background-color: #f7f7f7; */
 }

@@ -2,13 +2,16 @@ import { Footer } from '../footer/Footer';
 import { Header } from '../header/Header';
 import './Layout.css';
 
-export function Layout({ children }: any) {
+type LayoutProps = {
+    children: React.ReactNode;
+    userId?: number;
+};
+
+export function Layout({ children, userId }: LayoutProps) {
     return (
         <div className='layout-container' data-testid='layout-test-id'>
-            <Header />
-
-            {children}
-
+            <Header userId={userId} />
+            <div className='main-page-container'>{children}</div>
             <Footer />
         </div>
     );

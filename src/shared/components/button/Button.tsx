@@ -4,7 +4,9 @@ import { ButtonProps } from '../../../types/ButtonProps.types';
 
 export function Button(props: ButtonProps) {
     const buttonStyles = {
-        backgroundColor: props.color,
+        backgroundColor: props.backgroundColor,
+        color: props.textColor,
+        margin: props.margin,
     };
 
     return (

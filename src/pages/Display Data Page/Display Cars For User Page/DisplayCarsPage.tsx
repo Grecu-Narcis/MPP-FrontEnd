@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { Car } from '../../../models/car';
 import { CarCard } from '../../../features/Display Cars/CarCard';
 
@@ -20,7 +20,7 @@ import InfiniteScroll from 'react-infinite-scroll-component';
  * Example:
  * <DisplayCarsPage />
  */
-export function DisplayCarsPage() {
+export default function DisplayCarsPage() {
     const [cars, setCars] = useState<Car[]>([]);
 
     const [isLoadingCars, setIsLoadingCars] = useState<boolean>(true);
@@ -31,55 +31,69 @@ export function DisplayCarsPage() {
 
     const [user, setUser] = useState<User>();
 
+    const navigator = useNavigate();
+
     const { userId } = useParams();
-    if (userId === undefined) return;
+    if (userId === undefined) {
+        navigator('/home');
+        return;
+    }
+
+    const handleError = () => {
+        navigator('/home');
+        return;
+    };
 
     const fetchCars = () => {
-        getPageOfCarsByOwnerId(parseInt(userId), pageNumber, 50).then((response) => {
-            setCars([...cars, ...response]);
-            setPageNumber(pageNumber + 1);
-        });
+        getPageOfCarsByOwnerId(parseInt(userId), pageNumber, 50)
+            .then((response) => {
+                setCars([...cars, ...response]);
+                setPageNumber(pageNumber + 1);
+            })
+            .catch(handleError);
     };
 
     useEffect(() => {
-        getPageOfCarsByOwnerId(parseInt(userId), pageNumber, 50).then((response) => {
-            setCars(response);
-            setIsLoadingCars(false);
-            setPageNumber(pageNumber + 1);
-        });
+        getPageOfCarsByOwnerId(parseInt(userId), pageNumber, 50)
+            .then((response) => {
+                setCars(response);
+                setIsLoadingCars(false);
+                setPageNumber(pageNumber + 1);
+            })
+            .catch(handleError);
 
-        getCarsCountByOwnerId(parseInt(userId)).then((response) => {
-            setCarsTotal(response);
-        });
+        getCarsCountByOwnerId(parseInt(userId))
+            .then((response) => {
+                setCarsTotal(response);
+            })
+            .catch(handleError);
 
-        getUserById(userId).then((response) => {
-            setUser(response);
-            setIsLoadingUser(false);
-        });
+        getUserById(userId)
+            .then((response) => {
+                setUser(response);
+                setIsLoadingUser(false);
+            })
+            .catch(handleError);
     }, []);
 
     if (isLoadingCars || isLoadingUser) return <LoadingPage />;
 
     return (
-        <Layout>
-            <div className='main-content'>
-                <h1>Hi, {user?.getFirstName() + ' ' + user?.getLastName()}</h1>
-                <h2>
-                    {carsTotal == 0 ? "You don't have any cars" : carsTotal === 1 ? 'You have one car.' : `You have ${carsTotal} cars.`}
-                </h2>
-                <div className='cars-list'>
-                    <InfiniteScroll
-                        dataLength={cars.length}
-                        next={fetchCars}
-                        hasMore={carsTotal > cars.length}
-                        loader={<h4>Loading...</h4>}
-                        className='infinite-scroll-grid'
-                    >
-                        {cars.map((car) => (
-                            <CarCard key={car.getId()} givenCar={car} />
-                        ))}
-                    </InfiniteScroll>
-                </div>
+        <Layout userId={parseInt(userId)}>
+            <h1>Hi, {user?.getFirstName() + ' ' + user?.getLastName()}</h1>
+            <h2>{carsTotal == 0 ? "You don't have any cars" : carsTotal === 1 ? 'You have one car.' : `You have ${carsTotal} cars.`}</h2>
+            <div className='cars-list'>
+                <InfiniteScroll
+                    dataLength={cars.length}
+                    next={fetchCars}
+                    hasMore={carsTotal > cars.length}
+                    loader={<h4>Loading...</h4>}
+                    className='infinite-scroll-grid'
+                >
+                    {cars.map((car) => (
+                        <CarCard key={car.getId()} givenCar={car} />
+                    ))}
+                </InfiniteScroll>
             </div>
         </Layout>
     );

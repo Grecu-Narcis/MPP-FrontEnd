@@ -10,25 +10,15 @@ const FormEntry = forwardRef<HTMLInputElement, FormEntryProps>((props, ref) => {
             <label className='form-label' htmlFor={props.label}>
                 {props.label}
             </label>
-            {props.defaultValue === '' ? (
-                <input
-                    data-testid='form-entry-input'
-                    type='text'
-                    className='form-input'
-                    id={props.label}
-                    placeholder={props.placeHolder}
-                    ref={ref}
-                />
-            ) : (
-                <input
-                    data-testid='form-entry-input'
-                    type='text'
-                    className='form-input'
-                    placeholder={props.defaultValue}
-                    defaultValue={props.defaultValue}
-                    ref={ref}
-                />
-            )}
+
+            <input
+                data-testid='form-entry-input'
+                type={props.type ? props.type : 'text'}
+                className='form-input'
+                id={props.label}
+                placeholder={props.placeHolder}
+                ref={ref}
+            />
         </div>
     );
 });
