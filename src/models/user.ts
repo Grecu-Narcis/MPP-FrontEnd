@@ -2,17 +2,15 @@ export class User {
     private id: number;
     private firstName: string;
     private lastName: string;
-    private pictureUrl: string;
-    private age: number;
+    private email: string;
 
 
-    public constructor(id:number, firstName: string, lastName: string, pictureUrl: string, age: number)
+    public constructor(id:number, firstName: string, lastName: string, email: string)
     {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
-        this.pictureUrl = pictureUrl;
-        this.age = age;
+        this.email = email;
     }
 
     public getId(): number {
@@ -39,19 +37,11 @@ export class User {
         this.lastName = newLastName;
     }
 
-    public getPictureUrl(): string {
-        return this.pictureUrl;
+    public getEmail(): string {
+        return this.email;
     }
 
-    public setPictureUrl(newPictureUrl: string) {
-        this.pictureUrl = newPictureUrl;
-    }
-
-    public getAge(): number {
-        return this.age;
-    }
-
-    public setAge(newAge: number): void {
-        this.age = newAge;
+    public setEmail(newEmail: string) {
+        this.email = newEmail;
     }
 }

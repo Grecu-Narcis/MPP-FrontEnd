@@ -11,18 +11,13 @@ export default function ChartPage() {
 
     const ageMap = new Map<number, number>();
 
-    usersList.forEach((currentUser) => {
-        if (ageMap.get(currentUser.getAge()) === undefined) ageMap.set(currentUser.getAge(), 1);
-        else ageMap.set(currentUser.getAge(), ageMap.get(currentUser.getAge())! + 1);
-    });
+    // usersList.forEach((currentUser) => {
+    //     if (ageMap.get(currentUser.getAge()) === undefined) ageMap.set(currentUser.getAge(), 1);
+    //     else ageMap.set(currentUser.getAge(), ageMap.get(currentUser.getAge())! + 1);
+    // });
 
     console.log(ageMap);
-    if (ageMap.size === 0)
-        return (
-            <Layout>
-                <div className='main-page-content'>No users to display</div>
-            </Layout>
-        );
+    if (ageMap.size === 0) return <Layout>No users to display</Layout>;
 
     return (
         <Layout>

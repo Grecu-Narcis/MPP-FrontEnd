@@ -1,30 +1,7 @@
-import { User } from '../../../models/user';
 import { UserFormType } from '../../../types/UserFormProps.types';
 import { FormEntry } from './Form Entry/FormEntry';
 
 import './UserForm.css';
-
-type FormEntryType = {
-    label: string;
-    ref: React.RefObject<HTMLInputElement>;
-    placeHolder: string;
-    defaultValue: string;
-};
-
-function setFormEntriesForUser(formEntries: FormEntryType[], givenUser: User | undefined) {
-    if (givenUser !== undefined) {
-        // formEntries[0].disabled = true;
-
-        // formEntries[0].defaultValue = givenUser.getId().toString();
-        formEntries[0].defaultValue = givenUser.getFirstName();
-        formEntries[1].defaultValue = givenUser.getLastName();
-        formEntries[2].defaultValue = givenUser.getPictureUrl();
-        formEntries[3].defaultValue = givenUser.getAge().toString();
-        // formEntries[3].defaultValue = givenUser.getPictureUrl();
-    }
-
-    return formEntries;
-}
 
 function createFormEntries(props: UserFormType) {
     let formEntries = [
@@ -34,8 +11,6 @@ function createFormEntries(props: UserFormType) {
         { label: 'URL', ref: props.urlInput, placeHolder: 'URL', defaultValue: '' },
         { label: 'Age', ref: props.ageInput, placeHolder: 'Age', defaultValue: '' },
     ];
-
-    formEntries = setFormEntriesForUser(formEntries, props.givenUser);
 
     return formEntries;
 }

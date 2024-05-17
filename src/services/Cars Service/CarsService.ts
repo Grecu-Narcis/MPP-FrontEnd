@@ -11,19 +11,23 @@ export function convertDtoToCar(carToConvert: CarDTO) {
 
 export async function getCarById(carId: number) {
     try {
-        const response = await axios.get(apiEndPoint + '/getCar/' + carId);
+        const response = await axios.get(apiEndPoint + '/getCar/' + carId, 
+            {headers: {Authorization: 'Bearer ' + localStorage.getItem('authToken')}}
+        );
         return convertDtoToCar(response.data);
     }
 
     catch (error) {
         console.error((error as Error).message);
-        return undefined;
+        throw error;
     }
 }
 
 export async function getAllCarsByOwnerId(ownerId: number) {
     try {
-        const response = await axios.get(apiEndPoint + '/getAllByOwnerId/' + ownerId);
+        const response = await axios.get(apiEndPoint + '/getAllByOwnerId/' + ownerId,
+            {headers: {Authorization: 'Bearer ' + localStorage.getItem('authToken')}}
+        );
         const result: Car[] = [];
         response.data.forEach((currentCar: CarDTO) => {
             result.push(convertDtoToCar(currentCar));
@@ -41,7 +45,9 @@ export async function getAllCarsByOwnerId(ownerId: number) {
 export async function getPageOfCarsByOwnerId(ownerId: number, pageNumber: number, pageSize: number) {
     try {
         const response = await axios.get(apiEndPoint + '/getPageByOwnerId' + 
-        '?ownerId=' + ownerId + '&page=' + pageNumber + '&pageSize=' + pageSize);
+        '?ownerId=' + ownerId + '&page=' + pageNumber + '&pageSize=' + pageSize,
+        {headers: {Authorization: 'Bearer ' + localStorage.getItem('authToken')}}
+    );
         const result: Car[] = [];
         response.data.forEach((currentCar: CarDTO) => {
             result.push(convertDtoToCar(currentCar));
@@ -58,7 +64,9 @@ export async function getPageOfCarsByOwnerId(ownerId: number, pageNumber: number
 
 export async function getCarsCountByOwnerId(ownerId: number): Promise<number> {
     try {
-        const response = await axios.get(apiEndPoint + '/getCarsCount/' + ownerId);
+        const response = await axios.get(apiEndPoint + '/getCarsCount/' + ownerId,
+            {headers: {Authorization: 'Bearer ' + localStorage.getItem('authToken')}}
+        );
         return response.data;
     }
 
@@ -72,7 +80,9 @@ export async function getCarsCountByOwnerId(ownerId: number): Promise<number> {
 
 export async function updateCar(carToUpdate: Car) {
     try {
-        await axios.put(apiEndPoint + '/updateCar', carToUpdate);
+        await axios.put(apiEndPoint + '/updateCar', carToUpdate, 
+            {headers: {Authorization: 'Bearer ' + localStorage.getItem('authToken')}}
+        );
     }
 
     catch (error) {

@@ -27,12 +27,18 @@ export const DeleteUserModal = () => {
                     <div id='modal-text'>Are you sure you want to remove this user?</div>
 
                     <div id='buttons-list'>
-                        <Button type='button' data_test_id='yes-button' buttonMessage='Yes' color='#4CAF50' onClick={handleYesClick} />
+                        <Button
+                            type='button'
+                            data_test_id='yes-button'
+                            buttonMessage='Yes'
+                            backgroundColor='#4CAF50'
+                            onClick={handleYesClick}
+                        />
                         <Button
                             type='button'
                             data_test_id='no-button'
                             buttonMessage='No'
-                            color='#E53935'
+                            backgroundColor='#E53935'
                             onClick={() => setModalStatus(false)}
                         />
                     </div>

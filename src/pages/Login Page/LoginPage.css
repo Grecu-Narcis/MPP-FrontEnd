@@ -1,0 +1,13 @@
+.login-welcome-message {
+    font-size: 20pt;
+    font-weight: bold;
+    padding-bottom: 0.8rem;
+}
+
+.login-message {
+    padding-bottom: 1rem;
+}
+
+.login-wrapper {
+    width: 30%;
+}

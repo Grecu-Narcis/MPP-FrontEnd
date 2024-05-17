@@ -134,35 +134,33 @@ export default function DisplayUsersPage() {
         <Layout>
             <ModalContextProvider modalContext={{ modalStatus, setModalStatus, userId, setUserId, removeUser }}>
                 <DeleteUserModal />
-                <div className='main-page-container'>
-                    <Button
-                        type='button'
-                        onClick={() => {
-                            setIsAscending(!isAscending);
-                        }}
-                        buttonMessage='Ascending/Descending'
-                    />
+                <Button
+                    type='button'
+                    onClick={() => {
+                        setIsAscending(!isAscending);
+                    }}
+                    buttonMessage='Ascending/Descending'
+                />
 
-                    <div className='users-list' data-testid='users-list'>
-                        {currentUsers.map((user) => (
-                            <UserCard givenUser={user} key={user.getId()} />
-                        ))}
-                    </div>
+                <div className='users-list' data-testid='users-list'>
+                    {currentUsers.map((user) => (
+                        <UserCard givenUser={user} key={user.getId()} />
+                    ))}
+                </div>
 
-                    {showNext ? (
-                        <>
-                            <div>
-                                Displaying {currentUsers.length} out of {usersCount}
-                            </div>
-
-                            <Button onClick={handleShowMore} type='button' buttonMessage='Show more' />
-                        </>
-                    ) : (
-                        <div className='users-count'>
+                {showNext ? (
+                    <>
+                        <div>
                             Displaying {currentUsers.length} out of {usersCount}
                         </div>
-                    )}
-                </div>
+
+                        <Button onClick={handleShowMore} type='button' buttonMessage='Show more' />
+                    </>
+                ) : (
+                    <div className='users-count'>
+                        Displaying {currentUsers.length} out of {usersCount}
+                    </div>
+                )}
             </ModalContextProvider>
         </Layout>
     );

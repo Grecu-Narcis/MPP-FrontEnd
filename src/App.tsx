@@ -11,31 +11,23 @@ import { convertDtoToUser } from './services/Users Service/UsersService';
 import SockJS from 'sockjs-client';
 import Stomp from 'stompjs';
 import { UserDTO } from './types/UserDTO.types';
-import { DisplayCarsPage } from './pages/Display Data Page/Display Cars For User Page/DisplayCarsPage';
-import { CarForm } from './features/CRUD Operations/Car Form/CarFormPage';
 import { ConnectionStatusContextProvider } from './contexts/ConnectionStatusContext';
-import { UploadImage } from './pages/Upload Image/UploadImage';
-import { ViewImagePage } from './pages/Upload Image/GetImage';
 
-const DisplayUsersPage = React.lazy(() => import('./pages/Display Data Page/Display Users Page/DisplayUsersPage'));
-const AddUserPage = React.lazy(() => import('./pages/Add User Page/AddUserPage'));
-const EditUserPage = React.lazy(() => import('./pages/Edit User Page/EditUserPage'));
+const RegistrationPage = React.lazy(() => import('./pages/Registration Page/RegistrationPage'));
+const LoginPage = React.lazy(() => import('./pages/Login Page/LoginPage'));
+const LandingPage = React.lazy(() => import('./pages/Landing Page/LandingPage'));
+const DisplayCarsPage = React.lazy(() => import('./pages/Display Data Page/Display Cars For User Page/DisplayCarsPage'));
+const CarDetailsPage = React.lazy(() => import('./pages/Car Details Page/CarFormPage'));
 
 const pageSize = 3;
+
+document.title = 'TravelWheels';
 
 function App() {
     const [users, setUsers] = useState<User[]>([]);
 
     const [currentUsers, setCurrentUsers] = useState<User[]>(users.slice(0, pageSize));
     const [currentPage, setCurrentPage] = useState<number>(1);
-
-    const addUser = (newUser: User) => {
-        setUsers((prevState: User[]) => [...prevState, newUser]);
-    };
-
-    const removeUser = (userId: number) => {
-        setUsers((prevState: User[]) => prevState.filter((user) => user.getId() !== userId));
-    };
 
     useEffect(() => {
         if (!localStorage.getItem('users')) localStorage.setItem('users', JSON.stringify([]));
@@ -61,55 +53,68 @@ function App() {
 
     return (
         <ConnectionStatusContextProvider>
-            <UsersContextProvider userContext={{ users, addUser, removeUser }}>
-                <PagingContextProvider
-                    pagingContext={{
-                        currentUsers,
-                        setCurrentUsers,
-                        currentPage,
-                        setCurrentPage,
-                        pageSize: pageSize,
-                    }}
-                >
-                    <BrowserRouter>
-                        <Routes>
-                            <Route path='/loading' element={<LoadingPage />} />
-                            <Route
-                                path='/'
-                                element={
-                                    <Suspense fallback={<LoadingPage />}>
-                                        <DisplayUsersPage />
-                                    </Suspense>
-                                }
-                            />
-                            <Route
-                                path='/addUser'
-                                element={
-                                    <Suspense fallback={<LoadingPage />}>
-                                        <AddUserPage />
-                                    </Suspense>
-                                }
-                            />
-                            <Route
-                                path='/editUser/:userId'
-                                element={
-                                    <Suspense fallback={<LoadingPage />}>
-                                        <EditUserPage />
-                                    </Suspense>
-                                }
-                            />
-                            <Route path='/chart' element={<ChartPage />} />
+            {/* <UsersContextProvider userContext={{ users, addUser, removeUser }}> */}
+            <PagingContextProvider
+                pagingContext={{
+                    currentUsers,
+                    setCurrentUsers,
+                    currentPage,
+                    setCurrentPage,
+                    pageSize: pageSize,
+                }}
+            >
+                <BrowserRouter>
+                    <Routes>
+                        <Route
+                            path='/register'
+                            element={
+                                <Suspense fallback={<LoadingPage />}>
+                                    <RegistrationPage />
+                                </Suspense>
+                            }
+                        />
+                        <Route
+                            path='/login'
+                            element={
+                                <Suspense fallback={<LoadingPage />}>
+                                    <LoginPage />
+                                </Suspense>
+                            }
+                        />
 
-                            <Route path='/cars/:userId' element={<DisplayCarsPage />} />
+                        <Route
+                            path='/Home'
+                            element={
+                                <Suspense fallback={<LoadingPage />}>
+                                    <LandingPage />
+                                </Suspense>
+                            }
+                        />
 
-                            <Route path='/viewCar/:carId' element={<CarForm />} />
-                            <Route path='/addImage' element={<UploadImage />} />
-                            <Route path='/viewCarz' element={<ViewImagePage />} />
-                            <Route path='*' element={<Navigate to={'/'} />} />
-                        </Routes>
-                    </BrowserRouter>
-                </PagingContextProvider>
-            </UsersContextProvider>
+                        <Route path='/chart' element={<ChartPage />} />
+
+                        <Route
+                            path='/cars/:userId'
+                            element={
+                                <Suspense fallback={<LoadingPage />}>
+                                    <DisplayCarsPage />
+                                </Suspense>
+                            }
+                        />
+
+                        <Route
+                            path='/viewCar/:carId'
+                            element={
+                                <Suspense fallback={<LoadingPage />}>
+                                    <CarDetailsPage />
+                                </Suspense>
+                            }
+                        />
+                        <Route path='*' element={<Navigate to={'/home'} />} />
+                    </Routes>
+                </BrowserRouter>
+            </PagingContextProvider>
+            {/* </UsersContextProvider> */}
         </ConnectionStatusContextProvider>
     );
 }

@@ -2,6 +2,7 @@ import { createContext, useEffect, useState } from 'react';
 import { ConnectionStatusProps } from '../types/ConnectionStatusProps.types';
 import { addMissingUsers, checkServerStatus } from '../services/Users Service/UsersService';
 import { UserDTO } from '../types/UserDTO.types';
+import ErrorPage from '../pages/Error Page/ErrorPage';
 
 export const ConnectionStatusContext = createContext<ConnectionStatusProps | null>(null);
 
@@ -11,6 +12,13 @@ export const ConnectionStatusContext = createContext<ConnectionStatusProps | nul
 function ConnectionStatusContextProvider({ children }: any) {
     const [isOnline, setIsOnline] = useState<boolean>(navigator.onLine);
     const [isServerOnline, setIsServerOnline] = useState<boolean>(true);
+    const [isLoggedIn, setIsLoggedIn] = useState<boolean>(localStorage.getItem('authToken') !== null);
+
+    const handleLogout = () => {
+        setIsLoggedIn(false);
+        localStorage.removeItem('userId');
+        localStorage.removeItem('authToken');
+    };
 
     useEffect(() => {
         const connectionInterval = setInterval(() => {
@@ -40,7 +48,13 @@ function ConnectionStatusContextProvider({ children }: any) {
         setIsOnline,
         isServerOnline,
         setIsServerOnline,
+        isLoggedIn,
+        setIsLoggedIn,
+        handleLogout,
     };
+
+    if (!isOnline) return <ErrorPage>Ooops... no internet connection detected!</ErrorPage>;
+    if (!isServerOnline) return <ErrorPage>Ooops... the server is down!</ErrorPage>;
 
     return <ConnectionStatusContext.Provider value={connectionStatusContext}>{children}</ConnectionStatusContext.Provider>;
 }
