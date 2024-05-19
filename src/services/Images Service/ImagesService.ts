@@ -1,6 +1,7 @@
 import axios from "axios";
+import { endPointUrl } from "../config";
 
-const apiEndPoint = 'http://localhost:8080/api/images';
+const apiEndPoint = endPointUrl + '/api/images';
 
 export async function saveImage(image: File, userId: number) {
     const imageForm = new FormData();

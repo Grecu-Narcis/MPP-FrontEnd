@@ -3,7 +3,6 @@ import { User } from './models/user';
 
 import { Routes, Route, BrowserRouter, Navigate } from 'react-router-dom';
 import React, { Suspense, useEffect, useState } from 'react';
-import { UsersContextProvider } from './contexts/UsersContext';
 import LoadingPage from './pages/Loading Page/LoadingPage';
 import ChartPage from './pages/Chart Page/ChartPage';
 import { PagingContextProvider } from './contexts/PagingContext';
@@ -12,6 +11,7 @@ import SockJS from 'sockjs-client';
 import Stomp from 'stompjs';
 import { UserDTO } from './types/UserDTO.types';
 import { ConnectionStatusContextProvider } from './contexts/ConnectionStatusContext';
+import { endPointUrl } from './services/config';
 
 const RegistrationPage = React.lazy(() => import('./pages/Registration Page/RegistrationPage'));
 const LoginPage = React.lazy(() => import('./pages/Login Page/LoginPage'));
@@ -38,7 +38,7 @@ function App() {
         //     setCurrentUsers(users.slice(0, pageSize));
         // });
 
-        const sock = new SockJS('http://localhost:8080/websocket');
+        const sock = new SockJS(endPointUrl + '/websocket');
         const stompClient = Stomp.over(sock);
 
         stompClient.connect({}, () => {
@@ -49,6 +49,15 @@ function App() {
                 setUsers((prevState: User[]) => [...prevState, ...usersReceived]);
             });
         });
+
+        const handleBeforeUnload = () => {
+            localStorage.removeItem('authToken');
+            localStorage.removeItem('userId');
+        };
+
+        window.addEventListener('beforeunload', handleBeforeUnload);
+
+        return () => window.removeEventListener('beforeunload', handleBeforeUnload);
     }, []);
 
     return (

@@ -30,7 +30,14 @@ const Header = () => {
         if (!localStorage.getItem('userId')) return;
         const userId = parseInt(localStorage.getItem('userId')!);
 
-        if (userId) getImageByUserId(userId).then((response) => setProfileImage('data:image/jpeg;base64,' + response));
+        const cachedProfileImage = localStorage.getItem('profileImage');
+
+        if (cachedProfileImage) setProfileImage(cachedProfileImage);
+        else if (userId)
+            getImageByUserId(userId).then((response) => {
+                setProfileImage(response);
+                localStorage.setItem('profileImage', response);
+            });
     }, []);
 
     return (
@@ -46,7 +53,7 @@ const Header = () => {
                             <Link to={'/cars/' + localStorage.getItem('userId')} className='link'>
                                 View cars
                             </Link>
-                            <img src={profileImage} className='profile-image link' />
+                            {profileImage && <img src={'data:image/jpeg;base64,' + profileImage} className='profile-image link' />}
                             <FontAwesomeIcon icon={faRightFromBracket} className='logout-icon' onClick={handleLogoutClick} />
                         </>
                     ) : (

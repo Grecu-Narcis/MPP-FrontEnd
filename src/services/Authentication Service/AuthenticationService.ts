@@ -1,7 +1,8 @@
 import axios from "axios";
 import { LoginResponseDTO } from "../../types/LoginResponseDTO.types";
+import { endPointUrl } from "../config";
 
-const apiEndpoint = 'http://localhost:8080/api/auth';
+const apiEndpoint = endPointUrl + '/api/auth';
 
 export async function registerUser(firstName: string, lastName: string, email: string, password: string) {
     const response = await axios.post(apiEndpoint + '/register', 
