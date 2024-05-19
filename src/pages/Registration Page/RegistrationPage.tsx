@@ -4,11 +4,14 @@ import { Layout } from '../../shared/components/layout/Layout';
 
 import './RegistrationPage.css';
 import { registerUser } from '../../services/Authentication Service/AuthenticationService';
-import { useContext, useEffect } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { ConnectionStatusContext } from '../../contexts/ConnectionStatusContext';
+import Loading from 'react-loading';
 
 export default function RegistrationPage() {
     const navigator = useNavigate();
+    const [isLoading, setIsLoading] = useState<boolean>(false);
+
     const connectionContext = useContext(ConnectionStatusContext);
 
     if (!connectionContext) return;
@@ -16,10 +19,16 @@ export default function RegistrationPage() {
     const isLoggedIn = connectionContext.isLoggedIn;
 
     const handleRegister = (firstName: string, lastName: string, email: string, password: string) => {
-        registerUser(firstName, lastName, email, password).then((response) => {
-            alert(response);
-            navigator('/login');
-        });
+        setIsLoading(true);
+
+        registerUser(firstName, lastName, email, password)
+            .then(() => {
+                setIsLoading(false);
+                navigator('/login');
+            })
+            .catch(() => {
+                setIsLoading(false);
+            });
     };
 
     useEffect(() => {
@@ -39,6 +48,10 @@ export default function RegistrationPage() {
                 <Link to={'/login'} className='login-link'>
                     Already have an account? Login
                 </Link>
+
+                <div className='register-loader-wrapper'>
+                    {isLoading && <Loading type='spin' color='black' width={'30px'} height={'30px'} />}
+                </div>
             </div>
         </Layout>
     );

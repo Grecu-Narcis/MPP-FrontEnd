@@ -2,8 +2,9 @@ import axios from "axios";
 import { User } from "../../models/user";
 import { UserDTO } from "../../types/UserDTO.types";
 import { saveImage } from "../Images Service/ImagesService";
+import { endPointUrl } from "../config";
 
-const apiEndPoint = 'http://localhost:8080/api/users';
+const apiEndPoint = endPointUrl + '/api/users';
 
 export function convertDtoToUser(userToConvert: UserDTO) {
     return new User(userToConvert.id!, userToConvert.firstName, userToConvert.lastName, userToConvert.email);

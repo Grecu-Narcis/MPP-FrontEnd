@@ -1,8 +1,9 @@
 import axios from "axios";
 import { CarDTO } from "../../types/CarDTO.types";
 import { Car } from "../../models/car";
+import { endPointUrl } from "../config";
 
-const apiEndPoint = 'http://localhost:8080/api/cars';
+const apiEndPoint = endPointUrl + '/api/cars';
 
 export function convertDtoToCar(carToConvert: CarDTO) {
     return new Car(carToConvert.id, carToConvert.brand, carToConvert.model, carToConvert.year, 
