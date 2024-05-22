@@ -28,3 +28,39 @@
     min-height: 30px;
     margin-top: 1rem;
 }
+
+@media (min-width: 851px) and (max-width: 1024px) {
+    .registration-wrapper {
+        width: 35%;
+    }
+}
+
+@media (min-width: 721px) and (max-width: 850px) {
+    .registration-wrapper {
+        width: 40%;
+    }
+}
+
+@media (min-width: 561px) and (max-width: 720px) {
+    .registration-wrapper {
+        width: 50%;
+    }
+}
+
+@media (min-width: 481px) and (max-width: 560px) {
+    .registration-wrapper {
+        width: 60%;
+    }
+}
+
+@media (min-width: 401px) and (max-width: 480px) {
+    .registration-wrapper {
+        width: 70%;
+    }
+}
+
+@media (max-width: 400px) {
+    .registration-wrapper {
+        width: 75%;
+    }
+}
