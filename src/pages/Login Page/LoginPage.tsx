@@ -32,8 +32,8 @@ export default function LoginPage() {
 
                 setIsLoading(false);
             })
-            .catch((response) => {
-                alert((response as Error).message);
+            .catch(() => {
+                // alert((response as Error).message);
                 setIsLoading(false);
             });
     };

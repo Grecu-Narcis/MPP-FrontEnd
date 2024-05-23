@@ -9,7 +9,7 @@ export default function LandingPage() {
             <div className='main-div-landing'>
                 <div className='welcome-header'>
                     <div className='welcome-message'>Rent your car, earn money, and get a car rental when you need it.</div>
-                    <Button type='button' buttonMessage='Start renting now' margin='2rem' />
+                    <Button type='button' buttonMessage='Start renting now' className='start-renting-button' />
                 </div>
 
                 <div className='landing-info'>
