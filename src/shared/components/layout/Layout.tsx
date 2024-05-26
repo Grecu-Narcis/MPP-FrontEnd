@@ -7,10 +7,10 @@ type LayoutProps = {
     userId?: number;
 };
 
-export function Layout({ children, userId }: LayoutProps) {
+export function Layout({ children }: LayoutProps) {
     return (
         <div className='layout-container' data-testid='layout-test-id'>
-            <Header userId={userId} />
+            <Header />
             <div className='main-page-container'>{children}</div>
             <Footer />
         </div>

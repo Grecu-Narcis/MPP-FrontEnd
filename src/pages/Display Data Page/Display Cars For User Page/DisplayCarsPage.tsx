@@ -7,9 +7,9 @@ import './DisplayCarsPage.css';
 import { Layout } from '../../../shared/components/layout/Layout';
 import { getCarsCountByOwnerId, getPageOfCarsByOwnerId } from '../../../services/Cars Service/CarsService';
 import { User } from '../../../models/user';
-import { getUserById } from '../../../services/Users Service/UsersService';
 import LoadingPage from '../../Loading Page/LoadingPage';
 import InfiniteScroll from 'react-infinite-scroll-component';
+import { getDealerById } from '../../../services/Dealers Service/DealersService';
 
 /**
  * DisplayCarsPage
@@ -68,7 +68,7 @@ export default function DisplayCarsPage() {
             })
             .catch(handleError);
 
-        getUserById(userId)
+        getDealerById(userId)
             .then((response) => {
                 setUser(response);
                 setIsLoadingUser(false);
@@ -80,8 +80,8 @@ export default function DisplayCarsPage() {
 
     return (
         <Layout userId={parseInt(userId)}>
-            <h1>Hi, {user?.getFirstName() + ' ' + user?.getLastName()}</h1>
-            <h2>{carsTotal == 0 ? "You don't have any cars" : carsTotal === 1 ? 'You have one car.' : `You have ${carsTotal} cars.`}</h2>
+            <h1>{user?.getFirstName() + ' ' + user?.getLastName()}</h1>
+            <h2>{carsTotal == 0 ? 'No cars available' : carsTotal === 1 ? 'One car available.' : `${carsTotal} cars available.`}</h2>
             <div className='cars-list'>
                 <InfiniteScroll
                     dataLength={cars.length}
@@ -91,7 +91,11 @@ export default function DisplayCarsPage() {
                     className='infinite-scroll-grid'
                 >
                     {cars.map((car) => (
-                        <CarCard key={car.getId()} givenCar={car} />
+                        <CarCard
+                            key={car.getId()}
+                            givenCar={car}
+                            readOnly={userId != localStorage.getItem('userId') && localStorage.getItem('userRole') != 'ADMIN'}
+                        />
                     ))}
                 </InfiniteScroll>
             </div>

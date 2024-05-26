@@ -1,6 +1,6 @@
 export type FormEntryProps = {
     label: string;
-    placeHolder: string;
+    placeHolder?: string;
     defaultValue?: string;
     type?: string;
 };

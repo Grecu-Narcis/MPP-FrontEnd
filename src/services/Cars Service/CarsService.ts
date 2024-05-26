@@ -75,9 +75,58 @@ export async function getCarsCountByOwnerId(ownerId: number): Promise<number> {
         console.error((error as Error).message);
         return 0;
     }
-
 }
 
+export async function getCarsPage(pageNumber: number, pageSize: number): Promise<Car[]> {
+    try {
+        const response = await axios.get(apiEndPoint + '/getPage?page=' + pageNumber + '&size=' + pageSize,
+            {headers: {Authorization: 'Bearer ' + localStorage.getItem('authToken')}}
+        );
+
+        const result: Car[] = [];
+        response.data.forEach((currentCar: CarDTO) => {
+            result.push(convertDtoToCar(currentCar));
+        });
+
+        return result;
+    }
+    
+    catch (error) {
+        console.error((error as Error).message);
+
+        return [];
+    }
+}
+
+export async function getTotalCarCount(): Promise<number> {
+    try {
+        const response = await axios.get(apiEndPoint + '/getTotalCarCount',
+            {headers: {Authorization: 'Bearer ' + localStorage.getItem('authToken')}}
+        );
+        return response.data;
+    }
+
+    catch (error) {
+        console.error((error as Error).message);
+        return 0;
+    }
+}
+
+export async function getAllCars(): Promise<CarDTO[]> {
+    try {
+        const response = await axios.get<CarDTO[]>(apiEndPoint + '/getAll',
+            {headers: {Authorization: 'Bearer ' + localStorage.getItem('authToken')}}
+        );
+
+        return response.data;
+    }
+
+    catch (error) {
+        console.error((error as Error).message);
+
+        return [];
+    }
+}
 
 export async function updateCar(carToUpdate: Car) {
     try {
@@ -89,4 +138,12 @@ export async function updateCar(carToUpdate: Car) {
     catch (error) {
         console.error((error as Error).message);
     }
+}
+
+export async function deleteCar(carId: string) {
+    const response = await axios.delete(apiEndPoint + '/deleteCar/' + carId,
+        {headers: {Authorization: 'Bearer ' + localStorage.getItem('authToken')}}
+    );
+
+    return response.data;
 }

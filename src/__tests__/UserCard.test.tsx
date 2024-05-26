@@ -2,7 +2,6 @@ import '@testing-library/jest-dom';
 import { fireEvent, render, screen } from '@testing-library/react';
 import { expect, test, vi } from 'vitest';
 import { UserCard } from '../features/Display Users/UserCard';
-import { User } from '../models/User';
 import { BrowserRouter } from 'react-router-dom';
 import { ModalContextProvider } from '../contexts/ModalContext';
 
@@ -21,8 +20,12 @@ vi.mock('react-router-dom', async () => {
 });
 
 test('test user card rendering', () => {
-    const testUser = new User('Grecu', 'Narcis', 'narcis.jpg');
-
+    const testUser = {
+        firstName: 'Narcis',
+        lastName: 'Grecu',
+        email: 'narcis@email.com',
+        userRole: 'ADMIN',
+    };
     render(
         <BrowserRouter>
             <ModalContextProvider
@@ -52,7 +55,12 @@ test('test user card rendering', () => {
 });
 
 test('test user card remove method to be called', () => {
-    const testUser = new User('Grecu', 'Narcis', 'narcis.jpg');
+    const testUser = {
+        firstName: 'Narcis',
+        lastName: 'Grecu',
+        email: 'narcis@email.com',
+        userRole: 'ADMIN',
+    };
 
     render(
         <BrowserRouter>

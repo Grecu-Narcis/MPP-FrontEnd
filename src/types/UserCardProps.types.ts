@@ -1,5 +1,5 @@
-import { User } from '../models/user';
+import { UserDTO } from './UserDTO.types';
 
 export type UserCardPropsType = {
-    givenUser: User;
+    givenUser: UserDTO;
 };

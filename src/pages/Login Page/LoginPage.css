@@ -10,8 +10,6 @@
 
 .login-wrapper {
     width: 30%;
-    /* display: flex;
-    flex-direction: column; */
 }
 
 .login-loader-wrapper {
@@ -20,6 +18,13 @@
 
     min-height: 30px;
     margin-top: 1rem;
+}
+
+.error-message {
+    margin-top: 0.8rem;
+    font-size: 11pt;
+    display: flex;
+    justify-content: center;
 }
 
 @media (min-width: 851px) and (max-width: 1024px) {

@@ -4,7 +4,6 @@ import { User } from './models/user';
 import { Routes, Route, BrowserRouter, Navigate } from 'react-router-dom';
 import React, { Suspense, useEffect, useState } from 'react';
 import LoadingPage from './pages/Loading Page/LoadingPage';
-import ChartPage from './pages/Chart Page/ChartPage';
 import { PagingContextProvider } from './contexts/PagingContext';
 import { convertDtoToUser } from './services/Users Service/UsersService';
 import SockJS from 'sockjs-client';
@@ -18,6 +17,8 @@ const LoginPage = React.lazy(() => import('./pages/Login Page/LoginPage'));
 const LandingPage = React.lazy(() => import('./pages/Landing Page/LandingPage'));
 const DisplayCarsPage = React.lazy(() => import('./pages/Display Data Page/Display Cars For User Page/DisplayCarsPage'));
 const CarDetailsPage = React.lazy(() => import('./pages/Car Details Page/CarFormPage'));
+const DisplayDealersPage = React.lazy(() => import('./pages/Display Dealers Page/DisplayDealersPage'));
+const AdminDashboardPage = React.lazy(() => import('./pages/Admin Dashboard Page/AdminDashboardPage'));
 
 const pageSize = 3;
 
@@ -49,20 +50,10 @@ function App() {
                 setUsers((prevState: User[]) => [...prevState, ...usersReceived]);
             });
         });
-
-        const handleBeforeUnload = () => {
-            localStorage.removeItem('authToken');
-            localStorage.removeItem('userId');
-        };
-
-        window.addEventListener('beforeunload', handleBeforeUnload);
-
-        return () => window.removeEventListener('beforeunload', handleBeforeUnload);
     }, []);
 
     return (
         <ConnectionStatusContextProvider>
-            {/* <UsersContextProvider userContext={{ users, addUser, removeUser }}> */}
             <PagingContextProvider
                 pagingContext={{
                     currentUsers,
@@ -100,8 +91,6 @@ function App() {
                             }
                         />
 
-                        <Route path='/chart' element={<ChartPage />} />
-
                         <Route
                             path='/cars/:userId'
                             element={
@@ -119,11 +108,29 @@ function App() {
                                 </Suspense>
                             }
                         />
+
+                        <Route
+                            path='/viewDealers'
+                            element={
+                                <Suspense fallback={<LoadingPage />}>
+                                    <DisplayDealersPage />
+                                </Suspense>
+                            }
+                        />
+
+                        <Route
+                            path='/dashboard'
+                            element={
+                                <Suspense fallback={<LoadingPage />}>
+                                    <AdminDashboardPage />
+                                </Suspense>
+                            }
+                        />
+
                         <Route path='*' element={<Navigate to={'/home'} />} />
                     </Routes>
                 </BrowserRouter>
             </PagingContextProvider>
-            {/* </UsersContextProvider> */}
         </ConnectionStatusContextProvider>
     );
 }

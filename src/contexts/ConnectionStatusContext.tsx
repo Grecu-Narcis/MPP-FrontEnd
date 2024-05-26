@@ -2,7 +2,7 @@ import { createContext, useEffect, useState } from 'react';
 import { ConnectionStatusProps } from '../types/ConnectionStatusProps.types';
 import { addMissingUsers, checkServerStatus } from '../services/Users Service/UsersService';
 import { UserDTO } from '../types/UserDTO.types';
-import ErrorPage from '../pages/Error Page/ErrorPage';
+import NotificationCard from '../features/Notification Card/NotificationCard';
 
 export const ConnectionStatusContext = createContext<ConnectionStatusProps | null>(null);
 
@@ -18,6 +18,7 @@ function ConnectionStatusContextProvider({ children }: any) {
         setIsLoggedIn(false);
         localStorage.removeItem('userId');
         localStorage.removeItem('authToken');
+        localStorage.removeItem('userRole');
     };
 
     useEffect(() => {
@@ -53,10 +54,17 @@ function ConnectionStatusContextProvider({ children }: any) {
         handleLogout,
     };
 
-    if (!isOnline) return <ErrorPage>Ooops... no internet connection detected!</ErrorPage>;
-    if (!isServerOnline) return <ErrorPage>Ooops... the server is down!</ErrorPage>;
+    // if (!isOnline) return <ErrorPage>Ooops... no internet connection detected!</ErrorPage>;
+    // if (!isServerOnline) return <ErrorPage>Ooops... the server is down!</ErrorPage>;
 
-    return <ConnectionStatusContext.Provider value={connectionStatusContext}>{children}</ConnectionStatusContext.Provider>;
+    return (
+        <ConnectionStatusContext.Provider value={connectionStatusContext}>
+            {(!isOnline || !isServerOnline) && (
+                <NotificationCard>{!isOnline ? 'Ooops... no internet connection!' : 'Ooops... the server is down!'}</NotificationCard>
+            )}
+            {children}
+        </ConnectionStatusContext.Provider>
+    );
 }
 
 export { ConnectionStatusContextProvider };

@@ -3,7 +3,7 @@ import { render, screen } from '@testing-library/react';
 import { expect, test } from 'vitest';
 import { UserForm } from '../features/CRUD Operations/User Form/UserForm';
 import React from 'react';
-import { User } from '../models/User';
+import { User } from '../models/user';
 
 test('testing rendering of user form without user', () => {
     const ageInput = React.createRef<HTMLInputElement>();
@@ -30,7 +30,7 @@ test('testing rendering of user form with user', () => {
     const lastNameInput = React.createRef<HTMLInputElement>();
     const urlInput = React.createRef<HTMLInputElement>();
 
-    const demoUser = new User('Grecu', 'Narcis', 'narcis.jpg', 20);
+    const demoUser = new User(1, 'Grecu', 'Narcis', 'narcis@email.com');
 
     render(
         <UserForm
