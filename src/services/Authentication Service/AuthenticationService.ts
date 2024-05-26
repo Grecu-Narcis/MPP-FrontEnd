@@ -4,13 +4,14 @@ import { endPointUrl } from "../config";
 
 const apiEndpoint = endPointUrl + '/api/auth';
 
-export async function registerUser(firstName: string, lastName: string, email: string, password: string) {
+export async function registerUser(firstName: string, lastName: string, email: string, password: string, userRole: string) {
     const response = await axios.post(apiEndpoint + '/register', 
         {
             'firstName': firstName,
             'lastName': lastName,
             'email': email,
-            'password': password
+            'password': password,
+            'userRole': userRole
         }
     );
 
@@ -19,7 +20,7 @@ export async function registerUser(firstName: string, lastName: string, email: s
 
 export async function loginUser(email: string, password: string) {
     try {
-        const response = await axios.post(apiEndpoint + '/login',
+        const response = await axios.post<LoginResponseDTO>(apiEndpoint + '/login',
             {
                 'email': email,
                 'password': password
@@ -29,10 +30,10 @@ export async function loginUser(email: string, password: string) {
         if (response.status === 200)
             return response.data as LoginResponseDTO;
 
-        throw new Error('Failed to login!');
+        throw new Error(response.data.accessToken);
     }
     
-    catch (error) {
-        throw new Error('Failed to login!');
+    catch (error: any) {
+        throw new Error(error.response.data.accessToken);
     }
 }

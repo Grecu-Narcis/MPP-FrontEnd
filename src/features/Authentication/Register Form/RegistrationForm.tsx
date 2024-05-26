@@ -10,6 +10,7 @@ function getUserDataFromInputs(
     lastNameInput: React.RefObject<HTMLInputElement>,
     emailInput: React.RefObject<HTMLInputElement>,
     passwordInput: React.RefObject<HTMLInputElement>,
+    userTypeCheckbox: React.RefObject<HTMLInputElement>,
 ) {
     if (!firstNameInput.current?.value || !lastNameInput.current?.value || !emailInput.current?.value || !passwordInput.current?.value)
         throw new Error('You must provide value for each field!');
@@ -18,12 +19,14 @@ function getUserDataFromInputs(
     const lastName = lastNameInput.current.value;
     const email = emailInput.current.value;
     const password = passwordInput.current.value;
+    const isDealer = userTypeCheckbox.current!.value;
 
     return {
         firstName,
         lastName,
         email,
         password,
+        isDealer,
     };
 }
 
@@ -34,6 +37,7 @@ export function RegistrationForm({ handleRegister }: RegistrationFormProps) {
     const lastNameInput = useRef<HTMLInputElement>(null);
     const emailInput = useRef<HTMLInputElement>(null);
     const passwordInput = useRef<HTMLInputElement>(null);
+    const userTypeCheckbox = useRef<HTMLInputElement>(null);
 
     // const handleImageUpload = (event: any) => {
     //     if (!event.target.files[0]) return;
@@ -42,14 +46,17 @@ export function RegistrationForm({ handleRegister }: RegistrationFormProps) {
 
     const handleRegisterSubmit = () => {
         try {
-            const { firstName, lastName, email, password } = getUserDataFromInputs(
+            const { firstName, lastName, email, password, isDealer } = getUserDataFromInputs(
                 firstNameInput,
                 lastNameInput,
                 emailInput,
                 passwordInput,
+                userTypeCheckbox,
             );
 
-            handleRegister(firstName, lastName, email, password);
+            const userRole = isDealer ? 'MANAGER' : 'USER';
+
+            handleRegister(firstName, lastName, email, password, userRole);
         } catch (e) {
             alert((e as Error).message);
         }
@@ -68,6 +75,10 @@ export function RegistrationForm({ handleRegister }: RegistrationFormProps) {
                 <FormEntry label='Last Name' placeHolder='Last Name' ref={lastNameInput} />
                 <FormEntry label='Email' placeHolder='you@example.com' ref={emailInput} />
                 <FormEntry label='Password' placeHolder='Password' ref={passwordInput} type='password' />
+                <div className='manager-checkbox-wrapper'>
+                    <label>Register as manager</label>
+                    <input type='checkbox' ref={userTypeCheckbox} className='manager-checkbox' />
+                </div>
 
                 <Button type='button' buttonMessage='Register' onClick={handleRegisterSubmit} margin='0.8rem 0' />
             </form>

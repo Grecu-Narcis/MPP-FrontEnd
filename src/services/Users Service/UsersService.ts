@@ -23,11 +23,7 @@ export async function getAllUsers() {
             {headers: {Authorization: 'Bearer ' + localStorage.getItem('authToken')}}
         );
 
-        const users: User[] = [];
-    
-        response.data.forEach((currentUser: UserDTO) => {
-            users.push(convertDtoToUser(currentUser));
-        });
+        const users: UserDTO[] = response.data;
     
         return users;
     }
@@ -41,12 +37,8 @@ export async function getUsersPage(requiredPage: number, isAscending: boolean, p
     const response = await axios.get(apiEndPoint + '/getPage?page=' + requiredPage + "&isAscending=" + isAscending + "&pageSize=" + pageSize,
         {headers: {Authorization: 'Bearer ' + localStorage.getItem('authToken')}}
     );
-    const users: User[] = [];
-
-    response.data.forEach((currentUser: UserDTO) => {
-        users.push(convertDtoToUser(currentUser));
-    });
-
+    const users: UserDTO[] = response.data;
+    
     return users;
     } catch (error) {
         return [];  
@@ -63,7 +55,7 @@ export async function getUsersCount() {
     catch (error) {}
 }
 
-export async function addUser(userToAdd: UserDTO, profileImage: File | undefined) {
+export async function addUser(userToAdd: UserDTO, profileImage?: File | undefined) {
 
     await axios.post(apiEndPoint + '/addUser', {
         ...userToAdd,

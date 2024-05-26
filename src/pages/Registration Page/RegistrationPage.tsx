@@ -18,10 +18,10 @@ export default function RegistrationPage() {
 
     const isLoggedIn = connectionContext.isLoggedIn;
 
-    const handleRegister = (firstName: string, lastName: string, email: string, password: string) => {
+    const handleRegister = (firstName: string, lastName: string, email: string, password: string, userRole: string) => {
         setIsLoading(true);
 
-        registerUser(firstName, lastName, email, password)
+        registerUser(firstName, lastName, email, password, userRole)
             .then(() => {
                 setIsLoading(false);
                 navigator('/login');

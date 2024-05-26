@@ -4,6 +4,19 @@
     width: 100%;
 }
 
+.manager-checkbox-wrapper {
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: flex-end;
+    align-items: center;
+    font-size: 10pt;
+    margin-top: 0.8rem;
+}
+
+.manager-checkbox {
+    margin: 0 3px;
+}
+
 .profile-image-label {
     align-self: center;
     margin: 0;

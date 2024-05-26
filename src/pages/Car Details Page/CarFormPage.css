@@ -34,3 +34,16 @@
     height: 50%;
 }
 
+.car-details-options {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 1rem;
+}
+
+.car-details-options > button {
+    margin: 0;
+}
+
+.car-delete-button {
+    background-color: #EC7063;
+}

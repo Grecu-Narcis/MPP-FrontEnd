@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { Car } from '../../models/car';
-import { getCarById, updateCar } from '../../services/Cars Service/CarsService';
+import { deleteCar, getCarById, updateCar } from '../../services/Cars Service/CarsService';
 import LoadingPage from '../Loading Page/LoadingPage';
 import { Layout } from '../../shared/components/layout/Layout';
 
@@ -74,10 +74,16 @@ export default function CarDetailsPage() {
             .catch(handleError);
     }, []);
 
-    const handleOnClick = () => {
+    const handleUpdateClick = () => {
         const updatedCar = getCarData(brandInput, modelInput, mileageInput, fuelTypeInput, yearInput, priceInput, givenCar!);
         console.log(updatedCar);
         updateCar(updatedCar)
+            .then(() => navigate('/cars/' + localStorage.getItem('userId')))
+            .catch(handleError);
+    };
+
+    const handleRemoveClick = () => {
+        deleteCar(carId)
             .then(() => navigate('/cars/' + localStorage.getItem('userId')))
             .catch(handleError);
     };
@@ -145,9 +151,12 @@ export default function CarDetailsPage() {
                     defaultValue={givenCar?.getPrice().toString()}
                     ref={priceInput}
                 />
-            </form>
 
-            <Button type='button' buttonMessage='Update' onClick={handleOnClick} />
+                <div className='car-details-options'>
+                    <Button type='button' buttonMessage='Update' onClick={handleUpdateClick} className='car-update-button' />
+                    <Button type='button' buttonMessage='Remove' onClick={handleRemoveClick} className='car-delete-button' />
+                </div>
+            </form>
         </Layout>
     );
 }

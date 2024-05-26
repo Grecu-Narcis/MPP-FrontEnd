@@ -12,6 +12,7 @@ import Loading from 'react-loading';
 export default function LoginPage() {
     const navigator = useNavigate();
     const [isLoading, setIsLoading] = useState<boolean>(false);
+    const [errorMessage, setErrorMessage] = useState<string>();
 
     const connectionContext = useContext(ConnectionStatusContext);
     if (!connectionContext) return;
@@ -27,13 +28,17 @@ export default function LoginPage() {
                 console.log(loginResponse.accessToken);
                 localStorage.setItem('authToken', loginResponse.accessToken);
                 localStorage.setItem('userId', loginResponse.userId.toString());
+                localStorage.setItem('userRole', loginResponse.userRole);
+
                 setIsLoggedIn(true);
-                navigator('/cars/' + loginResponse.userId);
+
+                loginResponse.userRole === 'USER' ? navigator('/viewDealers') : navigator('/cars/' + loginResponse.userId);
 
                 setIsLoading(false);
+                setErrorMessage(undefined);
             })
-            .catch(() => {
-                // alert((response as Error).message);
+            .catch((error) => {
+                setErrorMessage((error as Error).message);
                 setIsLoading(false);
             });
     };
@@ -53,6 +58,7 @@ export default function LoginPage() {
 
                 <LoginForm handleLogin={handleLogin} />
 
+                <div className='error-message'>{errorMessage && <div>{errorMessage}</div>}</div>
                 <div className='login-loader-wrapper'>
                     {isLoading && <Loading type='spin' color='black' width={'30px'} height={'30px'} />}
                 </div>

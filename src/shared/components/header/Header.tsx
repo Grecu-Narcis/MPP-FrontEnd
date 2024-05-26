@@ -10,6 +10,8 @@ import { faRightFromBracket } from '@fortawesome/free-solid-svg-icons';
 
 const Header = () => {
     const [profileImage, setProfileImage] = useState<string>();
+    const [userRole, setUserRole] = useState<string>();
+
     const connectionContext = useContext(ConnectionStatusContext);
 
     if (!connectionContext) {
@@ -30,6 +32,8 @@ const Header = () => {
         if (!localStorage.getItem('userId')) return;
         const userId = parseInt(localStorage.getItem('userId')!);
 
+        if (localStorage.getItem('userRole')) setUserRole(localStorage.getItem('userRole')!);
+
         const cachedProfileImage = localStorage.getItem('profileImage');
 
         if (cachedProfileImage) setProfileImage(cachedProfileImage);
@@ -43,16 +47,33 @@ const Header = () => {
     return (
         <div className='header' data-testid='header-test-id'>
             <nav className='navbar'>
-                <div className='title'>TravelWheels</div>
+                <Link to={'/home'} className='title'>
+                    TravelWheels
+                </Link>
                 <div className='links'>
                     <Link to={'/home'} className='link'>
                         Home
                     </Link>
                     {isLoggedIn ? (
                         <>
-                            <Link to={'/cars/' + localStorage.getItem('userId')} className='link'>
-                                View cars
-                            </Link>
+                            {userRole && userRole === 'MANAGER' && (
+                                <Link to={'/cars/' + localStorage.getItem('userId')} className='link'>
+                                    View cars
+                                </Link>
+                            )}
+
+                            {userRole && userRole !== 'ADMIN' && (
+                                <Link to={'/viewDealers'} className='link'>
+                                    View dealers
+                                </Link>
+                            )}
+
+                            {userRole && userRole === 'ADMIN' && (
+                                <Link to={'/dashboard'} className='link'>
+                                    Dashboard
+                                </Link>
+                            )}
+
                             {profileImage && <img src={'data:image/jpeg;base64,' + profileImage} className='profile-image link' />}
                             <FontAwesomeIcon icon={faRightFromBracket} className='logout-icon' onClick={handleLogoutClick} />
                         </>

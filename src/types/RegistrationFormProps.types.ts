@@ -1,3 +1,3 @@
 export type RegistrationFormProps = {
-    handleRegister: (firstName: string, lastName: string, email: string, password: string) => void;
+    handleRegister: (firstName: string, lastName: string, email: string, password: string, userRole: string) => void;
 }

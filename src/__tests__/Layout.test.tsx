@@ -7,7 +7,7 @@ import { Layout } from '../shared/components/layout/Layout';
 test('test layout', () => {
     render(
         <BrowserRouter>
-            <Layout />
+            <Layout>test</Layout>
         </BrowserRouter>,
     );
 

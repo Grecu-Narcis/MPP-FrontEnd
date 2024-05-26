@@ -1,5 +1,6 @@
 import { Car } from "../models/car"
 
 export type CarCardProps = {
-    givenCar: Car
+    givenCar: Car,
+    readOnly?: boolean
 }
