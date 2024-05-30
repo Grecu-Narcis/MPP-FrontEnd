@@ -32,7 +32,7 @@ export default function CarsChart() {
 
     if (yearsMap.size === 0) return <div>No car in database!</div>;
     return (
-        <div className='chart-wrapper'>
+        <div className='chart-wrapper' data-testid='chart-wrapper'>
             <BarChart
                 xAxis={[
                     {

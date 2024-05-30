@@ -128,6 +128,25 @@ export async function getAllCars(): Promise<CarDTO[]> {
     }
 }
 
+export async function addCar(brand: string, model: string, mileage: number, fuelType: string, year: number, price: number) {
+    try {
+        await axios.post(apiEndPoint + '/addCar', {
+            brand: brand,
+            model: model,
+            mileage: mileage,
+            fuelType: fuelType,
+            year: year,
+            price: price,
+            ownerId: parseInt(localStorage.getItem('userId')!)
+        },
+            {headers: {Authorization: 'Bearer ' + localStorage.getItem('authToken')}}
+        );
+    }
+    catch (error) {
+        console.log(error);
+    }
+}
+
 export async function updateCar(carToUpdate: Car) {
     try {
         await axios.put(apiEndPoint + '/updateCar', carToUpdate, 

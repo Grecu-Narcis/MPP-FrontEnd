@@ -57,9 +57,15 @@ const Header = () => {
                     {isLoggedIn ? (
                         <>
                             {userRole && userRole === 'MANAGER' && (
-                                <Link to={'/cars/' + localStorage.getItem('userId')} className='link'>
-                                    View cars
-                                </Link>
+                                <>
+                                    <Link to={'/cars/' + localStorage.getItem('userId')} className='link'>
+                                        View cars
+                                    </Link>
+
+                                    <Link to={'/addCar'} className='link'>
+                                        Add car
+                                    </Link>
+                                </>
                             )}
 
                             {userRole && userRole !== 'ADMIN' && (
@@ -74,7 +80,12 @@ const Header = () => {
                                 </Link>
                             )}
 
-                            {profileImage && <img src={'data:image/jpeg;base64,' + profileImage} className='profile-image link' />}
+                            {profileImage && (
+                                <Link to={'/profile'}>
+                                    {' '}
+                                    <img src={'data:image/jpeg;base64,' + profileImage} className='profile-image link' />{' '}
+                                </Link>
+                            )}
                             <FontAwesomeIcon icon={faRightFromBracket} className='logout-icon' onClick={handleLogoutClick} />
                         </>
                     ) : (

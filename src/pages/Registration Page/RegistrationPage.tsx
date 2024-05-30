@@ -40,11 +40,15 @@ export default function RegistrationPage() {
 
     return (
         <Layout>
-            <div className='registration-wrapper'>
-                <div className='register-message'>Create a new account</div>
+            <div className='registration-wrapper' data-testid='registration-wrapper'>
+                <div className='register-message' data-testid='register-message'>
+                    Create a new account
+                </div>
                 <RegistrationForm handleRegister={handleRegister} />
 
-                <div className='terms-message'>By signing up, you agree to our Terms and Conditions</div>
+                <div className='terms-message' data-testid='terms-message'>
+                    By signing up, you agree to our Terms and Conditions
+                </div>
                 <Link to={'/login'} className='login-link'>
                     Already have an account? Login
                 </Link>

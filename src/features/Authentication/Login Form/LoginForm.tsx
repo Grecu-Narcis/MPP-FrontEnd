@@ -39,7 +39,7 @@ export function LoginForm({ handleLogin }: LoginFormProps) {
 
                 <div className='login-options'>
                     <Button type='button' buttonMessage='Login' margin='1rem 0' onClick={handleOnClick} />
-                    <Link to='/register' className='register-link'>
+                    <Link to='/register' className='register-link' data-testid='register-link'>
                         New to Rentify? Create an account.
                     </Link>
                 </div>

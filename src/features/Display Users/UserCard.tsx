@@ -52,7 +52,7 @@ export function UserCard({ givenUser }: UserCardPropsType) {
                 X
             </button> */}
 
-            <div className='card-info' data-testid='card-info'>
+            <div className='card-info'>
                 <div className='picture'>
                     <img src={path} alt='user profile' />
                 </div>
