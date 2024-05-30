@@ -18,6 +18,8 @@ const FormEntry = forwardRef<HTMLInputElement, FormEntryProps>((props, ref) => {
                 id={props.label}
                 placeholder={props.placeHolder}
                 ref={ref}
+                defaultValue={props.defaultValue}
+                disabled={props.disabled ? true : false}
             />
         </div>
     );

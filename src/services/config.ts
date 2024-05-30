@@ -1,1 +1,1 @@
-export const endPointUrl = 'https://3.67.195.198:8443'
+export const endPointUrl = 'https://3.125.47.185:8443'

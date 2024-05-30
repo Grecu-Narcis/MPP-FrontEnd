@@ -19,6 +19,7 @@ function ConnectionStatusContextProvider({ children }: any) {
         localStorage.removeItem('userId');
         localStorage.removeItem('authToken');
         localStorage.removeItem('userRole');
+        localStorage.removeItem('profileImage');
     };
 
     useEffect(() => {

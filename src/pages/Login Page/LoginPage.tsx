@@ -52,13 +52,17 @@ export default function LoginPage() {
 
     return (
         <Layout>
-            <div className='login-wrapper'>
-                <div className='login-welcome-message'>Welcome to Rentify</div>
+            <div className='login-wrapper' data-testid='login-wrapper'>
+                <div className='login-welcome-message' data-testid='login-welcome-message'>
+                    Welcome to Rentify
+                </div>
                 <div className='login-message'>Sign in to your account</div>
 
                 <LoginForm handleLogin={handleLogin} />
 
-                <div className='error-message'>{errorMessage && <div>{errorMessage}</div>}</div>
+                <div className='error-message' data-testid='error-message'>
+                    {errorMessage && <div>{errorMessage}</div>}
+                </div>
                 <div className='login-loader-wrapper'>
                     {isLoading && <Loading type='spin' color='black' width={'30px'} height={'30px'} />}
                 </div>

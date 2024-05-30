@@ -39,6 +39,7 @@ export default function CarGallery() {
 
     return (
         <InfiniteScroll
+            data-testid='cars-infinite-scroll'
             next={fetchCars}
             hasMore={cars.length < totalCount}
             loader={<Loading type='spin' color='black' />}

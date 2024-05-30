@@ -19,7 +19,9 @@ function getUserDataFromInputs(
     const lastName = lastNameInput.current.value;
     const email = emailInput.current.value;
     const password = passwordInput.current.value;
-    const isDealer = userTypeCheckbox.current!.value;
+    const isDealer = userTypeCheckbox.current!.checked;
+
+    console.log(isDealer);
 
     return {
         firstName,
@@ -64,7 +66,7 @@ export function RegistrationForm({ handleRegister }: RegistrationFormProps) {
 
     return (
         <>
-            <form className='register-form'>
+            <form className='register-form' data-testid='register-form-id'>
                 {/* <label htmlFor='profile-image' className='profile-image-label'>
                     <img src={profileImage ? URL.createObjectURL(profileImage) : 'assets/default-user.png'} className='add-image' />
                     <FontAwesomeIcon icon={faPlus} className='add-button' />
@@ -80,7 +82,13 @@ export function RegistrationForm({ handleRegister }: RegistrationFormProps) {
                     <input type='checkbox' ref={userTypeCheckbox} className='manager-checkbox' />
                 </div>
 
-                <Button type='button' buttonMessage='Register' onClick={handleRegisterSubmit} margin='0.8rem 0' />
+                <Button
+                    type='button'
+                    buttonMessage='Register'
+                    onClick={handleRegisterSubmit}
+                    margin='0.8rem 0'
+                    data_test_id='register-button'
+                />
             </form>
         </>
     );

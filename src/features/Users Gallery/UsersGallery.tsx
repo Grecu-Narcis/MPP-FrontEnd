@@ -40,6 +40,7 @@ export default function UsersGallery() {
 
     return (
         <InfiniteScroll
+            data-testid='users-infinite-scroll'
             next={fetchCars}
             hasMore={users.length < totalCount}
             loader={<Loading type='spin' color='black' width={'40px'} />}

@@ -40,17 +40,29 @@ export default function AdminDashboardPage() {
         <Layout>
             <div className='admin-dashboard'>
                 <div className='side-menu'>
-                    <div className={`option ${selectedItem === 'user' ? 'selected' : ''}`} onClick={() => handleSelectionChange('user')}>
+                    <div
+                        className={`option ${selectedItem === 'user' ? 'selected' : ''}`}
+                        data-testid='user-view'
+                        onClick={() => handleSelectionChange('user')}
+                    >
                         <FontAwesomeIcon icon={faUserGroup} className={'option-icon'} />
                         <div className='option-users'>Users</div>
                     </div>
 
-                    <div className={`option ${selectedItem === 'car' ? 'selected' : ''}`} onClick={() => handleSelectionChange('car')}>
+                    <div
+                        className={`option ${selectedItem === 'car' ? 'selected' : ''}`}
+                        data-testid='cars-view'
+                        onClick={() => handleSelectionChange('car')}
+                    >
                         <FontAwesomeIcon icon={faCar} className='option-icon' />
                         <div className='option-cars'>Cars</div>
                     </div>
 
-                    <div className={`option ${selectedItem === 'chart' ? 'selected' : ''}`} onClick={() => handleSelectionChange('chart')}>
+                    <div
+                        className={`option ${selectedItem === 'chart' ? 'selected' : ''}`}
+                        data-testid='chart-view'
+                        onClick={() => handleSelectionChange('chart')}
+                    >
                         <FontAwesomeIcon icon={faChartSimple} className='option-icon' />
                         <div className='option-chart'>Chart</div>
                     </div>

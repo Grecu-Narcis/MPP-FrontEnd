@@ -80,7 +80,7 @@ export default function DisplayCarsPage() {
 
     return (
         <Layout userId={parseInt(userId)}>
-            <h1>{user?.getFirstName() + ' ' + user?.getLastName()}</h1>
+            <h1 data-testid='username'>{user?.getFirstName() + ' ' + user?.getLastName()}</h1>
             <h2>{carsTotal == 0 ? 'No cars available' : carsTotal === 1 ? 'One car available.' : `${carsTotal} cars available.`}</h2>
             <div className='cars-list'>
                 <InfiniteScroll

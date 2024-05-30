@@ -3,4 +3,5 @@ export type FormEntryProps = {
     placeHolder?: string;
     defaultValue?: string;
     type?: string;
+    disabled?: boolean;
 };

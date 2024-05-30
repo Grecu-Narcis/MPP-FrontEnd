@@ -19,6 +19,8 @@ const DisplayCarsPage = React.lazy(() => import('./pages/Display Data Page/Displ
 const CarDetailsPage = React.lazy(() => import('./pages/Car Details Page/CarFormPage'));
 const DisplayDealersPage = React.lazy(() => import('./pages/Display Dealers Page/DisplayDealersPage'));
 const AdminDashboardPage = React.lazy(() => import('./pages/Admin Dashboard Page/AdminDashboardPage'));
+const ProfilePage = React.lazy(() => import('./pages/Profile Page/ProfilePage'));
+const AddCarPage = React.lazy(() => import('./pages/Add Car Page/AddCarPage'));
 
 const pageSize = 3;
 
@@ -101,6 +103,15 @@ function App() {
                         />
 
                         <Route
+                            path='/addCar'
+                            element={
+                                <Suspense fallback={<LoadingPage />}>
+                                    <AddCarPage />
+                                </Suspense>
+                            }
+                        />
+
+                        <Route
                             path='/viewCar/:carId'
                             element={
                                 <Suspense fallback={<LoadingPage />}>
@@ -123,6 +134,15 @@ function App() {
                             element={
                                 <Suspense fallback={<LoadingPage />}>
                                     <AdminDashboardPage />
+                                </Suspense>
+                            }
+                        />
+
+                        <Route
+                            path='/profile'
+                            element={
+                                <Suspense fallback={<LoadingPage />}>
+                                    <ProfilePage />
                                 </Suspense>
                             }
                         />

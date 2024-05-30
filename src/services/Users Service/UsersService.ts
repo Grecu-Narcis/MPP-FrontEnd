@@ -7,7 +7,7 @@ import { endPointUrl } from "../config";
 const apiEndPoint = endPointUrl + '/api/users';
 
 export function convertDtoToUser(userToConvert: UserDTO) {
-    return new User(userToConvert.id!, userToConvert.firstName, userToConvert.lastName, userToConvert.email);
+    return new User(userToConvert.id!, userToConvert.firstName, userToConvert.lastName, userToConvert.email, userToConvert.userRole);
 }
 
 export async function getUserById(requiredId: string) {
@@ -74,12 +74,12 @@ export async function addMissingUsers(usersToAdd: UserDTO[]) {
     {headers: {Authorization: 'Bearer ' + localStorage.getItem('authToken')}});
 }
 
-export async function updateUser(userToUpdate: User) {
+export async function updateUser(userToUpdate: UserDTO) {
     await axios.put(apiEndPoint + '/updateUser', {
         ...userToUpdate
     }, 
-    {headers: {Authorization: 'Bearer ' + localStorage.getItem('authToken')}}
-);
+        {headers: {Authorization: 'Bearer ' + localStorage.getItem('authToken')}}
+    );
 }
 
 export async function deleteUser(userId: number) {

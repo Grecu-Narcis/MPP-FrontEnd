@@ -7,12 +7,19 @@ export default function LandingPage() {
     return (
         <Layout>
             <div className='main-div-landing'>
-                <div className='welcome-header'>
-                    <div className='welcome-message'>Rent your car, earn money, and get a car rental when you need it.</div>
-                    <Button type='button' buttonMessage='Start renting now' className='start-renting-button' />
+                <div className='welcome-header' data-testid='welcome-header'>
+                    <div className='welcome-message' data-testid='welcome-message'>
+                        Rent your car, earn money, and get a car rental when you need it.
+                    </div>
+                    <Button
+                        type='button'
+                        buttonMessage='Start renting now'
+                        className='start-renting-button'
+                        data-testid='start-renting-button'
+                    />
                 </div>
 
-                <div className='landing-info'>
+                <div className='landing-info' data-testid='landing-info'>
                     <div className='landing-title'>Why rent a car with TravelWheels?</div>
                     <div className='landing-description'>
                         TravelWheels offers flexible car rentals that provide a convenient and affordable way to get arround. Whether you
