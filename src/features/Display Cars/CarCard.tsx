@@ -19,7 +19,7 @@ import './CarCard.css';
  * @example
  * <CarCard givenCar={carData} />
  */
-export function CarCard({ givenCar, readOnly }: CarCardProps) {
+export function CarCard({ givenCar }: CarCardProps) {
     const imagePath: string = '/assets/cars/' + givenCar.getPictureUrl();
 
     const navigate = useNavigate();
@@ -44,11 +44,11 @@ export function CarCard({ givenCar, readOnly }: CarCardProps) {
 
                 <div className='price-view'>
                     <div className='price'>{givenCar.getPrice().toLocaleString() + ' €'}</div>
-                    {!readOnly && (
-                        <button type='button' className='view-button' onClick={handleViewCar}>
-                            View
-                        </button>
-                    )}
+                    {/* {!readOnly && ( */}
+                    <button type='button' className='view-button' onClick={handleViewCar}>
+                        View
+                    </button>
+                    {/* )} */}
                 </div>
             </div>
         </div>

@@ -10,6 +10,8 @@ import { User } from '../../../models/user';
 import LoadingPage from '../../Loading Page/LoadingPage';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import { getDealerById } from '../../../services/Dealers Service/DealersService';
+import DealerMap from '../../../features/Map/DealerMap';
+import { getDealerLocation } from '../../../services/Location Service/LocationService';
 
 /**
  * DisplayCarsPage
@@ -26,10 +28,10 @@ export default function DisplayCarsPage() {
     const [isLoadingCars, setIsLoadingCars] = useState<boolean>(true);
     const [isLoadingUser, setIsLoadingUser] = useState<boolean>(true);
     const [carsTotal, setCarsTotal] = useState<number>(0);
-
     const [pageNumber, setPageNumber] = useState<number>(0);
-
     const [user, setUser] = useState<User>();
+    const [latitude, setLatitude] = useState<number>();
+    const [longitude, setLongitude] = useState<number>();
 
     const navigator = useNavigate();
 
@@ -74,6 +76,11 @@ export default function DisplayCarsPage() {
                 setIsLoadingUser(false);
             })
             .catch(handleError);
+
+        getDealerLocation(parseInt(userId)).then((response) => {
+            setLatitude(response.data.latitude);
+            setLongitude(response.data.longitude);
+        });
     }, []);
 
     if (isLoadingCars || isLoadingUser) return <LoadingPage />;
@@ -82,13 +89,15 @@ export default function DisplayCarsPage() {
         <Layout userId={parseInt(userId)}>
             <h1 data-testid='username'>{user?.getFirstName() + ' ' + user?.getLastName()}</h1>
             <h2>{carsTotal == 0 ? 'No cars available' : carsTotal === 1 ? 'One car available.' : `${carsTotal} cars available.`}</h2>
-            <div className='cars-list'>
+            <div className='cars-list' id='scroll-div'>
                 <InfiniteScroll
                     dataLength={cars.length}
                     next={fetchCars}
                     hasMore={carsTotal > cars.length}
                     loader={<h4>Loading...</h4>}
                     className='infinite-scroll-grid'
+                    scrollableTarget='scroll-div'
+                    height={600}
                 >
                     {cars.map((car) => (
                         <CarCard
@@ -98,6 +107,8 @@ export default function DisplayCarsPage() {
                         />
                     ))}
                 </InfiniteScroll>
+
+                {latitude && longitude && <DealerMap latitude={latitude} longitude={longitude} />}
             </div>
         </Layout>
     );

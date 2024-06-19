@@ -14,9 +14,7 @@ const Header = () => {
 
     const connectionContext = useContext(ConnectionStatusContext);
 
-    if (!connectionContext) {
-        return;
-    }
+    if (!connectionContext) return;
 
     const isLoggedIn = connectionContext.isLoggedIn;
     const handleLogout = connectionContext.handleLogout;

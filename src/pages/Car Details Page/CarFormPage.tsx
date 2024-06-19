@@ -8,6 +8,8 @@ import { Layout } from '../../shared/components/layout/Layout';
 import './CarFormPage.css';
 import { Button } from '../../shared/components/button/Button';
 
+import Chat from '../../features/Chat/AIChat';
+
 function getCarData(
     brandInput: React.RefObject<HTMLInputElement>,
     modelInput: React.RefObject<HTMLInputElement>,
@@ -46,6 +48,8 @@ export default function CarDetailsPage() {
 
     const [givenCar, setGivenCar] = useState<Car>();
     const [isLoading, setIsLoading] = useState<boolean>(true);
+
+    const isDisabled = localStorage.getItem('userRole') === 'USER';
 
     if (carId === undefined) {
         navigate('/');
@@ -97,12 +101,28 @@ export default function CarDetailsPage() {
                 <label htmlFor='brand' className='form-label'>
                     Brand:
                 </label>
-                <input type='text' className='form-input' id='brand' name='brand' defaultValue={givenCar?.getBrand()} ref={brandInput} />
+                <input
+                    type='text'
+                    className='form-input'
+                    id='brand'
+                    name='brand'
+                    defaultValue={givenCar?.getBrand()}
+                    ref={brandInput}
+                    disabled={isDisabled}
+                />
 
                 <label htmlFor='model' className='form-label'>
                     Model:
                 </label>
-                <input type='text' className='form-input' id='model' name='model' defaultValue={givenCar?.getModel()} ref={modelInput} />
+                <input
+                    type='text'
+                    className='form-input'
+                    id='model'
+                    name='model'
+                    defaultValue={givenCar?.getModel()}
+                    ref={modelInput}
+                    disabled={isDisabled}
+                />
 
                 <label htmlFor='mileage' className='form-label'>
                     Mileage:
@@ -114,6 +134,7 @@ export default function CarDetailsPage() {
                     name='mileage'
                     defaultValue={givenCar?.getMileage().toString()}
                     ref={mileageInput}
+                    disabled={isDisabled}
                 />
 
                 <label htmlFor='fuelType' className='form-label'>
@@ -126,6 +147,7 @@ export default function CarDetailsPage() {
                     name='fuelType'
                     defaultValue={givenCar?.getFuelType()}
                     ref={fuelTypeInput}
+                    disabled={isDisabled}
                 />
 
                 <label htmlFor='year' className='form-label'>
@@ -138,6 +160,7 @@ export default function CarDetailsPage() {
                     name='year'
                     defaultValue={givenCar?.getYear().toString()}
                     ref={yearInput}
+                    disabled={isDisabled}
                 />
 
                 <label htmlFor='price' className='form-label'>
@@ -150,13 +173,20 @@ export default function CarDetailsPage() {
                     name='price'
                     defaultValue={givenCar?.getPrice().toString()}
                     ref={priceInput}
+                    disabled={isDisabled}
                 />
 
                 <div className='car-details-options'>
-                    <Button type='button' buttonMessage='Update' onClick={handleUpdateClick} className='car-update-button' />
-                    <Button type='button' buttonMessage='Remove' onClick={handleRemoveClick} className='car-delete-button' />
+                    {!isDisabled && (
+                        <>
+                            <Button type='button' buttonMessage='Update' onClick={handleUpdateClick} className='car-update-button' />
+                            <Button type='button' buttonMessage='Remove' onClick={handleRemoveClick} className='car-delete-button' />
+                        </>
+                    )}
                 </div>
             </form>
+
+            <Chat carId={carId} />
         </Layout>
     );
 }

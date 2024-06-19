@@ -1,6 +1,7 @@
 import './App.css';
 import { User } from './models/user';
 
+import { APIProvider } from '@vis.gl/react-google-maps';
 import { Routes, Route, BrowserRouter, Navigate } from 'react-router-dom';
 import React, { Suspense, useEffect, useState } from 'react';
 import LoadingPage from './pages/Loading Page/LoadingPage';
@@ -55,103 +56,105 @@ function App() {
     }, []);
 
     return (
-        <ConnectionStatusContextProvider>
-            <PagingContextProvider
-                pagingContext={{
-                    currentUsers,
-                    setCurrentUsers,
-                    currentPage,
-                    setCurrentPage,
-                    pageSize: pageSize,
-                }}
-            >
-                <BrowserRouter>
-                    <Routes>
-                        <Route
-                            path='/register'
-                            element={
-                                <Suspense fallback={<LoadingPage />}>
-                                    <RegistrationPage />
-                                </Suspense>
-                            }
-                        />
-                        <Route
-                            path='/login'
-                            element={
-                                <Suspense fallback={<LoadingPage />}>
-                                    <LoginPage />
-                                </Suspense>
-                            }
-                        />
+        <APIProvider apiKey='AIzaSyCuyX1wdvRqsQapGbe3rAXDEwsjNB1tbk0' onLoad={() => console.log('Maps API has loaded.')}>
+            <ConnectionStatusContextProvider>
+                <PagingContextProvider
+                    pagingContext={{
+                        currentUsers,
+                        setCurrentUsers,
+                        currentPage,
+                        setCurrentPage,
+                        pageSize: pageSize,
+                    }}
+                >
+                    <BrowserRouter>
+                        <Routes>
+                            <Route
+                                path='/register'
+                                element={
+                                    <Suspense fallback={<LoadingPage />}>
+                                        <RegistrationPage />
+                                    </Suspense>
+                                }
+                            />
+                            <Route
+                                path='/login'
+                                element={
+                                    <Suspense fallback={<LoadingPage />}>
+                                        <LoginPage />
+                                    </Suspense>
+                                }
+                            />
 
-                        <Route
-                            path='/Home'
-                            element={
-                                <Suspense fallback={<LoadingPage />}>
-                                    <LandingPage />
-                                </Suspense>
-                            }
-                        />
+                            <Route
+                                path='/Home'
+                                element={
+                                    <Suspense fallback={<LoadingPage />}>
+                                        <LandingPage />
+                                    </Suspense>
+                                }
+                            />
 
-                        <Route
-                            path='/cars/:userId'
-                            element={
-                                <Suspense fallback={<LoadingPage />}>
-                                    <DisplayCarsPage />
-                                </Suspense>
-                            }
-                        />
+                            <Route
+                                path='/cars/:userId'
+                                element={
+                                    <Suspense fallback={<LoadingPage />}>
+                                        <DisplayCarsPage />
+                                    </Suspense>
+                                }
+                            />
 
-                        <Route
-                            path='/addCar'
-                            element={
-                                <Suspense fallback={<LoadingPage />}>
-                                    <AddCarPage />
-                                </Suspense>
-                            }
-                        />
+                            <Route
+                                path='/addCar'
+                                element={
+                                    <Suspense fallback={<LoadingPage />}>
+                                        <AddCarPage />
+                                    </Suspense>
+                                }
+                            />
 
-                        <Route
-                            path='/viewCar/:carId'
-                            element={
-                                <Suspense fallback={<LoadingPage />}>
-                                    <CarDetailsPage />
-                                </Suspense>
-                            }
-                        />
+                            <Route
+                                path='/viewCar/:carId'
+                                element={
+                                    <Suspense fallback={<LoadingPage />}>
+                                        <CarDetailsPage />
+                                    </Suspense>
+                                }
+                            />
 
-                        <Route
-                            path='/viewDealers'
-                            element={
-                                <Suspense fallback={<LoadingPage />}>
-                                    <DisplayDealersPage />
-                                </Suspense>
-                            }
-                        />
+                            <Route
+                                path='/viewDealers'
+                                element={
+                                    <Suspense fallback={<LoadingPage />}>
+                                        <DisplayDealersPage />
+                                    </Suspense>
+                                }
+                            />
 
-                        <Route
-                            path='/dashboard'
-                            element={
-                                <Suspense fallback={<LoadingPage />}>
-                                    <AdminDashboardPage />
-                                </Suspense>
-                            }
-                        />
+                            <Route
+                                path='/dashboard'
+                                element={
+                                    <Suspense fallback={<LoadingPage />}>
+                                        <AdminDashboardPage />
+                                    </Suspense>
+                                }
+                            />
 
-                        <Route
-                            path='/profile'
-                            element={
-                                <Suspense fallback={<LoadingPage />}>
-                                    <ProfilePage />
-                                </Suspense>
-                            }
-                        />
+                            <Route
+                                path='/profile'
+                                element={
+                                    <Suspense fallback={<LoadingPage />}>
+                                        <ProfilePage />
+                                    </Suspense>
+                                }
+                            />
 
-                        <Route path='*' element={<Navigate to={'/home'} />} />
-                    </Routes>
-                </BrowserRouter>
-            </PagingContextProvider>
-        </ConnectionStatusContextProvider>
+                            <Route path='*' element={<Navigate to={'/home'} />} />
+                        </Routes>
+                    </BrowserRouter>
+                </PagingContextProvider>
+            </ConnectionStatusContextProvider>
+        </APIProvider>
     );
 }
 
