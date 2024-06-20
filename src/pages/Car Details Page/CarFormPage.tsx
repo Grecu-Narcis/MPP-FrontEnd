@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useContext, useEffect, useRef, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { Car } from '../../models/car';
 import { deleteCar, getCarById, updateCar } from '../../services/Cars Service/CarsService';
@@ -9,6 +9,9 @@ import './CarFormPage.css';
 import { Button } from '../../shared/components/button/Button';
 
 import Chat from '../../features/Chat/AIChat';
+import { CompareCarsContext } from '../../contexts/CompareCarsContext';
+import ShareButton from '../../features/Share Button/ShareButton';
+import NotificationCard from '../../features/Notification Card/NotificationCard';
 
 function getCarData(
     brandInput: React.RefObject<HTMLInputElement>,
@@ -48,8 +51,11 @@ export default function CarDetailsPage() {
 
     const [givenCar, setGivenCar] = useState<Car>();
     const [isLoading, setIsLoading] = useState<boolean>(true);
+    const [showNotification, setShowNotification] = useState<boolean>(false);
 
-    const isDisabled = localStorage.getItem('userRole') === 'USER';
+    const compareCarsContext = useContext(CompareCarsContext)!;
+
+    const isDisabled = localStorage.getItem('userRole') === 'USER' || !localStorage.getItem('userRole');
 
     if (carId === undefined) {
         navigate('/');
@@ -183,10 +189,31 @@ export default function CarDetailsPage() {
                             <Button type='button' buttonMessage='Remove' onClick={handleRemoveClick} className='car-delete-button' />
                         </>
                     )}
+
+                    {isDisabled && (
+                        <div className='user-options'>
+                            <Button
+                                type='button'
+                                buttonMessage='Add to compare'
+                                className='add-button'
+                                onClick={() => {
+                                    compareCarsContext.addCar(givenCar!);
+                                    setShowNotification(true);
+                                    const timeout = setTimeout(() => {
+                                        setShowNotification(false);
+                                    }, 4000);
+
+                                    return () => clearInterval(timeout);
+                                }}
+                            />
+                        </div>
+                    )}
+                    <ShareButton car={givenCar!} />
                 </div>
             </form>
 
             <Chat carId={carId} />
+            {showNotification && <NotificationCard color='green'>Car added to compare list</NotificationCard>}
         </Layout>
     );
 }

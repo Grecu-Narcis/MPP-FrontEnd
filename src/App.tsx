@@ -12,6 +12,8 @@ import Stomp from 'stompjs';
 import { UserDTO } from './types/UserDTO.types';
 import { ConnectionStatusContextProvider } from './contexts/ConnectionStatusContext';
 import { endPointUrl } from './services/config';
+import CompareCarsContextProvider from './contexts/CompareCarsContext';
+import CompareCarsPage from './pages/Compare Cars Page/CompareCarsPage';
 
 const RegistrationPage = React.lazy(() => import('./pages/Registration Page/RegistrationPage'));
 const LoginPage = React.lazy(() => import('./pages/Login Page/LoginPage'));
@@ -68,89 +70,92 @@ function App() {
                     }}
                 >
                     <BrowserRouter>
-                        <Routes>
-                            <Route
-                                path='/register'
-                                element={
-                                    <Suspense fallback={<LoadingPage />}>
-                                        <RegistrationPage />
-                                    </Suspense>
-                                }
-                            />
-                            <Route
-                                path='/login'
-                                element={
-                                    <Suspense fallback={<LoadingPage />}>
-                                        <LoginPage />
-                                    </Suspense>
-                                }
-                            />
+                        <CompareCarsContextProvider>
+                            <Routes>
+                                <Route
+                                    path='/register'
+                                    element={
+                                        <Suspense fallback={<LoadingPage />}>
+                                            <RegistrationPage />
+                                        </Suspense>
+                                    }
+                                />
+                                <Route
+                                    path='/login'
+                                    element={
+                                        <Suspense fallback={<LoadingPage />}>
+                                            <LoginPage />
+                                        </Suspense>
+                                    }
+                                />
 
-                            <Route
-                                path='/Home'
-                                element={
-                                    <Suspense fallback={<LoadingPage />}>
-                                        <LandingPage />
-                                    </Suspense>
-                                }
-                            />
+                                <Route
+                                    path='/Home'
+                                    element={
+                                        <Suspense fallback={<LoadingPage />}>
+                                            <LandingPage />
+                                        </Suspense>
+                                    }
+                                />
 
-                            <Route
-                                path='/cars/:userId'
-                                element={
-                                    <Suspense fallback={<LoadingPage />}>
-                                        <DisplayCarsPage />
-                                    </Suspense>
-                                }
-                            />
+                                <Route
+                                    path='/cars/:userId'
+                                    element={
+                                        <Suspense fallback={<LoadingPage />}>
+                                            <DisplayCarsPage />
+                                        </Suspense>
+                                    }
+                                />
 
-                            <Route
-                                path='/addCar'
-                                element={
-                                    <Suspense fallback={<LoadingPage />}>
-                                        <AddCarPage />
-                                    </Suspense>
-                                }
-                            />
+                                <Route
+                                    path='/addCar'
+                                    element={
+                                        <Suspense fallback={<LoadingPage />}>
+                                            <AddCarPage />
+                                        </Suspense>
+                                    }
+                                />
 
-                            <Route
-                                path='/viewCar/:carId'
-                                element={
-                                    <Suspense fallback={<LoadingPage />}>
-                                        <CarDetailsPage />
-                                    </Suspense>
-                                }
-                            />
+                                <Route
+                                    path='/viewCar/:carId'
+                                    element={
+                                        <Suspense fallback={<LoadingPage />}>
+                                            <CarDetailsPage />
+                                        </Suspense>
+                                    }
+                                />
 
-                            <Route
-                                path='/viewDealers'
-                                element={
-                                    <Suspense fallback={<LoadingPage />}>
-                                        <DisplayDealersPage />
-                                    </Suspense>
-                                }
-                            />
+                                <Route
+                                    path='/viewDealers'
+                                    element={
+                                        <Suspense fallback={<LoadingPage />}>
+                                            <DisplayDealersPage />
+                                        </Suspense>
+                                    }
+                                />
 
-                            <Route
-                                path='/dashboard'
-                                element={
-                                    <Suspense fallback={<LoadingPage />}>
-                                        <AdminDashboardPage />
-                                    </Suspense>
-                                }
-                            />
+                                <Route
+                                    path='/dashboard'
+                                    element={
+                                        <Suspense fallback={<LoadingPage />}>
+                                            <AdminDashboardPage />
+                                        </Suspense>
+                                    }
+                                />
 
-                            <Route
-                                path='/profile'
-                                element={
-                                    <Suspense fallback={<LoadingPage />}>
-                                        <ProfilePage />
-                                    </Suspense>
-                                }
-                            />
+                                <Route
+                                    path='/profile'
+                                    element={
+                                        <Suspense fallback={<LoadingPage />}>
+                                            <ProfilePage />
+                                        </Suspense>
+                                    }
+                                />
 
-                            <Route path='*' element={<Navigate to={'/home'} />} />
-                        </Routes>
+                                <Route path='/compare' element={<CompareCarsPage />} />
+                                <Route path='*' element={<Navigate to={'/home'} />} />
+                            </Routes>
+                        </CompareCarsContextProvider>
                     </BrowserRouter>
                 </PagingContextProvider>
             </ConnectionStatusContextProvider>

@@ -17,6 +17,6 @@ export async function updateDealerLocation(dealerId: number, latitude: number, l
 
 export async function getDealerLocation(userId: number) {    
     return await axios.get(apiEndPoint + '/get/' + userId,
-        {headers: {Authorization: 'Bearer ' + localStorage.getItem('authToken')}}
+        // {headers: {Authorization: 'Bearer ' + localStorage.getItem('authToken')}}
     );
 }

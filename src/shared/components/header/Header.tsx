@@ -52,6 +52,10 @@ const Header = () => {
                     <Link to={'/home'} className='link'>
                         Home
                     </Link>
+
+                    <Link to={'/viewDealers'} className='link'>
+                        View dealers
+                    </Link>
                     {isLoggedIn ? (
                         <>
                             {userRole && userRole === 'MANAGER' && (
@@ -64,12 +68,6 @@ const Header = () => {
                                         Add car
                                     </Link>
                                 </>
-                            )}
-
-                            {userRole && userRole !== 'ADMIN' && (
-                                <Link to={'/viewDealers'} className='link'>
-                                    View dealers
-                                </Link>
                             )}
 
                             {userRole && userRole === 'ADMIN' && (

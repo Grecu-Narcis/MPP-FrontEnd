@@ -13,6 +13,7 @@ import { saveImage } from '../../services/Images Service/ImagesService';
 import LoadingPage from '../Loading Page/LoadingPage';
 import DealerMap from '../../features/Map/DealerMap';
 import { getDealerLocation, updateDealerLocation } from '../../services/Location Service/LocationService';
+import ReactLoading from 'react-loading';
 
 function getUserDataFromInputs(
     firstNameInput: React.RefObject<HTMLInputElement>,
@@ -38,6 +39,7 @@ export default function ProfilePage() {
     const [user, setUser] = useState<User>();
     const [isLoading, setIsLoading] = useState<boolean>(true);
     const [profileImage, setProfileImage] = useState<File>();
+    const [success, setSuccess] = useState<boolean>(false);
 
     const [latitude, setLatitude] = useState<number>();
     const [longitude, setLongitude] = useState<number>();
@@ -66,11 +68,15 @@ export default function ProfilePage() {
             userRole: user!.getRole(),
         };
 
+        setSuccess(true);
+
         updateUser(userDTO);
         if (profileImage !== undefined) saveImage(profileImage, user!.getId()).then(() => localStorage.removeItem('profileImage'));
         if (latitude && longitude) updateDealerLocation(user!.getId(), latitude, longitude);
 
-        navigate('/home');
+        setTimeout(() => {
+            navigate('/home');
+        }, 3000);
     };
 
     useEffect(() => {
@@ -109,6 +115,8 @@ export default function ProfilePage() {
                 )}
 
                 <Button type='button' buttonMessage='Update' onClick={handleUpdateClick} />
+
+                {success && <ReactLoading type='spin' width={30} height={30} color='black' />}
             </div>
         </Layout>
     );

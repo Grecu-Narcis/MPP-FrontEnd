@@ -8,7 +8,8 @@ export async function requestResponse(carId: string, message: string) {
         {
             carId: carId,
             message: message
-        }
+        },
+        // {headers: {Authorization: 'Bearer ' + localStorage.getItem('authToken')}}
     );
 
     return response.data;

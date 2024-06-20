@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import { Button } from '../../shared/components/button/Button';
 import { Layout } from '../../shared/components/layout/Layout';
 
@@ -9,23 +10,25 @@ export default function LandingPage() {
             <div className='main-div-landing'>
                 <div className='welcome-header' data-testid='welcome-header'>
                     <div className='welcome-message' data-testid='welcome-message'>
-                        Rent your car, earn money, and get a car rental when you need it.
+                        Shift into gear with our amazing car offers!
                     </div>
-                    <Button
-                        type='button'
-                        buttonMessage='Start renting now'
-                        className='start-renting-button'
-                        data-testid='start-renting-button'
-                    />
+                    <Link to={'/viewDealers'}>
+                        {' '}
+                        <Button
+                            type='button'
+                            buttonMessage='Start buying now'
+                            className='start-renting-button'
+                            data-testid='start-renting-button'
+                        />{' '}
+                    </Link>
                 </div>
 
                 <div className='landing-info' data-testid='landing-info'>
-                    <div className='landing-title'>Why rent a car with TravelWheels?</div>
+                    <div className='landing-title'>Travel Wheels - Your Trusted Destination for Quality New and Pre-Owned Vehicles</div>
                     <div className='landing-description'>
-                        TravelWheels offers flexible car rentals that provide a convenient and affordable way to get arround. Whether you
-                        need a car for a few hours, a day, or longer, we've got you covered. Plus, you can save on travel costs by renting a
-                        car from a private owner, and you'll have access to a wide range of vehicles, including sedans, SUVs, trucks and
-                        more.
+                        Discover your perfect ride at Travel Wheels! Explore our wide selection of quality new and pre-owned vehicles,
+                        tailored financing options, and exceptional customer service. Drive away with confidence and style. Your journey
+                        begins at Travel Wheels.
                     </div>
                 </div>
             </div>

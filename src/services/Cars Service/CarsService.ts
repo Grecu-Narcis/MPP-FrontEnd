@@ -12,9 +12,7 @@ export function convertDtoToCar(carToConvert: CarDTO) {
 
 export async function getCarById(carId: number) {
     try {
-        const response = await axios.get(apiEndPoint + '/getCar/' + carId, 
-            {headers: {Authorization: 'Bearer ' + localStorage.getItem('authToken')}}
-        );
+        const response = await axios.get(apiEndPoint + '/getCar/' + carId);
         return convertDtoToCar(response.data);
     }
 
@@ -46,9 +44,7 @@ export async function getAllCarsByOwnerId(ownerId: number) {
 export async function getPageOfCarsByOwnerId(ownerId: number, pageNumber: number, pageSize: number) {
     try {
         const response = await axios.get(apiEndPoint + '/getPageByOwnerId' + 
-        '?ownerId=' + ownerId + '&page=' + pageNumber + '&pageSize=' + pageSize,
-        {headers: {Authorization: 'Bearer ' + localStorage.getItem('authToken')}}
-    );
+        '?ownerId=' + ownerId + '&page=' + pageNumber + '&pageSize=' + pageSize);
         const result: Car[] = [];
         response.data.forEach((currentCar: CarDTO) => {
             result.push(convertDtoToCar(currentCar));
@@ -65,9 +61,7 @@ export async function getPageOfCarsByOwnerId(ownerId: number, pageNumber: number
 
 export async function getCarsCountByOwnerId(ownerId: number): Promise<number> {
     try {
-        const response = await axios.get(apiEndPoint + '/getCarsCount/' + ownerId,
-            {headers: {Authorization: 'Bearer ' + localStorage.getItem('authToken')}}
-        );
+        const response = await axios.get(apiEndPoint + '/getCarsCount/' + ownerId);
         return response.data;
     }
 

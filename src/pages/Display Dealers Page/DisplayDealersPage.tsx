@@ -103,11 +103,11 @@ export default function DisplayDealersPage() {
                         </InfiniteScroll>
                     )}
 
-                    {dealersCount === 0 && <div className='not-found-message'>No dealer found!</div>}
+                    {!isLoadingCount && !isLoadingDealers && dealersCount === 0 && (
+                        <div className='not-found-message'>No dealer found!</div>
+                    )}
                 </div>
             </div>
         </Layout>
     );
 }
-
-// AIzaSyCuyX1wdvRqsQapGbe3rAXDEwsjNB1tbk0
