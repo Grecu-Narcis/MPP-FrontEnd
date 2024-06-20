@@ -56,3 +56,13 @@
 .logout-icon:hover {
     cursor: pointer;
 }
+
+@media (max-width:640px) {
+    .header {
+        font-size: 12pt;
+    }
+
+    .link {
+        font-size: 8pt;
+    }
+}

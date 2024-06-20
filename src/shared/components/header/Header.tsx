@@ -14,9 +14,7 @@ const Header = () => {
 
     const connectionContext = useContext(ConnectionStatusContext);
 
-    if (!connectionContext) {
-        return;
-    }
+    if (!connectionContext) return;
 
     const isLoggedIn = connectionContext.isLoggedIn;
     const handleLogout = connectionContext.handleLogout;
@@ -54,6 +52,10 @@ const Header = () => {
                     <Link to={'/home'} className='link'>
                         Home
                     </Link>
+
+                    <Link to={'/viewDealers'} className='link'>
+                        View dealers
+                    </Link>
                     {isLoggedIn ? (
                         <>
                             {userRole && userRole === 'MANAGER' && (
@@ -66,12 +68,6 @@ const Header = () => {
                                         Add car
                                     </Link>
                                 </>
-                            )}
-
-                            {userRole && userRole !== 'ADMIN' && (
-                                <Link to={'/viewDealers'} className='link'>
-                                    View dealers
-                                </Link>
                             )}
 
                             {userRole && userRole === 'ADMIN' && (

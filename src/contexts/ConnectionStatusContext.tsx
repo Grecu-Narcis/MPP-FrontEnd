@@ -55,9 +55,6 @@ function ConnectionStatusContextProvider({ children }: any) {
         handleLogout,
     };
 
-    // if (!isOnline) return <ErrorPage>Ooops... no internet connection detected!</ErrorPage>;
-    // if (!isServerOnline) return <ErrorPage>Ooops... the server is down!</ErrorPage>;
-
     return (
         <ConnectionStatusContext.Provider value={connectionStatusContext}>
             {(!isOnline || !isServerOnline) && (

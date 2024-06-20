@@ -11,6 +11,9 @@ import { FormEntry } from '../../features/CRUD Operations/User Form/Form Entry/F
 import { Button } from '../../shared/components/button/Button';
 import { saveImage } from '../../services/Images Service/ImagesService';
 import LoadingPage from '../Loading Page/LoadingPage';
+import DealerMap from '../../features/Map/DealerMap';
+import { getDealerLocation, updateDealerLocation } from '../../services/Location Service/LocationService';
+import ReactLoading from 'react-loading';
 
 function getUserDataFromInputs(
     firstNameInput: React.RefObject<HTMLInputElement>,
@@ -35,12 +38,17 @@ export default function ProfilePage() {
     const navigate = useNavigate();
     const [user, setUser] = useState<User>();
     const [isLoading, setIsLoading] = useState<boolean>(true);
+    const [profileImage, setProfileImage] = useState<File>();
+    const [success, setSuccess] = useState<boolean>(false);
+
+    const [latitude, setLatitude] = useState<number>();
+    const [longitude, setLongitude] = useState<number>();
 
     const firstNameInput = useRef<HTMLInputElement>(null);
     const lastNameInput = useRef<HTMLInputElement>(null);
     const emailInput = useRef<HTMLInputElement>(null);
 
-    const [profileImage, setProfileImage] = useState<File>();
+    const role = localStorage.getItem('userRole')!;
 
     const handleImageUpload = (event: any) => {
         if (!event.target.files[0]) return;
@@ -50,6 +58,7 @@ export default function ProfilePage() {
     const handleUpdateClick = () => {
         const { firstName, lastName, email } = getUserDataFromInputs(firstNameInput, lastNameInput, emailInput);
         console.log(firstName, lastName, email);
+        console.log(latitude, longitude);
 
         const userDTO = {
             id: user!.getId(),
@@ -59,15 +68,15 @@ export default function ProfilePage() {
             userRole: user!.getRole(),
         };
 
-        updateUser(userDTO).then(() => {
-            console.log('update success!');
-        });
+        setSuccess(true);
 
-        if (profileImage !== undefined)
-            saveImage(profileImage, user!.getId()).then(() => {
-                console.log('image upload!');
-                localStorage.removeItem('profileImage');
-            });
+        updateUser(userDTO);
+        if (profileImage !== undefined) saveImage(profileImage, user!.getId()).then(() => localStorage.removeItem('profileImage'));
+        if (latitude && longitude) updateDealerLocation(user!.getId(), latitude, longitude);
+
+        setTimeout(() => {
+            navigate('/home');
+        }, 3000);
     };
 
     useEffect(() => {
@@ -75,8 +84,12 @@ export default function ProfilePage() {
 
         getUserById(localStorage.getItem('userId')!).then((response) => {
             setUser(response);
-            console.log(response);
             setIsLoading(false);
+        });
+
+        getDealerLocation(parseInt(localStorage.getItem('userId')!)).then((response) => {
+            setLatitude(response.data.latitude);
+            setLongitude(response.data.longitude);
         });
     }, []);
 
@@ -97,7 +110,13 @@ export default function ProfilePage() {
                     <FormEntry label='Role' defaultValue={user?.getRole()} disabled={true} />
                 </div>
 
+                {role === 'MANAGER' && (
+                    <DealerMap latitude={latitude} longitude={longitude} setLatitude={setLatitude} setLongitude={setLongitude} />
+                )}
+
                 <Button type='button' buttonMessage='Update' onClick={handleUpdateClick} />
+
+                {success && <ReactLoading type='spin' width={30} height={30} color='black' />}
             </div>
         </Layout>
     );

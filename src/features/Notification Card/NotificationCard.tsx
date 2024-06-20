@@ -2,7 +2,12 @@ import { useEffect, useState } from 'react';
 
 import './NotificationCard.css';
 
-export default function NotificationCard({ children }: any) {
+type NotificationCardProps = {
+    children: React.ReactNode;
+    color?: string;
+};
+
+export default function NotificationCard({ children, color }: NotificationCardProps) {
     const [isVisible, setIsVisible] = useState<boolean>(true);
 
     useEffect(() => {
@@ -13,5 +18,14 @@ export default function NotificationCard({ children }: any) {
         return () => clearInterval(timeout);
     }, []);
 
-    return <div className={`notification-card ${!isVisible ? 'fade-out' : ''}`}>{children}</div>;
+    return (
+        <div
+            className={`notification-card ${!isVisible ? 'fade-out' : ''}`}
+            style={{
+                backgroundColor: color,
+            }}
+        >
+            {children}
+        </div>
+    );
 }

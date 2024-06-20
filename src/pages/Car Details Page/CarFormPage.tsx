@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useContext, useEffect, useRef, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { Car } from '../../models/car';
 import { deleteCar, getCarById, updateCar } from '../../services/Cars Service/CarsService';
@@ -7,6 +7,11 @@ import { Layout } from '../../shared/components/layout/Layout';
 
 import './CarFormPage.css';
 import { Button } from '../../shared/components/button/Button';
+
+import Chat from '../../features/Chat/AIChat';
+import { CompareCarsContext } from '../../contexts/CompareCarsContext';
+import ShareButton from '../../features/Share Button/ShareButton';
+import NotificationCard from '../../features/Notification Card/NotificationCard';
 
 function getCarData(
     brandInput: React.RefObject<HTMLInputElement>,
@@ -46,6 +51,11 @@ export default function CarDetailsPage() {
 
     const [givenCar, setGivenCar] = useState<Car>();
     const [isLoading, setIsLoading] = useState<boolean>(true);
+    const [showNotification, setShowNotification] = useState<boolean>(false);
+
+    const compareCarsContext = useContext(CompareCarsContext)!;
+
+    const isDisabled = localStorage.getItem('userRole') === 'USER' || !localStorage.getItem('userRole');
 
     if (carId === undefined) {
         navigate('/');
@@ -97,12 +107,28 @@ export default function CarDetailsPage() {
                 <label htmlFor='brand' className='form-label'>
                     Brand:
                 </label>
-                <input type='text' className='form-input' id='brand' name='brand' defaultValue={givenCar?.getBrand()} ref={brandInput} />
+                <input
+                    type='text'
+                    className='form-input'
+                    id='brand'
+                    name='brand'
+                    defaultValue={givenCar?.getBrand()}
+                    ref={brandInput}
+                    disabled={isDisabled}
+                />
 
                 <label htmlFor='model' className='form-label'>
                     Model:
                 </label>
-                <input type='text' className='form-input' id='model' name='model' defaultValue={givenCar?.getModel()} ref={modelInput} />
+                <input
+                    type='text'
+                    className='form-input'
+                    id='model'
+                    name='model'
+                    defaultValue={givenCar?.getModel()}
+                    ref={modelInput}
+                    disabled={isDisabled}
+                />
 
                 <label htmlFor='mileage' className='form-label'>
                     Mileage:
@@ -114,6 +140,7 @@ export default function CarDetailsPage() {
                     name='mileage'
                     defaultValue={givenCar?.getMileage().toString()}
                     ref={mileageInput}
+                    disabled={isDisabled}
                 />
 
                 <label htmlFor='fuelType' className='form-label'>
@@ -126,6 +153,7 @@ export default function CarDetailsPage() {
                     name='fuelType'
                     defaultValue={givenCar?.getFuelType()}
                     ref={fuelTypeInput}
+                    disabled={isDisabled}
                 />
 
                 <label htmlFor='year' className='form-label'>
@@ -138,6 +166,7 @@ export default function CarDetailsPage() {
                     name='year'
                     defaultValue={givenCar?.getYear().toString()}
                     ref={yearInput}
+                    disabled={isDisabled}
                 />
 
                 <label htmlFor='price' className='form-label'>
@@ -150,13 +179,41 @@ export default function CarDetailsPage() {
                     name='price'
                     defaultValue={givenCar?.getPrice().toString()}
                     ref={priceInput}
+                    disabled={isDisabled}
                 />
 
                 <div className='car-details-options'>
-                    <Button type='button' buttonMessage='Update' onClick={handleUpdateClick} className='car-update-button' />
-                    <Button type='button' buttonMessage='Remove' onClick={handleRemoveClick} className='car-delete-button' />
+                    {!isDisabled && (
+                        <>
+                            <Button type='button' buttonMessage='Update' onClick={handleUpdateClick} className='car-update-button' />
+                            <Button type='button' buttonMessage='Remove' onClick={handleRemoveClick} className='car-delete-button' />
+                        </>
+                    )}
+
+                    {isDisabled && (
+                        <div className='user-options'>
+                            <Button
+                                type='button'
+                                buttonMessage='Add to compare'
+                                className='add-button'
+                                onClick={() => {
+                                    compareCarsContext.addCar(givenCar!);
+                                    setShowNotification(true);
+                                    const timeout = setTimeout(() => {
+                                        setShowNotification(false);
+                                    }, 4000);
+
+                                    return () => clearInterval(timeout);
+                                }}
+                            />
+                        </div>
+                    )}
+                    <ShareButton car={givenCar!} />
                 </div>
             </form>
+
+            <Chat carId={carId} />
+            {showNotification && <NotificationCard color='green'>Car added to compare list</NotificationCard>}
         </Layout>
     );
 }

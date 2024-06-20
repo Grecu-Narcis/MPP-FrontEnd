@@ -47,3 +47,12 @@
 .car-delete-button {
     background-color: #EC7063;
 }
+
+.user-options {
+    display: flex;
+    justify-content: center;
+}
+
+.add-button {
+    margin: 0;
+}
