@@ -121,7 +121,7 @@ export default function DisplayCarsPage() {
             <h1 data-testid='username'>{user?.getFirstName() + ' ' + user?.getLastName()}</h1>
             <h2>{carsTotal == 0 ? 'No cars available' : carsTotal === 1 ? 'One car available.' : `${carsTotal} cars available.`}</h2>
 
-            <QRCodeGenerator dealer={user!} />
+            <QRCodeGenerator />
 
             <div className='cars-list' id='scroll-div'>
                 <InfiniteScroll
@@ -142,17 +142,9 @@ export default function DisplayCarsPage() {
                     ))}
                 </InfiniteScroll>
 
-                {latitude && longitude && (
+                {localStorage.getItem('userRole') != 'MANAGER' && latitude && longitude && (
                     <>
-                        <div
-                            style={{
-                                marginTop: '2rem',
-                                fontWeight: 'bold',
-                                fontSize: '20pt',
-                            }}
-                        >
-                            Contact us
-                        </div>
+                        <div className='contact-wrapper'>Contact us</div>
                         <DealerMap latitude={latitude} longitude={longitude} />
 
                         <div className='distance-wrapper'>
@@ -170,7 +162,7 @@ export default function DisplayCarsPage() {
                     </>
                 )}
 
-                {isLoggedIn() && <ContactForm email={user!.getEmail()} />}
+                {localStorage.getItem('userRole') != 'MANAGER' && isLoggedIn() && <ContactForm email={user!.getEmail()} />}
             </div>
         </Layout>
     );

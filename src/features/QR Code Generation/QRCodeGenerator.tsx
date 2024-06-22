@@ -2,16 +2,11 @@ import { useRef, useState } from 'react';
 import { toPng } from 'html-to-image';
 import QRCode from 'react-qr-code';
 import { Button } from '../../shared/components/button/Button';
-import { User } from '../../models/user';
 
 import './QRCodeGenerator.css';
 
-type QRCodeGeneratorProps = {
-    dealer: User;
-};
-
-export default function QRCodeGenerator({ dealer }: QRCodeGeneratorProps) {
-    const details = 'Name: ' + dealer.getFirstName() + ' ' + dealer.getLastName() + '\nEmail: ' + dealer.getEmail();
+export default function QRCodeGenerator() {
+    const details = window.location.href;
 
     const qrCodeRef = useRef<HTMLDivElement>(null);
     const [showQr, setShowQr] = useState<boolean>(false);

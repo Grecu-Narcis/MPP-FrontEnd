@@ -54,7 +54,7 @@ export default function LoginPage() {
         <Layout>
             <div className='login-wrapper' data-testid='login-wrapper'>
                 <div className='login-welcome-message' data-testid='login-welcome-message'>
-                    Welcome to Rentify
+                    Welcome to TravelWheels
                 </div>
                 <div className='login-message'>Sign in to your account</div>
 
