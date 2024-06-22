@@ -58,7 +58,7 @@ function App() {
     }, []);
 
     return (
-        <APIProvider apiKey='AIzaSyCuyX1wdvRqsQapGbe3rAXDEwsjNB1tbk0' onLoad={() => console.log('Maps API has loaded.')}>
+        <APIProvider apiKey={import.meta.env.VITE_MAPS_KEY} onLoad={() => console.log('Maps API has loaded.')}>
             <ConnectionStatusContextProvider>
                 <PagingContextProvider
                     pagingContext={{
