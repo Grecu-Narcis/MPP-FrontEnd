@@ -44,17 +44,17 @@ function App() {
         //     setCurrentUsers(users.slice(0, pageSize));
         // });
 
-        const sock = new SockJS(endPointUrl + '/websocket');
-        const stompClient = Stomp.over(sock);
+        // const sock = new SockJS(endPointUrl + '/websocket');
+        // const stompClient = Stomp.over(sock);
 
-        stompClient.connect({}, () => {
-            stompClient.subscribe('/topic/users', (message) => {
-                const usersDTO: UserDTO[] = JSON.parse(message.body);
-                const usersReceived = usersDTO.map((userDTO) => convertDtoToUser(userDTO));
+        // stompClient.connect({}, () => {
+        //     stompClient.subscribe('/topic/users', (message) => {
+        //         const usersDTO: UserDTO[] = JSON.parse(message.body);
+        //         const usersReceived = usersDTO.map((userDTO) => convertDtoToUser(userDTO));
 
-                setUsers((prevState: User[]) => [...prevState, ...usersReceived]);
-            });
-        });
+        //         setUsers((prevState: User[]) => [...prevState, ...usersReceived]);
+        //     });
+        // });
     }, []);
 
     return (
