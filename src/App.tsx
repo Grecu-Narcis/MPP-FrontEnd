@@ -14,6 +14,8 @@ import { ConnectionStatusContextProvider } from './contexts/ConnectionStatusCont
 import { endPointUrl } from './services/config';
 import CompareCarsContextProvider from './contexts/CompareCarsContext';
 import CompareCarsPage from './pages/Compare Cars Page/CompareCarsPage';
+import View360 from './pages/360 View/360View';
+import LiveChat from './pages/Live Chat/LiveChat';
 
 const RegistrationPage = React.lazy(() => import('./pages/Registration Page/RegistrationPage'));
 const LoginPage = React.lazy(() => import('./pages/Login Page/LoginPage'));
@@ -74,6 +76,9 @@ function App() {
                     <BrowserRouter>
                         <CompareCarsContextProvider>
                             <Routes>
+                                <Route path='/chat' element={<LiveChat />} />
+
+                                <Route path='/360' element={<View360 />} />
                                 <Route
                                     path='/register'
                                     element={

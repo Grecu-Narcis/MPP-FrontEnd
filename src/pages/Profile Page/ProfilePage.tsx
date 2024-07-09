@@ -1,4 +1,4 @@
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { Layout } from '../../shared/components/layout/Layout';
 
 import './ProfilePage.css';
@@ -6,7 +6,7 @@ import { useEffect, useRef, useState } from 'react';
 import { User } from '../../models/user';
 import { getUserById, updateUser } from '../../services/Users Service/UsersService';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPlus } from '@fortawesome/free-solid-svg-icons';
+import { faPhone, faPlus } from '@fortawesome/free-solid-svg-icons';
 import { FormEntry } from '../../features/CRUD Operations/User Form/Form Entry/FormEntry';
 import { Button } from '../../shared/components/button/Button';
 import { saveImage } from '../../services/Images Service/ImagesService';
@@ -118,6 +118,14 @@ export default function ProfilePage() {
 
                 {success && <ReactLoading type='spin' width={30} height={30} color='black' />}
             </div>
+
+            {localStorage.getItem('userRole') === 'MANAGER' && (
+                <div className='video-call-contact'>
+                    <Link to={'/chat?roomID=' + user?.getEmail()}>
+                        Video calls <FontAwesomeIcon icon={faPhone} />
+                    </Link>
+                </div>
+            )}
         </Layout>
     );
 }

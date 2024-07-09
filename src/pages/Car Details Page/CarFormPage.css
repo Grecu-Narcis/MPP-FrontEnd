@@ -10,6 +10,7 @@
     width: 150px;
     height: 100px;
     border-radius: 10px;
+    margin: 10px;
 }
 
 .form-label {
@@ -32,6 +33,7 @@
     flex-direction: column;
     width: 30%;
     height: 50%;
+    margin: 10px;
 }
 
 .car-details-options {
@@ -54,5 +56,9 @@
 }
 
 .add-button {
+    margin: 0;
+}
+
+.button-360 {
     margin: 0;
 }

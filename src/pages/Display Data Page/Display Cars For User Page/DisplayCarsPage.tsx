@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import { Car } from '../../../models/car';
 import { CarCard } from '../../../features/Display Cars/CarCard';
 
@@ -15,6 +15,8 @@ import { getDealerLocation } from '../../../services/Location Service/LocationSe
 import { Button } from '../../../shared/components/button/Button';
 import QRCodeGenerator from '../../../features/QR Code Generation/QRCodeGenerator';
 import ContactForm from '../../../features/Contact Form/ContactForm';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faPhone } from '@fortawesome/free-solid-svg-icons';
 
 const degreeToRadians = (value: number) => (value * Math.PI) / 180;
 
@@ -122,6 +124,14 @@ export default function DisplayCarsPage() {
             <h2>{carsTotal == 0 ? 'No cars available' : carsTotal === 1 ? 'One car available.' : `${carsTotal} cars available.`}</h2>
 
             <QRCodeGenerator />
+
+            {localStorage.getItem('userRole') === 'USER' && (
+                <div className='video-call-contact'>
+                    <Link to={'/chat?roomID=' + user?.getEmail()}>
+                        Video call dealer <FontAwesomeIcon icon={faPhone} />
+                    </Link>
+                </div>
+            )}
 
             <div className='cars-list' id='scroll-div'>
                 <InfiniteScroll

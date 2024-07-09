@@ -1,5 +1,5 @@
 import { useContext, useEffect, useRef, useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import { Car } from '../../models/car';
 import { deleteCar, getCarById, updateCar } from '../../services/Cars Service/CarsService';
 import LoadingPage from '../Loading Page/LoadingPage';
@@ -103,6 +103,10 @@ export default function CarDetailsPage() {
     return (
         <Layout>
             <img src={'/assets/cars/' + givenCar?.getPictureUrl()} className='car-detail-image' alt='car' />
+
+            <Link to={'/360'}>
+                <Button buttonMessage='View 360' type='button' className='button-360' />
+            </Link>
             <form className='car-form'>
                 <label htmlFor='brand' className='form-label'>
                     Brand:

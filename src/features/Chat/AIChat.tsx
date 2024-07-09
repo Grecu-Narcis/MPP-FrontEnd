@@ -1,4 +1,4 @@
-import { faMessage, faPaperPlane, faXmark } from '@fortawesome/free-solid-svg-icons';
+import { faMessage, faMicrophone, faPaperPlane, faXmark } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useEffect, useRef, useState } from 'react';
 
@@ -26,8 +26,18 @@ export default function Chat({ carId }: ChatProps) {
         },
     ]);
 
+    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+    const recognition = new SpeechRecognition();
+
     const userInput = useRef<HTMLInputElement>(null);
     const messageDiv = useRef<HTMLDivElement>(null);
+
+    recognition.onresult = (event) => {
+        const transcript = event.results[0][0].transcript;
+        console.log(transcript);
+
+        userInput.current!.value = transcript;
+    };
 
     const addMessage = (messageToAdd: Message) => {
         setMessages((messages) => [...messages, messageToAdd]);
@@ -92,6 +102,9 @@ export default function Chat({ carId }: ChatProps) {
 
                     <div className='input-area'>
                         <input className='user-input' placeholder={'Ask MotorMate anything'} ref={userInput} />
+                        <button className='send-button' disabled={isAnswering} onClick={() => recognition.start()}>
+                            <FontAwesomeIcon icon={faMicrophone} />
+                        </button>
                         <button className='send-button' disabled={isAnswering}>
                             <FontAwesomeIcon icon={faPaperPlane} onClick={handleSend} />
                         </button>
